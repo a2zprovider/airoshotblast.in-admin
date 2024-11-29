@@ -1,0 +1,294 @@
+<%- include('../../common/header'); -%>
+
+    <!-- main-content -->
+    <div class="main-content app-content">
+        <!-- container -->
+        <div class="main-container container-fluid">
+            <!-- breadcrumb -->
+            <div class="breadcrumb-header justify-content-between">
+                <div class="my-auto">
+                    <div class="d-flex">
+                        <h4 class="content-title mb-0 my-auto">Edit Setting</h4><span class="text-muted mt-1 tx-13 ms-2 mb-0">/
+                            Setting</span>
+                    </div>
+                </div>
+                <div class="d-flex my-xl-auto right-content">
+
+                    <div class="mb-xl-0">
+                        <a href="/setting" class="btn btn-primary">View Setting</a>
+                    </div>
+                </div>
+            </div>
+            <!-- breadcrumb -->
+            <div>
+                <!-- success -->
+                <% if(success !='' ){ %>
+                    <div class="alert alert-success" role="alert">
+                        <%= success %>
+                    </div>
+                    <% } %>
+
+                        <!-- errors  -->
+                        <% if(danger !='' ){ %>
+                            <div class="alert alert-danger" role="alert">
+                                <%= danger %>
+                            </div>
+                            <% } %>
+
+                                <!-- warning -->
+                                <% if(info !='' ){ %>
+                                    <div class="alert alert-info" role="alert">
+                                        <%= info %>
+                                    </div>
+                                    <% } %>
+            </div>
+            <!--Row-->
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Edit Setting</h3>
+                        </div>
+                        <div class="card-body">
+                            <form class="row g-3 needs-validation" novalidate="" action="<%= `/setting/update/${list.id}` %>" method="POST" enctype="multipart/form-data">
+                                <div class="col-md-6">
+                                    <label for="title" class="form-label">Title</label>
+                                    <input type="text" name="title" value="<%= list.title %>" class="form-control" id="title" placeholder="Title" required="">
+                                    <div class="invalid-feedback"> Please enter title. </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="tagline" class="form-label">Tagline</label>
+                                    <input type="text" name="tagline" value="<%= list.tagline %>" class="form-control" id="tagline" placeholder="Tagline">
+                                    <div class="invalid-feedback"> Please enter tagline. </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="text" name="email" value="<%= list.email %>" class="form-control" id="email" placeholder="Email" required>
+                                    <div class="invalid-feedback"> Please enter email. </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="mobile" class="form-label">Mobile</label>
+                                    <input type="text" name="mobile" value="<%= list.mobile %>" class="form-control" id="mobile" placeholder="Mobile" required>
+                                    <div class="invalid-feedback"> Please enter mobile. </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="logo" class="form-label">Logo</label>
+                                    <input type="file" name="logo" class="form-control" id="logo">
+                                    <div class="invalid-feedback"> Please select logo. </div>
+                                    <% if(list.logo){ %>
+                                        <br>
+                                        <img src="upload/setting/logo/<%= list.logo %>" width="50px" alt="<%= list.name %>">
+                                        <% } %>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="favicon" class="form-label">Favicon</label>
+                                    <input type="file" name="favicon" class="form-control" id="favicon">
+                                    <div class="invalid-feedback"> Please select favicon. </div>
+                                    <% if(list.favicon){ %>
+                                        <br>
+                                        <img src="upload/setting/favicon/<%= list.favicon %>" width="50px" alt="<%= list.name %>">
+                                        <% } %>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="address" class="form-label">Address</label>
+                                    <textarea name="address" value="<%= list.address %>" class="w-100 form-control" rows="4" id="address" placeholder="Address" required=""><%= list.address %></textarea>
+                                    <div class="invalid-feedback"> Please enter address. </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="except" class="form-label">Short Description</label>
+                                    <textarea name="except" value="<%= list.except %>" class="w-100 form-control" rows="4" id="except" placeholder="Short Description" required=""><%= list.except %></textarea>
+                                    <div class="invalid-feedback"> Please enter short description. </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="description" class="form-label">Description</label>
+                                    <textarea name="description" value="<%= list.description %>" class="w-100 form-control editor" rows="10" id="description" placeholder="Description"><%= list.description %></textarea>
+                                    <div class="invalid-feedback"> Please enter description. </div>
+                                </div>
+                                <hr>
+                                <h3 class="card-title">Social Links</h3>
+                                <div class="col-md-3">
+                                    <label for="facebook" class="form-label">Facebook</label>
+                                    <input type="text" name="social_links[facebook]" class="form-control" value="<%= list.social_links ? JSON.parse(list.social_links).facebook : '' %>" id="facebook" placeholder="Facebook">
+                                    <div class="invalid-feedback"> Please enter facebook url. </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="instagram" class="form-label">Instagram</label>
+                                    <input type="text" name="social_links[instagram]" value="<%= list.social_links?JSON.parse(list.social_links).instagram:'' %>" class="form-control" id="instagram" placeholder="Instagram">
+                                    <div class="invalid-feedback"> Please enter instagram url. </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="pinterest" class="form-label">Pinterest</label>
+                                    <input type="text" name="social_links[pinterest]" value="<%= list.social_links?JSON.parse(list.social_links).pinterest:'' %>" class="form-control" id="pinterest" placeholder="Pinterest">
+                                    <div class="invalid-feedback"> Please enter pinterest url. </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="youtube" class="form-label">Youtube</label>
+                                    <input type="text" name="social_links[youtube]" value="<%= list.social_links?JSON.parse(list.social_links).youtube:'' %>" class="form-control" id="youtube" placeholder="Youtube">
+                                    <div class="invalid-feedback"> Please enter youtube url. </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="linkedin" class="form-label">Linkedin</label>
+                                    <input type="text" name="social_links[linkedin]" value="<%= list.social_links?JSON.parse(list.social_links).linkedin:'' %>" class="form-control" id="linkedin" placeholder="Linkedin">
+                                    <div class="invalid-feedback"> Please enter linkedin url. </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="whatsapp" class="form-label">Whatsapp</label>
+                                    <input type="text" name="social_links[whatsapp]" value="<%= list.social_links?JSON.parse(list.social_links).whatsapp:'' %>" class="form-control" id="whatsapp" placeholder="Whatsapp">
+                                    <div class="invalid-feedback"> Please enter whatsapp url. </div>
+                                </div>
+                                <hr>
+                                <h3 class="card-title">Seo Details</h3>
+
+                                <!-- Home -->
+                                <div class="col-md-12">
+                                    <label for="h_seo_title" class="form-label">Home Page Seo Title</label>
+                                    <input type="text" name="seo_details[h_seo_title]" value="<%= list.seo_details?JSON.parse(list.seo_details).h_seo_title:'' %>" class="form-control" id="home_seo_title" placeholder="Home Page Seo Title">
+                                    <div class="invalid-feedback"> Please enter home page seo title. </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="h_seo_keywords" class="form-label">Home Page Seo Keywords</label>
+                                    <textarea name="seo_details[h_seo_keywords]" value="<%= list.seo_details?JSON.parse(list.seo_details).h_seo_keywords:'' %>" class="w-100 form-control" rows="4" id="h_seo_keywords" placeholder="Home Page Seo Keywords"><%= list.seo_details?JSON.parse(list.seo_details).h_seo_keywords:'' %></textarea>
+                                    <div class="invalid-feedback"> Please enter home page seo keywords. </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="h_seo_description" class="form-label">Home Page Seo
+                                        Description</label>
+                                    <textarea name="seo_details[h_seo_description]" value="<%= list.seo_details?JSON.parse(list.seo_details).h_seo_description:'' %>" class="w-100 form-control" rows="4" id="h_seo_description" placeholder="Home Page Seo Description"><%= list.seo_details?JSON.parse(list.seo_details).h_seo_description:'' %></textarea>
+                                    <div class="invalid-feedback"> Please enter home page seo description. </div>
+                                </div>
+
+                                <!-- Setting -->
+                                <div class="col-md-12">
+                                    <label for="p_seo_title" class="form-label">Setting Page Seo Title</label>
+                                    <input type="text" name="seo_details[p_seo_title]" value="<%= list.seo_details?JSON.parse(list.seo_details).p_seo_title:'' %>" class="form-control" id="home_seo_title" placeholder="Setting Page Seo Title">
+                                    <div class="invalid-feedback"> Please enter setting page seo title. </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="p_seo_keywords" class="form-label">Setting Page Seo Keywords</label>
+                                    <textarea name="seo_details[p_seo_keywords]" value="<%= list.seo_details?JSON.parse(list.seo_details).p_seo_keywords:'' %>" class="w-100 form-control" rows="4" id="p_seo_keywords" placeholder="Setting Page Seo Keywords"><%= list.seo_details?JSON.parse(list.seo_details).p_seo_keywords:'' %></textarea>
+                                    <div class="invalid-feedback"> Please enter setting page seo keywords. </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="p_seo_description" class="form-label">Setting Page Seo
+                                        Description</label>
+                                    <textarea name="seo_details[p_seo_description]" value="<%= list.seo_details?JSON.parse(list.seo_details).p_seo_description:'' %>" class="w-100 form-control" rows="4" id="p_seo_description" placeholder="Setting Page Seo Description"><%= list.seo_details?JSON.parse(list.seo_details).p_seo_description:'' %></textarea>
+                                    <div class="invalid-feedback"> Please enter setting page seo description. </div>
+                                </div>
+
+                                <!-- Blog -->
+                                <div class="col-md-12">
+                                    <label for="b_seo_title" class="form-label">Blog Page Seo Title</label>
+                                    <input type="text" name="seo_details[b_seo_title]" value="<%= list.seo_details?JSON.parse(list.seo_details).b_seo_title:'' %>" class="form-control" id="home_seo_title" placeholder="Blog Page Seo Title">
+                                    <div class="invalid-feedback"> Please enter blog page seo title. </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="b_seo_keywords" class="form-label">Blog Page Seo Keywords</label>
+                                    <textarea name="seo_details[b_seo_keywords]" value="<%= list.seo_details?JSON.parse(list.seo_details).b_seo_keywords:'' %>" class="w-100 form-control" rows="4" id="b_seo_keywords" placeholder="Blog Page Seo Keywords"><%= list.seo_details?JSON.parse(list.seo_details).b_seo_keywords:'' %></textarea>
+                                    <div class="invalid-feedback"> Please enter blog page seo keywords. </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="b_seo_description" class="form-label">Blog Page Seo
+                                        Description</label>
+                                    <textarea name="seo_details[b_seo_description]" value="<%= list.seo_details?JSON.parse(list.seo_details).b_seo_description:'' %>" class="w-100 form-control" rows="4" id="b_seo_description" placeholder="Blog Page Seo Description"><%= list.seo_details?JSON.parse(list.seo_details).b_seo_description:'' %></textarea>
+                                    <div class="invalid-feedback"> Please enter blog page seo description. </div>
+                                </div>
+
+                                <!-- Contact -->
+                                <div class="col-md-12">
+                                    <label for="c_seo_title" class="form-label">Contact Page Seo Title</label>
+                                    <input type="text" name="seo_details[c_seo_title]" value="<%= list.seo_details?JSON.parse(list.seo_details).c_seo_title:'' %>" class="form-control" id="home_seo_title" placeholder="Contact Page Seo Title">
+                                    <div class="invalid-feedback"> Please enter contact page seo title. </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="c_seo_keywords" class="form-label">Contact Page Seo Keywords</label>
+                                    <textarea name="seo_details[c_seo_keywords]" value="<%= list.seo_details?JSON.parse(list.seo_details).c_seo_keywords:'' %>" class="w-100 form-control" rows="4" id="c_seo_keywords" placeholder="Contact Page Seo Keywords"><%= list.seo_details?JSON.parse(list.seo_details).c_seo_keywords:'' %></textarea>
+                                    <div class="invalid-feedback"> Please enter contact page seo keywords. </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="c_seo_description" class="form-label">Contact Page Seo
+                                        Description</label>
+                                    <textarea name="seo_details[c_seo_description]" value="<%= list.seo_details?JSON.parse(list.seo_details).c_seo_description:'' %>" class="w-100 form-control" rows="4" id="c_seo_description" placeholder="Contact Page Seo Description"><%= list.seo_details?JSON.parse(list.seo_details).c_seo_description:'' %></textarea>
+                                    <div class="invalid-feedback"> Please enter contact page seo description. </div>
+                                </div>
+
+                                <!-- Category -->
+                                <div class="col-md-12">
+                                    <label for="cat_seo_title" class="form-label">Category Page Seo Title</label>
+                                    <input type="text" name="seo_details[cat_seo_title]" value="<%= list.seo_details?JSON.parse(list.seo_details).cat_seo_title:'' %>" class="form-control" id="home_seo_title" placeholder="Category Page Seo Title">
+                                    <div class="invalid-feedback"> Please enter category page seo title. </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="cat_seo_keywords" class="form-label">Category Page Seo Keywords</label>
+                                    <textarea name="seo_details[cat_seo_keywords]" value="<%= list.seo_details?JSON.parse(list.seo_details).cat_seo_keywords:'' %>" class="w-100 form-control" rows="4" id="cat_seo_keywords" placeholder="Category Page Seo Keywords"><%= list.seo_details?JSON.parse(list.seo_details).cat_seo_keywords:'' %></textarea>
+                                    <div class="invalid-feedback"> Please enter category page seo keywords. </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="cat_seo_description" class="form-label">Category Page Seo
+                                        Description</label>
+                                    <textarea name="seo_details[cat_seo_description]" value="<%= list.seo_details?JSON.parse(list.seo_details).cat_seo_description:'' %>" class="w-100 form-control" rows="4" id="cat_seo_description" placeholder="Category Page Seo Description"><%= list.seo_details?JSON.parse(list.seo_details).cat_seo_description:'' %></textarea>
+                                    <div class="invalid-feedback"> Please enter category page seo description. </div>
+                                </div>
+
+                                <!-- Tag -->
+                                <div class="col-md-12">
+                                    <label for="t_seo_title" class="form-label">Tag Page Seo Title</label>
+                                    <input type="text" name="seo_details[t_seo_title]" value="<%= list.seo_details?JSON.parse(list.seo_details).t_seo_title:'' %>" class="form-control" id="home_seo_title" placeholder="Tag Page Seo Title">
+                                    <div class="invalid-feedback"> Please enter tag page seo title. </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="t_seo_keywords" class="form-label">Tag Page Seo Keywords</label>
+                                    <textarea name="seo_details[t_seo_keywords]" value="<%= list.seo_details?JSON.parse(list.seo_details).t_seo_keywords:'' %>" class="w-100 form-control" rows="4" id="t_seo_keywords" placeholder="Tag Page Seo Keywords"><%= list.seo_details?JSON.parse(list.seo_details).t_seo_keywords:'' %></textarea>
+                                    <div class="invalid-feedback"> Please enter tag page seo keywords. </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="t_seo_description" class="form-label">Tag Page Seo
+                                        Description</label>
+                                    <textarea name="seo_details[t_seo_description]" value="<%= list.seo_details?JSON.parse(list.seo_details).t_seo_description:'' %>" class="w-100 form-control" rows="4" id="t_seo_description" placeholder="Tag Page Seo Description"><%= list.seo_details?JSON.parse(list.seo_details).t_seo_description:'' %></textarea>
+                                    <div class="invalid-feedback"> Please enter tag page seo description. </div>
+                                </div>
+
+                                <hr>
+                                <h3 class="card-title">Other Details</h3>
+
+                                <div class="col-md-6">
+                                    <label for="nature_business" class="form-label">Nature of Business</label>
+                                    <input type="text" name="other_details[nature_business]" value="<%= list.other_details?JSON.parse(list.other_details).nature_business:'' %>" class="form-control" id="home_seo_title" placeholder="Nature of Business">
+                                    <div class="invalid-feedback"> Please enter nature of business. </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="total_employe" class="form-label">Total Number of Employees</label>
+                                    <input type="text" name="other_details[total_employe]" value="<%= list.other_details?JSON.parse(list.other_details).total_employe:'' %>" class="form-control" id="home_seo_title" placeholder="Total Number of Employees">
+                                    <div class="invalid-feedback"> Please enter total number of employees. </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="gst_date" class="form-label">GST Registration Date</label>
+                                    <input type="date" name="other_details[gst_date]" value="<%= list.other_details?JSON.parse(list.other_details).gst_date:'' %>" class="form-control" id="home_seo_title" placeholder="GST Registration Date">
+                                    <div class="invalid-feedback"> Please enter GST registration date. </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="annual_turnover" class="form-label">Annual Turnover</label>
+                                    <input type="text" name="other_details[annual_turnover]" value="<%= list.other_details?JSON.parse(list.other_details).annual_turnover:'' %>" class="form-control" id="home_seo_title" placeholder="Annual Turnover">
+                                    <div class="invalid-feedback"> Please enter annual turnover. </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="gst_no" class="form-label">GST No.</label>
+                                    <input type="text" name="other_details[gst_no]" value="<%= list.other_details?JSON.parse(list.other_details).gst_no:'' %>" class="form-control" id="home_seo_title" placeholder="GST No.">
+                                    <div class="invalid-feedback"> Please enter GST no. </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <button class="btn btn-primary" type="submit">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/Row-->
+        </div>
+        <!-- Container closed -->
+    </div>
+    <!-- /main-content -->
+
+    <%- include('../../common/footer'); -%>

@@ -1,0 +1,364 @@
+<%- include('../common/header') -%>
+
+    <!-- main-content -->
+    <div class="main-content app-content">
+        <!-- container -->
+        <div class="main-container container-fluid">
+            <!-- breadcrumb -->
+            <div class="breadcrumb-header justify-content-between">
+                <div class="left-content">
+                    <div>
+                        <h2 class="main-content-title tx-24 mg-b-1 mg-b-lg-1">Hi, welcome back!</h2>
+                        <!-- <p class="mg-b-0">Sales monitoring dashboard template.</p> -->
+                    </div>
+                </div>
+                <!-- <div class="main-dashboard-header-right">
+                    <div> <label class="tx-13">Customer Ratings</label>
+                        <div class="main-star"> <i class="typcn typcn-star active"></i> <i
+                                class="typcn typcn-star active"></i> <i class="typcn typcn-star active"></i> <i
+                                class="typcn typcn-star active"></i> <i class="typcn typcn-star"></i>
+                            <span>(14,873)</span>
+                        </div>
+                    </div>
+                    <div> <label class="tx-13">Online Sales</label>
+                        <h5>563,275</h5>
+                    </div>
+                    <div> <label class="tx-13">Offline Sales</label>
+                        <h5>783,675</h5>
+                    </div>
+                </div> -->
+            </div> <!-- breadcrumb -->
+            <div>
+                <!-- success -->
+                <% if(success !='' ){ %>
+                    <div class="alert alert-success" role="alert">
+                        <%= success %>
+                    </div>
+                    <% } %>
+
+                        <!-- errors  -->
+                        <% if(danger !='' ){ %>
+                            <div class="alert alert-danger" role="alert">
+                                <%= danger %>
+                            </div>
+                            <% } %>
+
+                                <!-- warning -->
+                                <% if(info !='' ){ %>
+                                    <div class="alert alert-info" role="alert">
+                                        <%= info %>
+                                    </div>
+                                    <% } %>
+            </div>
+            <!-- row -->
+
+            <div class="row row-sm">
+                <div class="col-xl-2 col-lg-6 col-md-6 col-xm-12">
+                    <div class="card overflow-hidden sales-card bg-primary-gradient">
+                        <a href="/enquiry">
+                            <div class="px-3 pt-3 pb-2 pt-0">
+                                <div class="">
+                                    <h6 class="mb-3 tx-12 text-white">TODAY ENQUIRY</h6>
+                                </div>
+                                <div class="pb-0 mt-0">
+                                    <div class="d-flex">
+                                        <div class="">
+                                            <h4 class="tx-20 fw-bold mb-1 text-white">
+                                                <%- enquiry.today %>
+                                            </h4>
+                                            <!-- <p class="mb-0 tx-12 text-white op-7">Compared to last week</p> -->
+                                        </div>
+                                        <!-- <span class="float-end my-auto ms-auto">
+                                        <i class="fas fa-arrow-circle-up text-white"></i>
+                                        <span class="text-white op-7">+427</span>
+                                    </span> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-lg-6 col-md-6 col-xm-12">
+                    <div class="card overflow-hidden sales-card bg-danger-gradient">
+                        <a href="/enquiry">
+                            <div class="px-3 pt-3 pb-2 pt-0">
+                                <div class="">
+                                    <h6 class="mb-3 tx-12 text-white">LAST WEEK ENQUIRY</h6>
+                                </div>
+                                <div class="pb-0 mt-0">
+                                    <div class="d-flex">
+                                        <div class="">
+                                            <h4 class="tx-20 fw-bold mb-1 text-white">
+                                                <%- enquiry.week %>
+                                            </h4>
+                                            <!-- <p class="mb-0 tx-12 text-white op-7">Compared to last week</p> -->
+                                        </div>
+                                        <!-- <span class="float-end my-auto ms-auto">
+                                        <i class="fas fa-arrow-circle-up text-white"></i>
+                                        <span class="text-white op-7">+427</span>
+                                    </span> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-lg-6 col-md-6 col-xm-12">
+                    <div class="card overflow-hidden sales-card bg-success-gradient">
+                        <a href="/enquiry">
+                            <div class="px-3 pt-3 pb-2 pt-0">
+                                <div class="">
+                                    <h6 class="mb-3 tx-12 text-white">LAST MONTH ENQUIRY</h6>
+                                </div>
+                                <div class="pb-0 mt-0">
+                                    <div class="d-flex">
+                                        <div class="">
+                                            <h4 class="tx-20 fw-bold mb-1 text-white">
+                                                <%- enquiry.month %>
+                                            </h4>
+                                            <!-- <p class="mb-0 tx-12 text-white op-7">Compared to last week</p> -->
+                                        </div>
+                                        <!-- <span class="float-end my-auto ms-auto">
+                                        <i class="fas fa-arrow-circle-up text-white"></i>
+                                        <span class="text-white op-7">+427</span>
+                                    </span> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-lg-6 col-md-6 col-xm-12">
+                    <div class="card overflow-hidden sales-card bg-warning-gradient">
+                        <a href="/enquiry">
+                            <div class="px-3 pt-3 pb-2 pt-0">
+                                <div class="">
+                                    <h6 class="mb-3 tx-12 text-white">LAST YEAR ENQUIRY</h6>
+                                </div>
+                                <div class="pb-0 mt-0">
+                                    <div class="d-flex">
+                                        <div class="">
+                                            <h4 class="tx-20 fw-bold mb-1 text-white">
+                                                <%- enquiry.year %>
+                                            </h4>
+                                            <!-- <p class="mb-0 tx-12 text-white op-7">Compared to last week</p> -->
+                                        </div>
+                                        <!-- <span class="float-end my-auto ms-auto">
+                                        <i class="fas fa-arrow-circle-up text-white"></i>
+                                        <span class="text-white op-7">+427</span>
+                                    </span> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row row-sm">
+                <div class="col-xl-2 col-lg-6 col-md-6 col-xm-12">
+                    <div class="card overflow-hidden sales-card bg-primary-gradient">
+                        <a href="/enquiry">
+                            <div class="px-3 pt-3 pb-2 pt-0">
+                                <div class="">
+                                    <h6 class="mb-3 tx-12 text-white">TOTAL ENQUIRY</h6>
+                                </div>
+                                <div class="pb-0 mt-0">
+                                    <div class="d-flex">
+                                        <div class="">
+                                            <h4 class="tx-20 fw-bold mb-1 text-white">
+                                                <%- counts.enquiry %>
+                                            </h4>
+                                            <!-- <p class="mb-0 tx-12 text-white op-7">Compared to last week</p> -->
+                                        </div>
+                                        <!-- <span class="float-end my-auto ms-auto">
+                                        <i class="fas fa-arrow-circle-up text-white"></i>
+                                        <span class="text-white op-7">+427</span>
+                                    </span> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-lg-6 col-md-6 col-xm-12">
+                    <div class="card overflow-hidden sales-card bg-danger-gradient">
+                        <a href="/product">
+                            <div class="px-3 pt-3 pb-2 pt-0">
+                                <div class="">
+                                    <h6 class="mb-3 tx-12 text-white">TOTAL PRODUCT</h6>
+                                </div>
+                                <div class="pb-0 mt-0">
+                                    <div class="d-flex">
+                                        <div class="">
+                                            <h4 class="tx-20 fw-bold mb-1 text-white">
+                                                <%- counts.product %>
+                                            </h4>
+                                            <!-- <p class="mb-0 tx-12 text-white op-7">Compared to last week</p> -->
+                                        </div>
+                                        <!-- <span class="float-end my-auto ms-auto">
+                                        <i class="fas fa-arrow-circle-up text-white"></i>
+                                        <span class="text-white op-7">+427</span>
+                                    </span> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-lg-6 col-md-6 col-xm-12">
+                    <div class="card overflow-hidden sales-card bg-success-gradient">
+                        <a href="/category">
+                            <div class="px-3 pt-3 pb-2 pt-0">
+                                <div class="">
+                                    <h6 class="mb-3 tx-12 text-white">TOTAL CATEGORY</h6>
+                                </div>
+                                <div class="pb-0 mt-0">
+                                    <div class="d-flex">
+                                        <div class="">
+                                            <h4 class="tx-20 fw-bold mb-1 text-white">
+                                                <%- counts.category %>
+                                            </h4>
+                                            <!-- <p class="mb-0 tx-12 text-white op-7">Compared to last week</p> -->
+                                        </div>
+                                        <!-- <span class="float-end my-auto ms-auto">
+                                        <i class="fas fa-arrow-circle-up text-white"></i>
+                                        <span class="text-white op-7">+427</span>
+                                    </span> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-lg-6 col-md-6 col-xm-12">
+                    <div class="card overflow-hidden sales-card bg-warning-gradient">
+                        <a href="/blog">
+                            <div class="px-3 pt-3 pb-2 pt-0">
+                                <div class="">
+                                    <h6 class="mb-3 tx-12 text-white">TOTAL BLOG</h6>
+                                </div>
+                                <div class="pb-0 mt-0">
+                                    <div class="d-flex">
+                                        <div class="">
+                                            <h4 class="tx-20 fw-bold mb-1 text-white">
+                                                <%- counts.blog %>
+                                            </h4>
+                                            <!-- <p class="mb-0 tx-12 text-white op-7">Compared to last week</p> -->
+                                        </div>
+                                        <!-- <span class="float-end my-auto ms-auto">
+                                        <i class="fas fa-arrow-circle-up text-white"></i>
+                                        <span class="text-white op-7">+427</span>
+                                    </span> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-lg-6 col-md-6 col-xm-12">
+                    <div class="card overflow-hidden sales-card bg-purple-gradient">
+                        <a href="/blogcategory">
+                            <div class="px-3 pt-3 pb-2 pt-0">
+                                <div class="">
+                                    <h6 class="mb-3 tx-12 text-white">TOTAL BLOG CATEGORY</h6>
+                                </div>
+                                <div class="pb-0 mt-0">
+                                    <div class="d-flex">
+                                        <div class="">
+                                            <h4 class="tx-20 fw-bold mb-1 text-white">
+                                                <%- counts.blogcategory %>
+                                            </h4>
+                                            <!-- <p class="mb-0 tx-12 text-white op-7">Compared to last week</p> -->
+                                        </div>
+                                        <!-- <span class="float-end my-auto ms-auto">
+                                        <i class="fas fa-arrow-circle-up text-white"></i>
+                                        <span class="text-white op-7">+427</span>
+                                    </span> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-lg-6 col-md-6 col-xm-12">
+                    <div class="card overflow-hidden sales-card bg-info-gradient">
+                        <a href="/tag">
+                            <div class="px-3 pt-3 pb-2 pt-0">
+                                <div class="">
+                                    <h6 class="mb-3 tx-12 text-white">TOTAL TAG</h6>
+                                </div>
+                                <div class="pb-0 mt-0">
+                                    <div class="d-flex">
+                                        <div class="">
+                                            <h4 class="tx-20 fw-bold mb-1 text-white">
+                                                <%- counts.tag %>
+                                            </h4>
+                                            <!-- <p class="mb-0 tx-12 text-white op-7">Compared to last week</p> -->
+                                        </div>
+                                        <!-- <span class="float-end my-auto ms-auto">
+                                        <i class="fas fa-arrow-circle-up text-white"></i>
+                                        <span class="text-white op-7">+427</span>
+                                    </span> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-lg-6 col-md-6 col-xm-12">
+                    <div class="card overflow-hidden sales-card bg-teal-gradient">
+                        <a href="/faq">
+                            <div class="px-3 pt-3 pb-2 pt-0">
+                                <div class="">
+                                    <h6 class="mb-3 tx-12 text-white">TOTAL FAQ</h6>
+                                </div>
+                                <div class="pb-0 mt-0">
+                                    <div class="d-flex">
+                                        <div class="">
+                                            <h4 class="tx-20 fw-bold mb-1 text-white">
+                                                <%- counts.faq %>
+                                            </h4>
+                                            <!-- <p class="mb-0 tx-12 text-white op-7">Compared to last week</p> -->
+                                        </div>
+                                        <!-- <span class="float-end my-auto ms-auto">
+                                        <i class="fas fa-arrow-circle-up text-white"></i>
+                                        <span class="text-white op-7">+427</span>
+                                    </span> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-lg-6 col-md-6 col-xm-12">
+                    <div class="card overflow-hidden sales-card bg-teal-gradient">
+                        <a href="/application">
+                            <div class="px-3 pt-3 pb-2 pt-0">
+                                <div class="">
+                                    <h6 class="mb-3 tx-12 text-white">TOTAL APPLICATION</h6>
+                                </div>
+                                <div class="pb-0 mt-0">
+                                    <div class="d-flex">
+                                        <div class="">
+                                            <h4 class="tx-20 fw-bold mb-1 text-white">
+                                                <%- counts.application %>
+                                            </h4>
+                                            <!-- <p class="mb-0 tx-12 text-white op-7">Compared to last week</p> -->
+                                        </div>
+                                        <!-- <span class="float-end my-auto ms-auto">
+                                        <i class="fas fa-arrow-circle-up text-white"></i>
+                                        <span class="text-white op-7">+427</span>
+                                    </span> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div> <!-- row closed -->
+        </div> <!-- /Container -->
+    </div>
+    <!-- /main-content -->
+
+    <%- include('../common/footer'); -%>

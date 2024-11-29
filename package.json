@@ -1,0 +1,38 @@
+{
+  "name": "nodejs-structure",
+  "version": "1.0.0",
+  "description": "node.js structure with express.js for simple backend application",
+  "main": "./src/app.js",
+  "scripts": {
+    "start": "nodemon transpiled/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@sentry/node": "^7.112.2",
+    "babel-polyfill": "^6.26.0",
+    "bcrypt-nodejs": "^0.0.3",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-session": "^1.18.0",
+    "fs": "^0.0.1-security",
+    "jsonwebtoken": "^9.0.2",
+    "moment": "^2.30.1",
+    "mongoose": "^5.13.22",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "slugify": "^1.6.6",
+    "winston": "^3.13.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "nodemon": "^2.0.4"
+  }
+}

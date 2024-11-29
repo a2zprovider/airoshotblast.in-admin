@@ -1,0 +1,219 @@
+<%- include('../../common/header'); -%>
+
+    <!-- main-content -->
+    <div class="main-content app-content">
+        <!-- container -->
+        <div class="main-container container-fluid">
+            <!-- breadcrumb -->
+            <div class="breadcrumb-header justify-content-between">
+                <div class="my-auto">
+                    <div class="d-flex">
+                        <h4 class="content-title mb-0 my-auto">Add Product</h4><span
+                            class="text-muted mt-1 tx-13 ms-2 mb-0">/
+                            Product</span>
+                    </div>
+                </div>
+                <div class="d-flex my-xl-auto right-content">
+                    <div class="mb-xl-0">
+                        <a href="/product" class="btn btn-primary">View Product</a>
+                    </div>
+                </div>
+            </div> <!-- breadcrumb -->
+            <div>
+                <!-- success -->
+                <% if(success !='' ){ %>
+                    <div class="alert alert-success" role="alert">
+                        <%= success %>
+                    </div>
+                    <% } %>
+
+                        <!-- errors  -->
+                        <% if(danger !='' ){ %>
+                            <div class="alert alert-danger" role="alert">
+                                <%= danger %>
+                            </div>
+                            <% } %>
+
+                                <!-- warning -->
+                                <% if(info !='' ){ %>
+                                    <div class="alert alert-info" role="alert">
+                                        <%= info %>
+                                    </div>
+                                    <% } %>
+            </div>
+            <!--Row-->
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Add Product</h3>
+                        </div>
+                        <div class="card-body">
+
+
+                            <form class="row g-3 needs-validation" novalidate="" action="/product" method="POST"
+                                files="true" enctype="multipart/form-data">
+                                <div class="col-md-6">
+                                    <label for="title" class="form-label">Title</label>
+                                    <input type="text" name="title" class="form-control" id="title" placeholder="Title"
+                                        required="">
+                                    <div class="invalid-feedback"> Please enter title. </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="slug" class="form-label">Slug</label>
+                                    <input type="text" name="slug" class="form-control" id="slug" placeholder="Slug">
+                                    <div class="invalid-feedback"> Please enter slug. </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="price" class="form-label">Price Range</label>
+                                    <input type="text" name="price" class="form-control" id="price"
+                                        placeholder="Price Range">
+                                    <div class="invalid-feedback"> Please enter price. </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="category" class="form-label">Category</label>
+                                    <select class="form-select border" name="category" id="category" required="">
+                                        <option selected="" disabled="" value="">Select category</option>
+                                        <% categories.forEach((category,key)=> { %>
+                                            <option value="<%-category._id %>">
+                                                <%-category.title %>
+                                            </option>
+                                            <% }) %>
+                                    </select>
+                                    <div class="invalid-feedback"> Please select category. </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="country" class="form-label">Country</label>
+                                    <select class="form-select border" name="country" id="country">
+                                        <option selected="" disabled="" value="">Select country</option>
+                                        <% countries.forEach((country,key)=> { %>
+                                            <option value="<%-country._id %>">
+                                                <%-country.title %>
+                                            </option>
+                                            <% }) %>
+                                    </select>
+                                    <div class="invalid-feedback"> Please select country. </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="image1" class="form-label">Image</label>
+                                    <input type="file" name="image" class="form-control" id="image">
+                                    <div class="invalid-feedback"> Please select image. </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="images1" class="form-label">Multi Images</label>
+                                    <input type="file" name="images" multiple class="form-control" id="images">
+                                    <div class="invalid-feedback"> Please select images. </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="except" class="form-label">Short Description</label>
+                                    <textarea name="except" class="w-100 form-control" rows="4" id="except"
+                                        placeholder="Short Description"></textarea>
+                                    <div class="invalid-feedback"> Please enter short description. </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="description" class="form-label">Description</label>
+                                    <textarea name="description" class="w-100 form-control editor" rows="10"
+                                        id="description" placeholder="Description" required></textarea>
+                                    <div class="invalid-feedback"> Please enter description. </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="application" class="form-label">Application</label>
+                                    <textarea name="application" class="w-100 form-control editor" rows="10"
+                                        id="application" placeholder="Application"></textarea>
+                                    <div class="invalid-feedback"> Please enter application. </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="container1">
+                                        <label for="">Product Specification</label><br>
+                                        <button class="add_form_field btn-primary btn" data-id="1">Add
+                                            &nbsp;
+                                            <span style="font-size:16px; font-weight:bold;">+ </span>
+                                        </button>
+                                        <div class="row mt-3">
+                                            <div class="col-md-5">
+                                                <label class="form-label">Name</label>
+                                                <input type="text" name="field[name][0]" class="form-control"
+                                                    placeholder="Name" required>
+                                                <div class="invalid-feedback"> Please enter name. </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <label class="form-label">Value</label>
+                                                <input type="text" name="field[value][0]" class="form-control"
+                                                    placeholder="Value" required>
+                                                <div class="invalid-feedback"> Please enter value. </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="form-label">.</label>
+                                                <a href="#" class="btn btn-danger delete">Delete</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="container2">
+                                        <label for="">Product Additional Information</label><br>
+                                        <button class="add_form_field2 btn-primary btn" data-id="1">Add
+                                            &nbsp;
+                                            <span style="font-size:16px; font-weight:bold;">+ </span>
+                                        </button>
+                                        <div class="row mt-3">
+                                            <div class="col-md-5">
+                                                <label class="form-label">Name</label>
+                                                <input type="text" name="field1[name][0]" class="form-control"
+                                                    placeholder="Name" required>
+                                                <div class="invalid-feedback"> Please enter name. </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <label class="form-label">Value</label>
+                                                <input type="text" name="field1[value][0]" class="form-control"
+                                                    placeholder="Value" required>
+                                                <div class="invalid-feedback"> Please enter value. </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="form-label">.</label>
+                                                <a href="#" class="btn btn-danger delete">Delete</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <hr>
+                                <div class="col-md-12">
+                                    <label for="seo_title" class="form-label">Seo Title</label>
+                                    <input type="text" name="seo_title" class="form-control" id="seo_title"
+                                        placeholder="Seo Title" required>
+                                    <div class="invalid-feedback"> Please enter seo title. </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="seo_keywords" class="form-label">Seo Keywords</label>
+                                    <textarea name="seo_keywords" class="w-100 form-control" rows="4" id="seo_keywords"
+                                        placeholder="Seo Keywords" required></textarea>
+                                    <div class="invalid-feedback"> Please enter seo keywords. </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="seo_description" class="form-label">Seo Description</label>
+                                    <textarea name="seo_description" class="w-100 form-control" rows="4"
+                                        id="seo_description" placeholder="Seo Description" required></textarea>
+                                    <div class="invalid-feedback"> Please enter seo description. </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <button class="btn btn-primary" type="submit">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/Row-->
+        </div> <!-- Container closed -->
+    </div>
+    <!-- /main-content -->
+
+    <%- include('../../common/footer'); -%>

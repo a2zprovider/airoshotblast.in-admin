@@ -1,0 +1,70 @@
+<% var query_url=query.search ? '&search=' +query.search : '' +query.limit && query.limit != 10 && query.limit != undefined ? '&limit=' +query.limit : '' %>
+    <div class="mt-3">
+        <% if (lists.pages> 1) { %>
+            <ul class="pagination text-center">
+                <% if (lists.current==1) { %>
+                    <!-- <li class="page-item disabled"><a class="page-link"><i
+                                                                class="icon fe fe-chevron-left"></i></a></li> -->
+                    <% } else { %>
+                        <li class="page-item"><a class="page-link" href="<%= url %>?page=1<%= query_url %>">First</a>
+                        </li>
+                        <% } %>
+                            <% var i=(Number(lists.current)> 5 ? Number(lists.current) -
+                                4 :
+                                1) %>
+                                <% if (i!=lists.current) { %>
+                                    <li class="page-item"><a
+                                            href="<%= url %>?page=<%= lists.current-1 %><%= query_url %>"
+                                            class="page-link"><i class="icon fe fe-chevron-left"></i></a>
+                                    </li>
+                                    <% } %>
+                                        <% if (i !==1) { %>
+                                            <li class="page-item disabled"><a class="page-link">...</a></li>
+                                            <% } %>
+                                                <% for (; i <=(Number(lists.current) + 4) && i <=lists.pages; i++) { %>
+                                                    <% if (i==lists.current) { %>
+                                                        <li class="page-item active"><a class="page-link">
+                                                                <%= i %>
+                                                            </a></li>
+                                                        <% } else { %>
+                                                            <li class="page-item"><a class="page-link"
+                                                                    href="<%= url %>?page=<%= i %><%= query_url %>">
+                                                                    <%= i %>
+                                                                </a></li>
+                                                            <% } %>
+                                                                <% if (i==Number(lists.current) + 4 && i < lists.pages)
+                                                                    { %>
+                                                                    <li class="page-item disabled">
+                                                                        <a class="page-link">...</a>
+                                                                    </li>
+                                                                    <% } %>
+                                                                        <% } %>
+
+                                                                            <% if
+                                                                                (i!=lists.current&lists.current!=lists.pages)
+                                                                                { %>
+                                                                                <li class="page-item"><a
+                                                                                        href="<%= url %>?page=<%= Number(lists.current)+1 %><%= query_url %>"
+                                                                                        class="page-link"><i
+                                                                                            class="icon fe fe-chevron-right"></i></a>
+                                                                                </li>
+                                                                                <% } %>
+                                                                                    <% if (lists.current==lists.pages) {
+                                                                                        %>
+                                                                                        <!-- <li
+                                                                                                            class="page-item disabled">
+                                                                                                            <a
+                                                                                                                class="page-link"><i
+                                                                                                                    class="icon fe fe-chevron-right"></i></a>
+                                                                                                        </li> -->
+                                                                                        <% } else { %>
+
+
+                                                                                            <li class="page-item">
+                                                                                                <a class="page-link"
+                                                                                                    href="<%= url %>?page=<%= lists.pages %><%= query_url %>">Last</a>
+                                                                                            </li>
+                                                                                            <% } %>
+            </ul>
+            <% } %>
+    </div>

@@ -1,0 +1,129 @@
+<%- include('../common/header') -%>
+
+    <!-- main-content -->
+    <div class="main-content app-content">
+        <!-- container -->
+        <div class="main-container container-fluid">
+            <!-- breadcrumb -->
+
+            <div class="breadcrumb-header justify-content-between">
+                <div class="my-auto">
+                    <div class="d-flex">
+                        <h4 class="content-title mb-0 my-auto">Change Password</h4><span
+                            class="text-muted mt-1 tx-13 ms-2 mb-0">/ User</span>
+                    </div>
+                </div>
+            </div> <!-- breadcrumb -->
+            <div>
+                <!-- success -->
+                <% if(success !='' ){ %>
+                    <div class="alert alert-success" role="alert">
+                        <%= success %>
+                    </div>
+                    <% } %>
+
+                        <!-- errors  -->
+                        <% if(danger !='' ){ %>
+                            <div class="alert alert-danger" role="alert">
+                                <%= danger %>
+                            </div>
+                            <% } %>
+
+                                <!-- warning -->
+                                <% if(info !='' ){ %>
+                                    <div class="alert alert-info" role="alert">
+                                        <%= info %>
+                                    </div>
+                                    <% } %>
+            </div>
+            <div class="row row-sm">
+                <!-- Col -->
+                <div class="col-lg-4">
+                    <div class="card mg-b-20">
+                        <div class="card-body">
+                            <div class="ps-0">
+                                <div class="main-profile-overview">
+                                    <div class="main-img-user profile-user"> <img alt=""
+                                            src="../assets/img/faces/11.jpg"></div>
+                                    <div class="d-flex justify-content-between mg-b-20">
+                                        <div>
+                                            <h5 class="main-profile-name" style="text-transform: capitalize;">
+                                                <%= user.name %>
+                                            </h5>
+                                            <!-- <p class="main-profile-name-text">Web Designer</p> -->
+                                        </div>
+                                    </div>
+                                    <!-- <hr class="mg-y-30"> <label class="main-content-label tx-13 mg-b-20">Social</label>
+                                    <div class="main-profile-social-list">
+                                        <div class="media">
+                                            <div class="media-icon bg-primary-transparent text-primary"> <i
+                                                    class="icon ion-logo-github"></i> </div>
+                                            <div class="media-body"> <span>Github</span> <a
+                                                    href="">github.com/spruko</a> </div>
+                                        </div>
+                                    </div> -->
+                                </div><!-- main-profile-overview -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mg-b-20">
+                        <div class="card-body">
+                            <div class="main-content-label tx-13 mg-b-25"> contact </div>
+                            <div class="main-profile-contact-list">
+                                <!-- <div class="media">
+                                    <div class="media-icon bg-primary-transparent text-primary"> <i
+                                            class="fe fe-phone"></i> </div>
+                                    <div class="media-body"> <span>Mobile</span>
+                                        <div>
+                                            <%= user.mobile %>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="media">
+                                    <div class="media-icon bg-success-transparent text-success"> <i
+                                            class="fe fe-mail"></i> </div>
+                                    <div class="media-body"> <span>Email</span>
+                                        <div>
+                                            <%= user.email %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- main-profile-contact-list -->
+                        </div>
+                    </div>
+                </div> <!-- Col -->
+                <div class="col-lg-8">
+                    <form class="form-horizontal" action="/user/update-password" method="POST">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="mb-4 main-content-label">Change Password</div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3"> <label class="form-label">New Password</label> </div>
+                                        <div class="col-md-9">
+                                            <input type="password" name="new_password" class="form-control"
+                                                placeholder="New Password" required="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3"><label class="form-label">Confirm Password</label></div>
+                                        <div class="col-md-9">
+                                            <input type="password" name="confirm_password" class="form-control"
+                                                placeholder="Confirm Password" required="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer"> <button type="submit"
+                                    class="btn btn-primary waves-effect waves-light">Update</button> </div>
+                        </div>
+                    </form>
+                </div> <!-- /Col -->
+            </div>
+        </div> <!-- /Container -->
+    </div>
+    <!-- /main-content -->
+
+    <%- include('../common/footer'); -%>

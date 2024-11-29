@@ -1,0 +1,335 @@
+<!-- Message Modal -->
+<div class="modal fade" id="chatmodel" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-right chatbox" role="document">
+        <div class="modal-content chat border-0">
+            <div class="card overflow-hidden mb-0 border-0">
+                <!-- action-header -->
+                <div class="action-header clearfix">
+                    <div class="float-start hidden-xs d-flex ms-2">
+                        <div class="img_cont me-3"> <img src="../../assets/img/faces/11.jpg"
+                                class="rounded-circle user_img" alt="img"> </div>
+                        <div class="align-items-center mt-2">
+                            <h4 class="text-white mb-0 fw-semibold">Daneil Scott</h4> <span
+                                class="dot-label bg-success"></span><span class="me-3 text-white">online</span>
+                        </div>
+                    </div>
+                    <ul class="ah-actions actions align-items-center">
+                        <li class="call-icon"> <a href="" class="d-done d-md-block phone-button" data-bs-toggle="modal"
+                                data-bs-target="#audiomodal"> <i class="si si-phone"></i> </a> </li>
+                        <li class="video-icon"> <a href="" class="d-done d-md-block phone-button" data-bs-toggle="modal"
+                                data-bs-target="#videomodal"> <i class="si si-camrecorder"></i> </a> </li>
+                        <li class="dropdown"> <a href="" data-bs-toggle="dropdown" aria-expanded="true"> <i
+                                    class="si si-options-vertical"></i> </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><i class="fe fe-user-circle"></i> View profile</li>
+                                <li><i class="fe fe-users"></i>Add friends</li>
+                                <li><i class="fe fe-plus"></i> Add to group</li>
+                                <li><i class="fe fe-ban"></i> Block</li>
+                            </ul>
+                        </li>
+                        <li> <a href="" class="" data-bs-dismiss="modal" aria-label="Close"> <span aria-hidden="true"><i
+                                        class="si si-close text-white"></i></span> </a>
+                        </li>
+                    </ul>
+                </div> <!-- action-header end -->
+                <!-- card-footer -->
+                <div class="card-footer">
+                    <div class="msb-reply d-flex">
+                        <div class="input-group"> <input type="text" class="form-control " placeholder="Typing....">
+                            <div class="input-group-text bg-transparent border-0 p-0"> <button type="button"
+                                    class="btn btn-primary "> <i class="far fa-paper-plane" aria-hidden="true"></i>
+                                </button> </div>
+                        </div>
+                    </div>
+                </div><!-- card-footer end -->
+            </div>
+        </div>
+    </div>
+</div>
+<!--Video Modal -->
+<div id="videomodal" class="modal fade">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content bg-dark border-0 text-white">
+            <div class="modal-body mx-auto text-center p-7">
+                <h5>Valex Video call</h5> <img src="assets/img/faces/11.jpg"
+                    class="rounded-circle user-img-circle h-8 w-8 mt-4 mb-3" alt="img">
+                <h4 class="mb-1 fw-semibold">Daneil Scott</h4>
+                <h6>Calling...</h6>
+                <div class="mt-5">
+                    <div class="row">
+                        <div class="col-4"> <a class="icon icon-shape rounded-circle mb-0 me-3"
+                                href="javascript:void(0);"> <i class="fas fa-video-slash"></i> </a> </div>
+                        <div class="col-4"> <a class="icon icon-shape rounded-circle text-white mb-0 me-3"
+                                href="javascript:void(0);" data-bs-dismiss="modal" aria-label="Close"> <i
+                                    class="fas fa-phone bg-danger text-white"></i> </a> </div>
+                        <div class="col-4"> <a class="icon icon-shape rounded-circle mb-0 me-3"
+                                href="javascript:void(0);"> <i class="fas fa-microphone-slash"></i> </a>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- modal-body -->
+        </div>
+    </div><!-- modal-dialog -->
+</div><!-- modal -->
+<!-- Audio Modal -->
+<div id="audiomodal" class="modal fade">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content border-0">
+            <div class="modal-body mx-auto text-center p-7">
+                <h5>Valex Voice call</h5> <img src="img/faces/11.jpg"
+                    class="rounded-circle user-img-circle h-8 w-8 mt-4 mb-3" alt="img">
+                <h4 class="mb-1  fw-semibold">Daneil Scott</h4>
+                <h6>Calling...</h6>
+                <div class="mt-5">
+                    <div class="row">
+                        <div class="col-4"> <a class="icon icon-shape rounded-circle mb-0 me-3"
+                                href="javascript:void(0);"> <i class="fas fa-volume-up bg-light text-dark"></i> </a>
+                        </div>
+                        <div class="col-4"> <a class="icon icon-shape rounded-circle text-white mb-0 me-3"
+                                href="javascript:void(0);" data-bs-dismiss="modal" aria-label="Close"> <i
+                                    class="fas fa-phone text-white bg-success"></i> </a> </div>
+                        <div class="col-4"> <a class="icon icon-shape  rounded-circle mb-0 me-3"
+                                href="javascript:void(0);"> <i class="fas fa-microphone-slash bg-light text-dark"></i>
+                            </a> </div>
+                    </div>
+                </div>
+            </div><!-- modal-body -->
+        </div>
+    </div><!-- modal-dialog -->
+</div><!-- modal -->
+<!-- Footer opened -->
+<div class="main-footer ht-45">
+    <div class="container-fluid pd-t-0 ht-100p"> <span> Copyright © 2022 <a href="javascript:void(0);"
+                class="text-primary">Admin Panel</a>. Designed
+            by <a href="javascript:void(0);"> A2Z Providers </a> All rights reserved.</span> </div>
+</div> <!-- Footer closed -->
+</div> <!-- End Page -->
+<!-- Back-to-top --> <a href="#top" id="back-to-top" style="display: none;"><i class="fe fe-chevron-up"
+        style="font-weight: bold; color: #fff;"></i></a>
+<!-- JQuery min js -->
+<script src="../../assets/plugins/jquery/jquery.min.js"></script>
+<script src="../../assets/plugins/bootstrap/js/popper.min.js"></script>
+
+<!-- Start Extra Script -->
+<!-- <script src="../../assets/extra/datepicker.js"></script> -->
+<!-- End Extra Script -->
+
+<!-- <script src="https://cdn.tiny.cloud/1/026o65ph1xnp06b0cfa1dn17isxml8f4coai6rn9f8rflwbi/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.3/tinymce.min.js" crossorigin="anonymous"
+    referrerpolicy="no-referrer"></script>
+
+<script>
+
+    tinymce.init({
+        selector: '.editor',
+        plugins: "powerpaste advcode code link image textcolor emoticons hr lists charmap table fullscreen",
+        fontsizeselect: true,
+        browser_spellcheck: true,
+        menubar: true,
+        toolbar: 'bold italic underline strikethrough link  | formatselect h1 h2 h3 h4 h5 h6 | table hr superscript subscript | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | uploadImageButton | fullscreen | link image | removeformat | code',
+        branding: false,
+        protect: [
+            /\<\/?(if|endif)\>/g, // Protect <if> & </endif>
+            /\<xsl\:[^>]+\>/g, // Protect <xsl:...>
+            /\<script\:[^>]+\>/g, // Protect <xsl:...>
+            /<\?php.*?\?>/g // Protect php code
+        ],
+        images_upload_credentials: true,
+        file_browser_callback_types: 'image',
+        image_dimensions: true,
+        automatic_uploads: true,
+        relative_urls: false,
+        remove_script_host: false,
+        fullscreen_native: false,
+        // setup: function(editor) {
+        //     editor.ui.registry.addButton('uploadImageButton', {
+        //         icon: 'image',
+        //         onAction: function() {
+        //             $('#upload_media1').modal('show');
+        //         }
+        //     });
+        // }
+        file_picker_callback: function (cb, value, meta) {
+            var input = document.createElement('input');
+            input.setAttribute('type', 'file');
+            input.setAttribute('accept', 'image/*');
+            input.onchange = function () {
+                var file = this.files[0];
+
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function () {
+                    var id = 'blobid' + (new Date()).getTime();
+                    var blobCache = tinymce.activeEditor.editorUpload.blobCache;
+                    var base64 = reader.result.split(',')[1];
+                    var blobInfo = blobCache.create(id, file, base64);
+                    blobCache.add(blobInfo);
+
+                    // call the callback and populate the Title field with the file name
+                    cb(blobInfo.blobUri(), {
+                        title: file.name
+                    });
+                };
+            };
+
+            input.click();
+        }
+    });
+</script>
+
+
+<script src="../../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+<!--Internal  Chart.bundle js -->
+<script src="../../assets/plugins/chart.js/Chart.bundle.min.js"></script>
+<script src="../../assets/plugins/moment/moment.js"></script>
+<!--Internal Sparkline js -->
+<script src="../../assets/plugins/jquery-sparkline/jquery.sparkline.min.js"></script>
+<script src="../../assets/plugins/raphael/raphael.min.js"></script>
+<script src="../../assets/plugins/ratings-2/jquery.star-rating.js"></script>
+
+<script src="../../assets/js/advanced-form-elements.js"></script>
+<script src="../../assets/js/jquery.sumoselect.js"></script>
+
+<!-- Start Extra Script -->
+<!-- <script src="../../assets/extra/ion.rangeSlider.min.js"></script>
+<script src="../../assets/extra/amazeui.datetimepicker.min.js"></script>
+<script src="../../assets/extra/jquery.simple-dtpicker.js"></script>
+<script src="../../assets/extra/picker.min.js"></script>
+<script src="../../assets/extra/pickr.es5.min.js"></script>
+<script src="../../assets/extra/colorpicker.js"></script>
+<script src="../../assets/extra/bootstrap-datepicker.js"></script> -->
+<!-- End Extra Script -->
+
+<script src="../../assets/plugins/ratings-2/star-rating.js"></script>
+
+<script src="../../assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+
+<script src="../../assets/plugins/perfect-scrollbar/p-scroll.js"></script>
+<script src="../../assets/js/eva-icons.min.js"></script>
+<script src="../../assets/plugins/sidebar/sidebar.js"></script>
+
+<script src="../../assets/plugins/sidebar/sidebar-custom.js"></script>
+<script src="../../assets/js/sticky.js"></script>
+
+<script src="../../assets/js/modal-popup.js"></script>
+<script src="../../assets/plugins/side-menu/sidemenu.js"></script>
+<script src="../../assets/plugins/jqvmap/jquery.vmap.min.js"></script>
+
+<script src="../../assets/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+<!--Internal  index js -->
+<script src="../../assets/js/index.js"></script>
+<!--themecolor js-->
+<script src="../../assets/js/themecolor.js"></script>
+
+<script src="../../assets/js/jquery.vmap.sampledata.js"></script>
+<script src="../../assets/js/form-validation.js"></script>
+<script src="../../assets/switcher/js/switcher.js"></script>
+<script src="../../assets/js/custom.js"></script>
+<!-- <script>
+    $(document).ready(function () {
+        var max_fields = 5;
+        var wrapper = $(".container1");
+        var add_button = $(".add_form_field");
+        var val = $(".add_form_field").data('id');
+
+        var x = val - 1;
+        $(add_button).click(function (e) {
+            e.preventDefault();
+            if (x < max_fields) {
+                x++;
+                $(wrapper).append(`<div class="row mt-3"><div class="col-md-5"> <label class="form-label">Name ${x}</label><input type="text" name="field[${x}][name]" class="form-control"  placeholder="Name" required><div class="invalid-feedback"> Please enter field name. </div></div><div class="col-md-5"> <label class="form-label">Value ${x}</label><input type="text" name="field[${x}][value]" required class="form-control"  placeholder="Value"><div class="invalid-feedback"> Please enter field value. </div></div><div class="col-md-2"><label class="form-label">.</label><a href="#" class="btn btn-danger delete">Delete</a></div></div>`); //add input box
+            } else {
+                alert('You Reached the limits')
+            }
+        });
+
+        $(wrapper).on("click", ".delete", function (e) {
+            e.preventDefault();
+            $(this).parent('div').parent('div').remove();
+            x--;
+        })
+    });
+</script> -->
+
+
+
+<script>
+    $(document).ready(function () {
+        var max_fields = 30;
+        var wrapper = $(".container1");
+        var add_button = $(".add_form_field");
+        var val = $(".add_form_field").data('id');
+
+        var x = val - 1;
+        $(add_button).click(function (e) {
+            e.preventDefault();
+            if (x < max_fields) {
+                x++;
+                $(wrapper).append(`<div class="row mt-3"><div class="col-md-5"> <label class="form-label">Name</label><input type="text" name="field[name][]" class="form-control"  placeholder="Name" required><div class="invalid-feedback"> Please enter name. </div></div><div class="col-md-5"> <label class="form-label">Value</label><input type="text" name="field[value][]" required class="form-control"  placeholder="Value"><div class="invalid-feedback"> Please enter value. </div></div>
+<div class="col-md-2"><label class="form-label">.</label><a href="#" class="btn btn-danger delete">Delete</a></div></div>`); //add input box
+            } else {
+                alert('You Reached the limits')
+            }
+        });
+
+        $(wrapper).on("click", ".delete", function (e) {
+            e.preventDefault();
+            $(this).parent('div').parent('div').remove();
+            x--;
+        })
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        var max_fields = 30;
+        var wrapper1 = $(".container2");
+        var add_button1 = $(".add_form_field2");
+        var val = $(".add_form_field2").data('id');
+
+        var x1 = val - 1;
+        $(add_button1).click(function (e) {
+            e.preventDefault();
+            if (x1 < max_fields) {
+                x1++;
+                $(wrapper1).append(`<div class="row mt-3"><div class="col-md-5"> <label class="form-label">Name</label><input type="text" name="field1[name][]" class="form-control"  placeholder="Name" required><div class="invalid-feedback"> Please enter name. </div></div><div class="col-md-5"> <label class="form-label">Value</label><input type="text" name="field1[value][]" required class="form-control"  placeholder="Value"><div class="invalid-feedback"> Please enter value. </div></div>
+<div class="col-md-2"><label class="form-label">.</label><a href="#" class="btn btn-danger delete">Delete</a></div></div>`); //add input box
+            } else {
+                alert('You Reached the limits')
+            }
+        });
+
+        $(wrapper1).on("click", ".delete", function (e) {
+            e.preventDefault();
+            $(this).parent('div').parent('div').remove();
+            x1--;
+        })
+    });
+</script>
+<script>
+    let main_url = $('.main-url').data('url');
+    var currentURL = window.location.href;
+    $('.search_btn').on('click', function () {
+        let s_val = $('.record-search').val();
+        // if (val != '') {
+        // console.log(s_val);
+        var url = new URL(currentURL);
+        url.searchParams.set('search', s_val);
+        // console.log('main_url', url.href);
+        window.location.href = url.href;
+        // }
+    });
+    $('.record-limit').on('change', function () {
+        let l_val = $(this).val();
+        // console.log(l_val);
+        var url = new URL(currentURL);
+        url.searchParams.set('limit', l_val);
+        // console.log('main_url', url.href);
+        window.location.href = url.href;
+    });
+</script>
+</div>
+<div class="main-navbar-backdrop"></div>
+</body>
+
+</html>

@@ -1,0 +1,82 @@
+<%- include('../../common/header'); -%>
+
+    <!-- main-content -->
+    <div class="main-content app-content">
+        <!-- container -->
+        <div class="main-container container-fluid">
+            <!-- breadcrumb -->
+            <div class="breadcrumb-header justify-content-between">
+                <div class="my-auto">
+                    <div class="d-flex">
+                        <h4 class="content-title mb-0 my-auto">Edit Permission</h4><span
+                            class="text-muted mt-1 tx-13 ms-2 mb-0">/
+                            Permission</span>
+                    </div>
+                </div>
+                <div class="d-flex my-xl-auto right-content">
+
+                    <div class="mb-xl-0">
+                        <a href="/permission" class="btn btn-primary">View Permission</a>
+                    </div>
+                </div>
+            </div> <!-- breadcrumb -->
+            <div>
+                <!-- success -->
+                <% if(success !='' ){ %>
+                    <div class="alert alert-success" role="alert">
+                        <%= success %>
+                    </div>
+                    <% } %>
+
+                        <!-- errors  -->
+                        <% if(danger !='' ){ %>
+                            <div class="alert alert-danger" role="alert">
+                                <%= danger %>
+                            </div>
+                            <% } %>
+
+                                <!-- warning -->
+                                <% if(info !='' ){ %>
+                                    <div class="alert alert-info" role="alert">
+                                        <%= info %>
+                                    </div>
+                                    <% } %>
+            </div>
+            <!--Row-->
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Edit Permission</h3>
+                        </div>
+                        <div class="card-body">
+                            <form class="row g-3 needs-validation" novalidate=""
+                                action="<%= `/permission/update/${list.id}` %>" method="POST" enctype="multipart/form-data">
+                                <div class="col-md-12">
+                                    <label for="resource" class="form-label">Resource</label>
+                                    <input type="text" name="resource" value="<%= list.resource %>" class="form-control" id="resource" placeholder="Resource"
+                                        required="">
+                                    <div class="invalid-feedback"> Please enter resource. </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="action" class="form-label">Action</label>
+                                    <input type="text" name="action" value="<%= list.action %>" class="form-control" id="action" placeholder="Action"
+                                        required="">
+                                    <div class="invalid-feedback"> Please enter action. </div>
+                                </div>
+
+
+                                <div class="col-12">
+                                    <button class="btn btn-primary" type="submit">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/Row-->
+        </div> <!-- Container closed -->
+    </div>
+    <!-- /main-content -->
+
+    <%- include('../../common/footer'); -%>

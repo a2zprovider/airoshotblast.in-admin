@@ -1,0 +1,44 @@
+2024-11-21T11:15:43.760Z [error]: uncaughtException: detail is not defined
+ReferenceError: detail is not defined
+    at D:/node-js/airoshotblast.in-admin/src/controllers/admin/product.controller.js:96:13
+    at done (D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\make-middleware.js:45:7)
+    at indicateDone (D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\make-middleware.js:49:68)
+    at D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\make-middleware.js:155:11
+    at WriteStream.<anonymous> (D:\node-js\airoshotblast.in-admin\node_modules\multer\storage\disk.js:43:9)
+    at WriteStream.emit (node:events:531:35)
+    at finish (node:internal/streams/writable:946:10)
+    at node:internal/streams/writable:927:13
+    at processTicksAndRejections (node:internal/process/task_queues:82:21)
+2024-11-21T11:18:37.259Z [error]: uncaughtException: detail is not defined
+ReferenceError: detail is not defined
+    at D:/node-js/airoshotblast.in-admin/src/controllers/admin/product.controller.js:96:13
+    at done (D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\make-middleware.js:45:7)
+    at indicateDone (D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\make-middleware.js:49:68)
+    at D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\make-middleware.js:155:11
+    at WriteStream.<anonymous> (D:\node-js\airoshotblast.in-admin\node_modules\multer\storage\disk.js:43:9)
+    at WriteStream.emit (node:events:531:35)
+    at finish (node:internal/streams/writable:946:10)
+    at node:internal/streams/writable:927:13
+    at processTicksAndRejections (node:internal/process/task_queues:82:21)
+2024-11-27T06:05:47.106Z [error]: uncaughtException: detail is not defined
+ReferenceError: detail is not defined
+    at D:/node-js/airoshotblast.in-admin/src/controllers/admin/setting.controller.js:95:13
+    at done (D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\make-middleware.js:45:7)
+    at indicateDone (D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\make-middleware.js:49:68)
+    at D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\make-middleware.js:155:11
+    at WriteStream.<anonymous> (D:\node-js\airoshotblast.in-admin\node_modules\multer\storage\disk.js:43:9)
+    at WriteStream.emit (node:events:531:35)
+    at finish (node:internal/streams/writable:946:10)
+    at node:internal/streams/writable:927:13
+    at processTicksAndRejections (node:internal/process/task_queues:82:21)
+2024-11-27T06:06:15.812Z [error]: uncaughtException: detail is not defined
+ReferenceError: detail is not defined
+    at D:/node-js/airoshotblast.in-admin/src/controllers/admin/setting.controller.js:95:13
+    at done (D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\make-middleware.js:45:7)
+    at indicateDone (D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\make-middleware.js:49:68)
+    at D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\make-middleware.js:155:11
+    at WriteStream.<anonymous> (D:\node-js\airoshotblast.in-admin\node_modules\multer\storage\disk.js:43:9)
+    at WriteStream.emit (node:events:531:35)
+    at finish (node:internal/streams/writable:946:10)
+    at node:internal/streams/writable:927:13
+    at processTicksAndRejections (node:internal/process/task_queues:82:21)

@@ -1,0 +1,142 @@
+<html lang="en"
+    style="--primary-1:rgba(1, 98, 232, 0.1); --primary-2:rgba(1, 98, 232, 0.2); --primary-3:rgba(1, 98, 232, 0.3); --primary-5:rgba(1, 98, 232, 0.5); --primary-8:rgba(1, 98, 232, 0.8);">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <meta name="Description" content="">
+    <meta name="Author" content="Pankaj Choudhary">
+    <meta name="Keywords" content="">
+    <!-- Title -->
+    <title>Login - Admin Panel</title>
+    <!-- Favicon -->
+    <link rel="icon" href="../../assets/img/brand/favicon.png" type="image/x-icon"> <!-- Icons css -->
+    <div class="jqvmap-label"></div>
+    <link href="../../assets/css/icons.css" rel="stylesheet"> <!-- Bootstrap css -->
+    <link href="../../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet"> <!-- style css -->
+    <link href="../../assets/css/style.css" rel="stylesheet">
+    <!--- Animations css-->
+    <link href="../../assets/css/animate.css" rel="stylesheet">
+    <!---Switcher css-->
+    <style>
+        .table-bordered> :not(caption)>* {
+            border-bottom-color: #dde2ef;
+        }
+
+        .form-control textarea {
+            border: 1px solid #e1e5ef;
+        }
+
+        .main-signup-header,
+        .main-card-signin {
+            padding: 1.5rem;
+            border: 1px solid #e1e5ef;
+            border-radius: 6px;
+        }
+
+        @media (min-width: 767px) {
+            .card-sigin {
+                width: 500px;
+            }
+        }
+    </style>
+
+</head>
+
+<body class="main-body app sidebar-mini ltr">
+    <div class="horizontalMenucontainer">
+        <!-- Loader -->
+        <div id="global-loader"> <img src="../../assets/img/loader.svg" class="loader-img" alt="Loader">
+        </div> <!-- /Loader -->
+        <!-- Page -->
+        <div class="page">
+            <div class="main-container container-fluid">
+                <!-- The content  -->
+                <div class="bg-white py-4">
+                    <div class="login d-flex align-items-center justify-content-center py-2">
+                        <!-- Demo content-->
+                        <div class="container p-0">
+                            <div class="">
+                                <div class="mx-auto d-flex align-items-center  justify-content-center">
+                                    <div class="card-sigin text-center">
+                                        <div class="card-sigin">
+                                            <div class="main-signup-header">
+                                                <div class="mb-3">
+                                                    <!-- <img src="../assets/img/brand/favicon.png"
+                                                        class="sign-favicon-a ht-40" alt="logo"> -->
+
+                                                    <h1 class="main-logo1 ms-1 me-0 my-auto tx-28">Admin
+                                                        <span>Panel</span>
+                                                    </h1>
+                                                </div>
+                                                <!-- <h2>Welcome back!</h2> -->
+                                                <h5 class="fw-semibold mb-4">Please sign in to
+                                                    continue.</h5>
+                                                <div>
+                                                    <% if(success !='' ){ %>
+                                                        <div class="alert alert-success" role="alert">
+                                                            <%= success %>
+                                                        </div>
+                                                        <% } %>
+                                                            <% if(danger !='' ){ %>
+                                                                <div class="alert alert-danger" role="alert">
+                                                                    <%= danger %>
+                                                                </div>
+                                                                <% } %>
+                                                                    <% if(info !='' ){ %>
+                                                                        <div class="alert alert-info" role="alert">
+                                                                            <%= info %>
+                                                                        </div>
+                                                                        <% } %>
+                                                </div>
+                                                <form action="/login" method="POST" class="needs-validation">
+                                                    <div class="form-group">
+                                                        <input class="form-control"  id="email" name="email"
+                                                            placeholder="Enter your email" type="email" required>
+                                                        <div class="invalid-feedback"> Please enter name. </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input class="form-control" name="password"
+                                                            placeholder="Enter your password" type="password" required>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-main-primary btn-block">Sign
+                                                        In</button>
+
+                                                </form>
+                                                <!-- <div class="main-signin-footer mt-5">
+                                                    <p><a href="">Forgot password?</a></p>
+                                                    <p>Don't have an account?
+                                                        <a href="#">
+                                                            Create an Account
+                                                        </a>
+                                                    </p>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- End -->
+                    </div>
+                </div>
+                <!-- End -->
+            </div>
+        </div>
+        <!-- End Page -->
+
+        <!-- JQuery min js -->
+        <script src="../../assets/plugins/jquery/jquery.min.js"></script>
+        <!-- Bootstrap Bundle js -->
+        <script src="../../assets/plugins/bootstrap/js/popper.min.js"></script>
+
+        <script src="../../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+        <!-- eva-icons js -->
+        <script src="../../assets/js/eva-icons.min.js"></script>
+        <script src="../../assets/js/form-validation.js"></script>
+
+        <script src="../../assets/js/custom.js"></script>
+</body>
+
+</html>
