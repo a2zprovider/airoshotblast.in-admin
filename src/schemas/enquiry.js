@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const EnquirySchema = new Schema({
     name: String,
-    mobile: Number,
+    mobile: String,
     email: String,
     subject: String,
     message: String,

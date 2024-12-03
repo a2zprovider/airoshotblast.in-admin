@@ -62,6 +62,8 @@ exports.create = (req, res) => {
         career.slug = req.body.slug ? slugify(req.body.slug, { lower: true }) : slugify(req.body.title, { lower: true });
         career.except = req.body.except;
         career.description = req.body.description;
+        career.vacancy = req.body.vacancy;
+        career.address = req.body.address;
 
         career.seo_title = req.body.seo_title;
         career.seo_keywords = req.body.seo_keywords;
@@ -180,6 +182,8 @@ exports.update = (req, res) => {
         career_detail.slug = req.body.slug ? slugify(req.body.slug, { lower: true }) : slugify(req.body.title, { lower: true });
         career_detail.except = req.body.except;
         career_detail.description = req.body.description;
+        career_detail.vacancy = req.body.vacancy;
+        career_detail.address = req.body.address;
 
         career_detail.seo_title = req.body.seo_title;
         career_detail.seo_keywords = req.body.seo_keywords;

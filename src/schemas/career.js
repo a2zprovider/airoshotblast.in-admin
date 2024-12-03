@@ -14,6 +14,8 @@ const CareerSchema = new Schema({
     image: String,
     except: String,
     description: String,
+    address:String,
+    vacancy:String,
     seo_title: String,
     seo_keywords: String,
     seo_description: String,

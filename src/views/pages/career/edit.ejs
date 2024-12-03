@@ -1,0 +1,136 @@
+<%- include('../../common/header'); -%>
+
+    <!-- main-content -->
+    <div class="main-content app-content">
+        <!-- container -->
+        <div class="main-container container-fluid">
+            <!-- breadcrumb -->
+            <div class="breadcrumb-header justify-content-between">
+                <div class="my-auto">
+                    <div class="d-flex">
+                        <h4 class="content-title mb-0 my-auto">Edit Career</h4><span
+                            class="text-muted mt-1 tx-13 ms-2 mb-0">/
+                            Career</span>
+                    </div>
+                </div>
+                <div class="d-flex my-xl-auto right-content">
+
+                    <div class="mb-xl-0">
+                        <a href="/career" class="btn btn-primary">View Career</a>
+                    </div>
+                </div>
+            </div> <!-- breadcrumb -->
+            <div>
+                <!-- success -->
+                <% if(success !='' ){ %>
+                    <div class="alert alert-success" role="alert">
+                        <%= success %>
+                    </div>
+                    <% } %>
+
+                        <!-- errors  -->
+                        <% if(danger !='' ){ %>
+                            <div class="alert alert-danger" role="alert">
+                                <%= danger %>
+                            </div>
+                            <% } %>
+
+                                <!-- warning -->
+                                <% if(info !='' ){ %>
+                                    <div class="alert alert-info" role="alert">
+                                        <%= info %>
+                                    </div>
+                                    <% } %>
+            </div>
+            <!--Row-->
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Edit Career</h3>
+                        </div>
+                        <div class="card-body">
+                            <form class="row g-3 needs-validation" novalidate=""
+                                action="<%= `/career/update/${list.id}` %>" method="POST"
+                                enctype="multipart/form-data">
+                                <div class="col-md-6">
+                                    <label for="title" class="form-label">Title</label>
+                                    <input type="text" name="title" value="<%= list.title %>" class="form-control"
+                                        id="title" placeholder="Title" required="">
+                                    <div class="invalid-feedback"> Please enter title. </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="slug" class="form-label">Slug</label>
+                                    <input type="text" name="slug" value="<%= list.slug %>" class="form-control"
+                                        id="slug" placeholder="Slug" required>
+                                    <div class="invalid-feedback"> Please enter slug. </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="vacancy" class="form-label">No. of Vacancy</label>
+                                    <input type="text" name="vacancy" value="<%= list.vacancy %>" class="form-control" id="vacancy" placeholder="No. of Vacancy">
+                                    <div class="invalid-feedback"> Please enter no. of vacancy. </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="address" class="form-label">Address</label>
+                                    <input type="text" name="address" value="<%= list.address %>" class="form-control" id="address" placeholder="Address">
+                                    <div class="invalid-feedback"> Please enter address. </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="image" class="form-label">Image</label>
+                                    <input type="file" name="image" class="form-control" id="image">
+                                    <div class="invalid-feedback"> Please select image. </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="except" class="form-label">Short Description</label>
+                                    <textarea name="except" value="<%= list.except %>"
+                                        class="w-100 form-control" rows="4" id="except"
+                                        placeholder="Short Description"
+                                        required=""><%= list.except %></textarea>
+                                    <div class="invalid-feedback"> Please enter short description. </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="description" class="form-label">Description</label>
+                                    <textarea name="description" value="<%= list.description %>"
+                                        class="w-100 form-control editor" rows="10" id="description" placeholder="Description"
+                                        required=""><%= list.description %></textarea>
+                                    <div class="invalid-feedback"> Please enter description. </div>
+                                </div>
+                                
+                                <hr>
+                                <div class="col-md-12">
+                                    <label for="seo_title" class="form-label">Seo Title</label>
+                                    <input type="text" name="seo_title" value="<%= list.seo_title %>" class="form-control" id="seo_title"
+                                        placeholder="Seo Title">
+                                    <div class="invalid-feedback"> Please enter seo title. </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="seo_keywords" class="form-label">Seo Keywords</label>
+                                    <textarea name="seo_keywords" class="w-100 form-control"  rows="4" id="seo_keywords"
+                                        placeholder="Seo Keywords"><%= list.seo_keywords %></textarea>
+                                    <div class="invalid-feedback"> Please enter seo keywords. </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="seo_description" class="form-label">Seo Description</label>
+                                    <textarea name="seo_description" class="w-100 form-control" rows="4"
+                                        id="seo_description" placeholder="Seo Description" ><%= list.seo_description %></textarea>
+                                    <div class="invalid-feedback"> Please enter seo description. </div>
+                                </div>
+
+
+
+                                <div class="col-12">
+                                    <button class="btn btn-primary" type="submit">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/Row-->
+        </div> <!-- Container closed -->
+    </div>
+    <!-- /main-content -->
+
+    <%- include('../../common/footer'); -%>
