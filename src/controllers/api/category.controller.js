@@ -21,8 +21,32 @@ exports.findAll = async (req, res) => {
         const categories = await Category.find(query).skip(offset).limit(parseInt(limit)).populate('parent').exec();
         const count = await Category.find(query).countDocuments();
 
+        const categoriesWithProducts = await Promise.all(
+            categories.map(async (category) => {
+                const categoryObj = category.toObject ? category.toObject() : category;
+
+                try {
+                    // Fetch the blog count for each category
+                    const products = await Product.find({
+                        category: categoryObj._id, // Make sure category._id is accessible
+                    }).populate(['category', 'country']).limit(12).exec();
+
+                    // Add the blogCount to the category object
+                    categoryObj.products = products;
+                    // console.log('category with blog count:', categoryObj);
+
+                    return categoryObj; // Return the updated object
+                } catch (error) {
+                    console.error(`Error fetching blog count for category ${categoryObj._id}:`, error);
+                    // In case of an error, return the category without blog count
+                    categoryObj.products = []; // Fallback value
+                    return categoryObj;
+                }
+            })
+        );
+
         let lists = {
-            data: categories, current: page, offset: offset,
+            data: categoriesWithProducts, current: page, offset: offset,
             pages: Math.ceil(count / limit)
         };
         res.status(200).send({ success: true, message: count + ' Records Found', data: lists });

@@ -17,6 +17,13 @@ const storage = multer.diskStorage({
             }
             callback(null, dir);
         }
+        else if (res.fieldname === "thumb_image") {
+            var dir = "./src/public/upload/product/thumb";
+            if (!fs.existsSync(dir)) {
+                fs.mkdirSync(dir);
+            }
+            callback(null, dir);
+        }
         else if (res.fieldname === "images") {
             var dir = "./src/public/upload/product/imgs";
             if (!fs.existsSync(dir)) {
@@ -30,13 +37,16 @@ const storage = multer.diskStorage({
         if (res.fieldname === "image") {
             callback(null, res.fieldname + '-' + Date.now() + Math.random().toString().substr(2, 6) + path.extname(res.originalname));
         }
+        else if (res.fieldname === "thumb_image") {
+            callback(null, res.fieldname + '-' + Date.now() + Math.random().toString().substr(2, 6) + path.extname(res.originalname));
+        }
         else if (res.fieldname === "images") {
             callback(null, res.fieldname + '-' + Date.now() + Math.random().toString().substr(2, 6) + path.extname(res.originalname));
         }
     }
 })
 
-const upload = multer({ storage: storage }).fields([{ name: 'image', maxCount: 1 }, { name: 'images' }]);
+const upload = multer({ storage: storage }).fields([{ name: 'image', maxCount: 1 }, { name: 'thumb_image', maxCount: 1 }, { name: 'images' }]);
 
 // Create a new Product Page
 exports.add = async (req, res) => {
@@ -62,10 +72,7 @@ exports.create = (req, res) => {
         if (err) {
             res.redirect('/product/create');
         }
-
-        if (req.file) {
-            product.image = req.file.filename;
-        }
+        console.log('req : ', req);
 
         if (!req.body.title) {
             req.flash('danger', 'Please enter title.');
@@ -92,9 +99,12 @@ exports.create = (req, res) => {
         product.seo_title = req.body.seo_title;
         product.seo_keywords = req.body.seo_keywords;
         product.seo_description = req.body.seo_description;
-
+        
         if (req.files && req.files.image) {
-            detail.image = req.files.image[0].filename;
+            product.image = req.files.image[0].filename;
+        }
+        if (req.files && req.files.thumb_image) {
+            product.thumb_image = req.files.thumb_image[0].filename;
         }
         if (req.files && req.files.images) {
             var imgs = [];
@@ -247,6 +257,9 @@ exports.update = async (req, res) => {
 
         if (req.files && req.files.image) {
             product_detail.image = req.files.image[0].filename;
+        }
+        if (req.files && req.files.thumb_image) {
+            product_detail.thumb_image = req.files.thumb_image[0].filename;
         }
         if (req.files && req.files.images) {
             var imgs = [];

@@ -42,3 +42,57 @@ ReferenceError: detail is not defined
     at finish (node:internal/streams/writable:946:10)
     at node:internal/streams/writable:927:13
     at processTicksAndRejections (node:internal/process/task_queues:82:21)
+2024-12-04T09:28:08.720Z [error]: uncaughtException: detail is not defined
+ReferenceError: detail is not defined
+    at D:/node-js/airoshotblast.in-admin/src/controllers/admin/product.controller.js:107:13
+    at done (D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\make-middleware.js:45:7)
+    at D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\make-middleware.js:65:11
+    at D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\remove-uploaded-files.js:20:9
+    at FSReqCallback.oncomplete (node:fs:193:23)
+2024-12-04T09:31:07.328Z [error]: uncaughtException: Cannot set headers after they are sent to the client
+Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    at ServerResponse.setHeader (node:_http_outgoing:703:11)
+    at ServerResponse.header (D:\node-js\airoshotblast.in-admin\node_modules\express\lib\response.js:794:10)
+    at ServerResponse.location (D:\node-js\airoshotblast.in-admin\node_modules\express\lib\response.js:915:15)
+    at ServerResponse.redirect (D:\node-js\airoshotblast.in-admin\node_modules\express\lib\response.js:953:18)
+    at D:/node-js/airoshotblast.in-admin/src/controllers/admin/product.controller.js:277:13
+    at done (D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\make-middleware.js:45:7)
+    at D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\make-middleware.js:65:11
+    at removeUploadedFiles (D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\remove-uploaded-files.js:5:28)
+    at D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\make-middleware.js:61:9
+    at Counter.onceZero (D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\counter.js:23:29)
+    at abortWithError (D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\make-middleware.js:56:21)
+    at D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\make-middleware.js:110:18
+    at wrappedFileFilter (D:\node-js\airoshotblast.in-admin\node_modules\multer\index.js:40:16)
+    at Multipart.<anonymous> (D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\make-middleware.js:107:7)
+    at Multipart.emit (node:events:519:28)
+    at HeaderParser.cb (D:\node-js\airoshotblast.in-admin\node_modules\busboy\lib\types\multipart.js:358:14)
+2024-12-04T10:43:32.349Z [error]: uncaughtException: detail is not defined
+ReferenceError: detail is not defined
+    at D:/node-js/airoshotblast.in-admin/src/controllers/admin/product.controller.js:108:13
+    at done (D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\make-middleware.js:45:7)
+    at indicateDone (D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\make-middleware.js:49:68)
+    at D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\make-middleware.js:155:11
+    at WriteStream.<anonymous> (D:\node-js\airoshotblast.in-admin\node_modules\multer\storage\disk.js:43:9)
+    at WriteStream.emit (node:events:531:35)
+    at finish (node:internal/streams/writable:946:10)
+    at node:internal/streams/writable:927:13
+    at processTicksAndRejections (node:internal/process/task_queues:82:21)
+2024-12-04T10:45:36.794Z [error]: uncaughtException: Cannot set headers after they are sent to the client
+Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    at ServerResponse.setHeader (node:_http_outgoing:703:11)
+    at ServerResponse.header (D:\node-js\airoshotblast.in-admin\node_modules\express\lib\response.js:794:10)
+    at ServerResponse.location (D:\node-js\airoshotblast.in-admin\node_modules\express\lib\response.js:915:15)
+    at ServerResponse.redirect (D:\node-js\airoshotblast.in-admin\node_modules\express\lib\response.js:953:18)
+    at D:/node-js/airoshotblast.in-admin/src/controllers/admin/product.controller.js:73:17
+    at done (D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\make-middleware.js:45:7)
+    at D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\make-middleware.js:65:11
+    at removeUploadedFiles (D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\remove-uploaded-files.js:5:28)
+    at D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\make-middleware.js:61:9
+    at Counter.onceZero (D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\counter.js:23:29)
+    at abortWithError (D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\make-middleware.js:56:21)
+    at Multipart.<anonymous> (D:\node-js\airoshotblast.in-admin\node_modules\multer\lib\make-middleware.js:160:41)
+    at Multipart.emit (node:events:531:35)
+    at emitErrorNT (node:internal/streams/destroy:169:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:128:3)
+    at processTicksAndRejections (node:internal/process/task_queues:82:21)
