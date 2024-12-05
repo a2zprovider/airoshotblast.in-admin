@@ -72,22 +72,32 @@
                                     <div class="invalid-feedback"> Please enter mobile. </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label for="logo" class="form-label">Logo</label>
                                     <input type="file" name="logo" class="form-control" id="logo">
                                     <div class="invalid-feedback"> Please select logo. </div>
                                     <% if(list.logo){ %>
                                         <br>
-                                        <img src="upload/setting/logo/<%= list.logo %>" width="50px" alt="<%= list.name %>">
+                                        <img src="upload/setting/logo/<%= list.logo %>" width="50px" alt="<%= list.title %>">
                                         <% } %>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label for="favicon" class="form-label">Favicon</label>
                                     <input type="file" name="favicon" class="form-control" id="favicon">
                                     <div class="invalid-feedback"> Please select favicon. </div>
                                     <% if(list.favicon){ %>
                                         <br>
-                                        <img src="upload/setting/favicon/<%= list.favicon %>" width="50px" alt="<%= list.name %>">
+                                        <img src="upload/setting/favicon/<%= list.favicon %>" width="50px" alt="<%= list.title %>">
+                                        <% } %>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="brochure" class="form-label">Brochure</label>
+                                    <input type="file" name="brochure" class="form-control" id="brochure">
+                                    <div class="invalid-feedback"> Please select brochure. </div>
+                                    <% if(list.brochure){ %>
+                                        <br>
+                                        <a href="upload/setting/brochure/<%= list.brochure %>" target="_blank">Brochure Link</a>
+                                        <!-- <img src="upload/setting/brochure/<%= list.brochure %>" width="50px" alt="<%= list.title %>"> -->
                                         <% } %>
                                 </div>
                                 <div class="col-md-6">
@@ -96,6 +106,11 @@
                                     <div class="invalid-feedback"> Please enter address. </div>
                                 </div>
                                 <div class="col-md-6">
+                                    <label for="map" class="form-label">Map</label>
+                                    <textarea name="map" value="<%= list.map %>" class="w-100 form-control" rows="4" id="map" placeholder="Map" required=""><%= list.map %></textarea>
+                                    <div class="invalid-feedback"> Please enter map. </div>
+                                </div>
+                                <div class="col-md-12">
                                     <label for="except" class="form-label">Short Description</label>
                                     <textarea name="except" value="<%= list.except %>" class="w-100 form-control" rows="4" id="except" placeholder="Short Description" required=""><%= list.except %></textarea>
                                     <div class="invalid-feedback"> Please enter short description. </div>

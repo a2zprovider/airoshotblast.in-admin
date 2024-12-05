@@ -40,7 +40,7 @@ app.use(bodyParser.json());
 
 // allow cors
 var corsOptions = {
-    origin: ["http://localhost:3000/", "http://localhost:3000","http://localhost:5173/", "http://localhost:5173"],
+    origin: ["http://localhost:3000/", "http://localhost:3000","http://localhost:5173/", "http://localhost:5173","http://185.166.39.93:3000/","http://185.166.39.93:3000"],
     methods: "GET,POST,PUT,DELETE"
 };
 app.use(cors(corsOptions));

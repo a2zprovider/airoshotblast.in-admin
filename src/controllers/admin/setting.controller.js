@@ -19,6 +19,12 @@ const storage = multer.diskStorage({
                 fs.mkdirSync(dir);
             }
             callback(null, dir);
+        } else if (res.fieldname === "brochure") {
+            var dir = "./src/public/upload/setting/brochure";
+            if (!fs.existsSync(dir)) {
+                fs.mkdirSync(dir);
+            }
+            callback(null, dir);
         }
 
     },
@@ -27,11 +33,13 @@ const storage = multer.diskStorage({
             callback(null, res.fieldname + path.extname(res.originalname));
         } else if (res.fieldname === "favicon") {
             callback(null, res.fieldname + path.extname(res.originalname));
+        } else if (res.fieldname === "brochure") {
+            callback(null, res.fieldname + path.extname(res.originalname));
         }
     }
 })
 
-const upload = multer({ storage: storage }).fields([{ name: 'logo', maxCount: 1 }, { name: 'favicon', maxCount: 1 }]);
+const upload = multer({ storage: storage }).fields([{ name: 'logo', maxCount: 1 }, { name: 'favicon', maxCount: 1 }, { name: 'brochure', maxCount: 1 }]);
 
 exports.edit = (req, res) => {
     const user = req.cookies['user'];
@@ -83,6 +91,7 @@ exports.update = async (req, res) => {
         setting_detail.title = req.body.title;
         setting_detail.tagline = req.body.tagline;
         setting_detail.address = req.body.address;
+        setting_detail.map = req.body.map;
         setting_detail.except = req.body.except;
         setting_detail.description = req.body.description;
         setting_detail.email = req.body.email;
@@ -96,6 +105,9 @@ exports.update = async (req, res) => {
         }
         if (req.files && req.files.favicon) {
             setting_detail.favicon = req.files.favicon[0].filename;
+        }
+        if (req.files && req.files.brochure) {
+            setting_detail.brochure = req.files.brochure[0].filename;
         }
 
         Setting.updateOne({ _id: id }, { $set: setting_detail }).then(num => {
@@ -130,6 +142,7 @@ exports.update1 = (req, res) => {
         detail.email = req.body.email;
         detail.mobile = req.body.mobile;
         detail.address = req.body.address;
+        detail.map = req.body.map;
         detail.except = req.body.except;
         detail.description = req.body.description;
         detail.social_links = req.body.social_links;
@@ -141,6 +154,9 @@ exports.update1 = (req, res) => {
         }
         if (req.files && req.files.favicon) {
             detail.favicon = req.files.favicon[0].filename;
+        }
+        if (req.files && req.files.brochure) {
+            setting_detail.brochure = req.files.brochure[0].filename;
         }
 
         Setting.updateOne({ _id: id }, { $set: detail }).then(num => {
