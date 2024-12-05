@@ -27,6 +27,7 @@ const BlogSchema = new Schema({
         },
     ],
     image: String,
+    thumb_image: String,
     except: String,
     description: String,
     country: {

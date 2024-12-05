@@ -10,20 +10,33 @@ const path = require('path');
 
 const storage = multer.diskStorage({
     destination: function (req, res, callback) {
-        var dir = "./src/public/upload/blog";
-
-        if (!fs.existsSync(dir)) {
-            fs.mkdirSync(dir);
+        if (res.fieldname === "image") {
+            var dir = "./src/public/upload/blog";
+            if (!fs.existsSync(dir)) {
+                fs.mkdirSync(dir);
+            }
+            callback(null, dir);
         }
-        callback(null, dir);
+        else if (res.fieldname === "thumb_image") {
+            var dir = "./src/public/upload/blog/thumb";
+            if (!fs.existsSync(dir)) {
+                fs.mkdirSync(dir);
+            }
+            callback(null, dir);
+        }
     },
     filename: function (req, res, callback) {
-        callback(null, res.fieldname + '-' + Date.now() + path.extname(res.originalname));
+        if (res.fieldname === "image") {
+            callback(null, res.fieldname + '-' + Date.now() + Math.random().toString().substr(2, 6) + path.extname(res.originalname));
+        }
+        else if (res.fieldname === "thumb_image") {
+            callback(null, res.fieldname + '-' + Date.now() + Math.random().toString().substr(2, 6) + path.extname(res.originalname));
+        }
         // callback(null, res.originalname);
     }
 })
 
-const upload = multer({ storage: storage }).single('image');
+const upload = multer({ storage: storage }).fields([{ name: 'image', maxCount: 1 }, { name: 'thumb_image', maxCount: 1 }]);
 
 // Create a new Blog Page
 exports.add = async (req, res) => {
@@ -51,10 +64,6 @@ exports.create = async (req, res) => {
             res.redirect('/blog/create');
         }
 
-        if (req.file) {
-            blog.image = req.file.filename;
-        }
-
         if (!req.body.title) {
             req.flash('danger', 'Please enter title.');
             res.redirect('/blog/create');
@@ -77,6 +86,13 @@ exports.create = async (req, res) => {
         blog.seo_title = req.body.seo_title;
         blog.seo_keywords = req.body.seo_keywords;
         blog.seo_description = req.body.seo_description;
+        
+        if (req.files && req.files.image) {
+            blog.image = req.files.image[0].filename;
+        }
+        if (req.files && req.files.thumb_image) {
+            blog.thumb_image = req.files.thumb_image[0].filename;
+        }
 
         // Save Blog in the database
         Blog.create(blog)
@@ -206,8 +222,11 @@ exports.update = async (req, res) => {
         blog_detail.seo_keywords = req.body.seo_keywords;
         blog_detail.seo_description = req.body.seo_description;
 
-        if (req.file) {
-            blog_detail.image = req.file.filename;
+        if (req.files && req.files.image) {
+            blog_detail.image = req.files.image[0].filename;
+        }
+        if (req.files && req.files.thumb_image) {
+            blog_detail.thumb_image = req.files.thumb_image[0].filename;
         }
 
         Blog.updateOne({ _id: id }, { $set: blog_detail }).then(num => {

@@ -107,7 +107,7 @@
                                     </select>
                                     <div class="invalid-feedback"> Please select country. </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <label for="image1" class="form-label">Image</label>
                                     <input type="file" name="image" class="form-control" id="image">
                                     <div class="invalid-feedback"> Please select image. </div>
@@ -117,6 +117,21 @@
                                             <div
                                                 style="border: 1px solid;width: 50px;padding: 3px; margin-right: 10px; position: relative;">
                                                 <img src="../../../upload/product/<%= list.image %>" width="50px"
+                                                    alt="<%= list.name %>">
+                                            </div>
+                                        </div>
+                                        <% } %>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="image1" class="form-label">Thumb Image</label>
+                                    <input type="file" name="thumb_image" class="form-control" id="image">
+                                    <div class="invalid-feedback"> Please select thumb image. </div>
+                                    <% if(list.thumb_image){ %>
+                                        <br>
+                                        <div style="display: flex;">
+                                            <div
+                                                style="border: 1px solid;width: 50px;padding: 3px; margin-right: 10px; position: relative;">
+                                                <img src="../../../upload/product/thumb/<%= list.thumb_image %>" width="50px"
                                                     alt="<%= list.name %>">
                                             </div>
                                         </div>

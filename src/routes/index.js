@@ -18,6 +18,7 @@ const CategoryController = require("../controllers/admin/category.controller");
 const BlogCategoryController = require("../controllers/admin/blogcategory.controller");
 const ApplicationController = require("../controllers/admin/application.controller");
 const CareerController = require("../controllers/admin/career.controller");
+const VideoController = require("../controllers/admin/video.controller");
 const CountryController = require("../controllers/admin/country.controller");
 const CityController = require("../controllers/admin/city.controller");
 const StateController = require("../controllers/admin/state.controller");
@@ -203,6 +204,16 @@ router.post("/career/update/:id", auth, checkPermission('Career', 'Update'), Car
 router.get("/career/delete/:id", auth, checkPermission('Career', 'Delete'), CareerController.delete);
 router.post("/career/deleteAll", auth, checkPermission('Career', 'Delete'), CareerController.deleteAll);
 
+// Video
+router.post("/video", auth, checkPermission('Video', 'Create'), VideoController.create);
+router.get("/video", auth, checkPermission('Video', 'Read'), VideoController.findAll);
+router.get("/video/create", auth, checkPermission('Video', 'Add'), VideoController.add);
+router.get("/video/:id", auth, checkPermission('Video', 'Read'), VideoController.findOne);
+router.get("/video/edit/:id", auth, checkPermission('Video', 'Edit'), VideoController.edit);
+router.post("/video/update/:id", auth, checkPermission('Video', 'Update'), VideoController.update);
+router.get("/video/delete/:id", auth, checkPermission('Video', 'Delete'), VideoController.delete);
+router.post("/video/deleteAll", auth, checkPermission('Video', 'Delete'), VideoController.deleteAll);
+
 
 // Api Routes
 const ProductApiController = require("../controllers/api/product.controller");
@@ -217,6 +228,7 @@ const SliderApiController = require("../controllers/api/slider.controller");
 const TagApiController = require("../controllers/api/tag.controller");
 const ApplicationApiController = require("../controllers/api/application.controller");
 const CareerApiController = require("../controllers/api/career.controller");
+const VideoApiController = require("../controllers/api/video.controller");
 
 // Product
 router.get("/api/products", ProductApiController.findAll);
@@ -261,5 +273,8 @@ router.get("/api/application/:slug", ApplicationApiController.findOne);
 // Career
 router.get("/api/careers", CareerApiController.findAll);
 router.get("/api/career/:slug", CareerApiController.findOne);
+
+// Video
+router.get("/api/video", VideoApiController.findAll);
 
 export default router;

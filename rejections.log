@@ -99,3 +99,19 @@ MongoError: text index required for $text query
     at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
     at Socket.Readable.push (node:internal/streams/readable:390:5)
     at TCP.onStreamRead (node:internal/stream_base_commons:190:23)
+2024-12-04T09:24:45.285Z [error]: unhandledRejection: Cannot set headers after they are sent to the client
+Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    at ServerResponse.setHeader (node:_http_outgoing:703:11)
+    at ServerResponse.header (D:\node-js\airoshotblast.in-admin\node_modules\express\lib\response.js:794:10)
+    at ServerResponse.location (D:\node-js\airoshotblast.in-admin\node_modules\express\lib\response.js:915:15)
+    at ServerResponse.redirect (D:\node-js\airoshotblast.in-admin\node_modules\express\lib\response.js:953:18)
+    at D:/node-js/airoshotblast.in-admin/src/controllers/admin/product.controller.js:285:21
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-12-04T09:26:45.453Z [error]: unhandledRejection: Cannot set headers after they are sent to the client
+Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    at ServerResponse.setHeader (node:_http_outgoing:703:11)
+    at ServerResponse.header (D:\node-js\airoshotblast.in-admin\node_modules\express\lib\response.js:794:10)
+    at ServerResponse.location (D:\node-js\airoshotblast.in-admin\node_modules\express\lib\response.js:915:15)
+    at ServerResponse.redirect (D:\node-js\airoshotblast.in-admin\node_modules\express\lib\response.js:953:18)
+    at D:/node-js/airoshotblast.in-admin/src/controllers/admin/product.controller.js:285:21
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
