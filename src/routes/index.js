@@ -18,6 +18,7 @@ const CategoryController = require("../controllers/admin/category.controller");
 const BlogCategoryController = require("../controllers/admin/blogcategory.controller");
 const ApplicationController = require("../controllers/admin/application.controller");
 const CareerController = require("../controllers/admin/career.controller");
+const JobController = require("../controllers/admin/job.controller");
 const VideoController = require("../controllers/admin/video.controller");
 const CountryController = require("../controllers/admin/country.controller");
 const CityController = require("../controllers/admin/city.controller");
@@ -214,6 +215,16 @@ router.post("/video/update/:id", auth, checkPermission('Video', 'Update'), Video
 router.get("/video/delete/:id", auth, checkPermission('Video', 'Delete'), VideoController.delete);
 router.post("/video/deleteAll", auth, checkPermission('Video', 'Delete'), VideoController.deleteAll);
 
+// Job
+router.post("/job", auth, checkPermission('Job', 'Create'), JobController.create);
+router.get("/job", auth, checkPermission('Job', 'Read'), JobController.findAll);
+router.get("/job/create", auth, checkPermission('Job', 'Add'), JobController.add);
+router.get("/job/:id", auth, checkPermission('Job', 'Read'), JobController.findOne);
+router.get("/job/edit/:id", auth, checkPermission('Job', 'Edit'), JobController.edit);
+router.post("/job/update/:id", auth, checkPermission('Job', 'Update'), JobController.update);
+router.get("/job/delete/:id", auth, checkPermission('Job', 'Delete'), JobController.delete);
+router.post("/job/deleteAll", auth, checkPermission('Job', 'Delete'), JobController.deleteAll);
+
 
 // Api Routes
 const ProductApiController = require("../controllers/api/product.controller");
@@ -273,6 +284,7 @@ router.get("/api/application/:slug", ApplicationApiController.findOne);
 // Career
 router.get("/api/careers", CareerApiController.findAll);
 router.get("/api/career/:slug", CareerApiController.findOne);
+router.post("/api/job", CareerApiController.job);
 
 // Video
 router.get("/api/video", VideoApiController.findAll);
