@@ -306,6 +306,33 @@
         })
     });
 </script>
+
+<script>
+    $(document).ready(function () {
+        var max_fields = 30;
+        var wrapper1 = $(".container3");
+        var add_button1 = $(".add_form_field3");
+        var val = $(".add_form_field3").data('id');
+        var x1 = val - 1;
+        $(add_button1).click(function (e) {
+            e.preventDefault();
+            if (x1 < max_fields) {
+                x1++;
+                $(wrapper1).append(`<div class="row mt-3"><div class="col-md-6"> <label class="form-label">Title</label><input type="text" name="field[title][]" class="form-control"  placeholder="Title"><div class="invalid-feedback"> Please enter title. </div></div><div class="col-md-6"><label class="form-label">Image</label><input type="hidden" name="field[img][]"><input type="file" name="field[image][${x1}]" class="form-control"><div class="invalid-feedback"> Please select image. </div></div><div class="col-md-12 mt-3"> <label class="form-label">Description</label><textarea name="field[description][]" class="w-100 form-control editor" placeholder="Description" required=""></textarea><div class="invalid-feedback"> Please enter description. </div></div>
+<div class="col-md-2"><label class="form-label">.</label><a href="#" class="btn btn-danger delete">Delete</a></div></div>`); //add input box
+            } else {
+                alert('You Reached the limits')
+            }
+        });
+
+        $(wrapper1).on("click", ".delete", function (e) {
+            e.preventDefault();
+            $(this).parent('div').parent('div').remove();
+            x1--;
+        })
+    });
+</script>
+
 <script>
     let main_url = $('.main-url').data('url');
     var currentURL = window.location.href;

@@ -53,7 +53,7 @@
                             <form class="row g-3 needs-validation" novalidate=""
                                 action="<%= `/page/update/${list.id}` %>" method="POST"
                                 enctype="multipart/form-data">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <label for="title" class="form-label">Title</label>
                                     <input type="text" name="title" value="<%= list.title %>" class="form-control"
                                         id="title" placeholder="Title" required="">
@@ -65,18 +65,38 @@
                                         id="slug" placeholder="Slug" required>
                                     <div class="invalid-feedback"> Please enter slug. </div>
                                 </div>
-                                <!-- <div class="col-md-6">
-                                    <label for="validationCustom04" class="form-label">State</label>
-                                    <select class="form-select border" id="validationCustom04" required="">
-                                        <option selected="" disabled="">Choose...</option>
-                                        <option>...</option>
+                                <div class="col-md-6">
+                                    <label for="parent" class="form-label">Parent</label>
+                                    <select class="form-select border" name="parent" id="parent">
+                                        <option selected disabled> Select parent</option>
+                                        <% pages.forEach((page,key)=> { %>
+                                            <% if(JSON.stringify(list.parent)==JSON.stringify(page._id)){ %>
+                                                <option value="<%-page._id %>" selected>
+                                                    <%-page.title %>
+                                                </option>
+                                                <% }else { %>
+                                                    <option value="<%-page._id %>">
+                                                        <%-page.title %>
+                                                    </option>
+                                                    <% } %>
+                                                        <% }) %>
                                     </select>
-                                    <div class="invalid-feedback"> Please select a valid state. </div>
-                                </div> -->
+                                    <div class="invalid-feedback"> Please select parent. </div>
+                                </div>
                                 <div class="col-md-6">
                                     <label for="image" class="form-label">Image</label>
                                     <input type="file" name="image" class="form-control" id="image">
                                     <div class="invalid-feedback"> Please select image. </div>
+                                    <% if(list.image){ %>
+                                        <br>
+                                        <div style="display: flex;">
+                                            <div
+                                                style="border: 1px solid;width: 50px;padding: 3px; margin-right: 10px; position: relative;">
+                                                <img src="../../../upload/page/<%= list.image %>" width="50px"
+                                                    alt="<%= list.title %>">
+                                            </div>
+                                        </div>
+                                        <% } %>
                                 </div>
                                 <div class="col-md-12">
                                     <label for="except" class="form-label">Short Description</label>
@@ -93,7 +113,56 @@
                                         required=""><%= list.description %></textarea>
                                     <div class="invalid-feedback"> Please enter description. </div>
                                 </div>
-                                
+                                <hr>
+                                <div class="col-md-12">
+                                    <div class="container3">
+                                        <label for="">Other Details</label><br>
+                                        <button class="add_form_field3 btn-primary btn"
+                                            data-id="<%= list.field && list.field!='null' && JSON.parse(list.field).title.length %>">Add
+                                            &nbsp;
+                                            <span style="font-size:16px; font-weight:bold;">+ </span>
+                                        </button>
+                                        <% list.field && list.field!='null' &&
+                                            JSON.parse(list.field).title.forEach((f,key)=>
+                                            { %>
+
+                                            <div class="row mt-3">
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Title</label>
+                                                    <input type="text" name="field[title][]" value="<%= f %>"
+                                                        class="form-control" placeholder="Title">
+                                                    <div class="invalid-feedback"> Please enter title. </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Image</label>
+                                                    <input type="hidden" name="field[img][]" value="<%= JSON.parse(list.field).image[key] %>">
+                                                    <input type="file" name="field[image][<%= key %>]" class="form-control">
+                                                    <div class="invalid-feedback"> Please select image. </div>
+                                                    <% if(JSON.parse(list.field).image[key]){ %>
+                                                        <br>
+                                                        <div style="display: flex;">
+                                                            <div
+                                                                style="border: 1px solid;width: 50px;padding: 3px; margin-right: 10px; position: relative;">
+                                                                <img src="../../../upload/page/other/<%= JSON.parse(list.field).image[key] %>" width="50px"
+                                                                    alt="<%= list.title %>">
+                                                            </div>
+                                                        </div>
+                                                        <% } %>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Description</label>
+                                                    <textarea name="field[description][]" value="<%= JSON.parse(list.field).description[key] %>"
+                                                        class="w-100 form-control editor" placeholder="Description"><%= JSON.parse(list.field).description[key] %></textarea>
+                                                    <div class="invalid-feedback"> Please enter description. </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label">.</label>
+                                                    <a href="#" class="btn btn-danger delete">Delete</a>
+                                                </div>
+                                            </div>
+                                            <% }) %>
+                                    </div>
+                                </div>
                                 <hr>
                                 <div class="col-md-12">
                                     <label for="seo_title" class="form-label">Seo Title</label>
@@ -101,23 +170,18 @@
                                         placeholder="Seo Title">
                                     <div class="invalid-feedback"> Please enter seo title. </div>
                                 </div>
-
                                 <div class="col-md-6">
                                     <label for="seo_keywords" class="form-label">Seo Keywords</label>
-                                    <textarea name="seo_keywords" class="w-100 form-control"  rows="4" id="seo_keywords"
+                                    <textarea name="seo_keywords" class="w-100 form-control" rows="4" id="seo_keywords"
                                         placeholder="Seo Keywords"><%= list.seo_keywords %></textarea>
                                     <div class="invalid-feedback"> Please enter seo keywords. </div>
                                 </div>
-
                                 <div class="col-md-6">
                                     <label for="seo_description" class="form-label">Seo Description</label>
                                     <textarea name="seo_description" class="w-100 form-control" rows="4"
                                         id="seo_description" placeholder="Seo Description" ><%= list.seo_description %></textarea>
                                     <div class="invalid-feedback"> Please enter seo description. </div>
                                 </div>
-
-
-
                                 <div class="col-12">
                                     <button class="btn btn-primary" type="submit">Submit</button>
                                 </div>

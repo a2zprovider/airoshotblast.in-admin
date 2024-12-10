@@ -6,31 +6,42 @@ const path = require('path');
 
 const storage = multer.diskStorage({
     destination: function (req, res, callback) {
-        var dir = "./src/public/upload/page";
-
-        if (!fs.existsSync(dir)) {
-            fs.mkdirSync(dir);
+        if (res.fieldname === "image") {
+            var dir = "./src/public/upload/page";
+            if (!fs.existsSync(dir)) {
+                fs.mkdirSync(dir);
+            }
+            callback(null, dir);
+        } else {
+            var dir = "./src/public/upload/page/other";
+            if (!fs.existsSync(dir)) {
+                fs.mkdirSync(dir);
+            }
+            callback(null, dir);
         }
-        callback(null, dir);
     },
     filename: function (req, res, callback) {
-        callback(null, res.fieldname + '-' + Date.now() + path.extname(res.originalname));
-        // callback(null, res.originalname);
+        if (res.fieldname === "image") {
+            callback(null, res.fieldname + '-' + Date.now() + Math.random().toString().substr(2, 6) + path.extname(res.originalname));
+        } else {
+            callback(null, 'other' + Math.random().toString().substr(2, 6) + '-' + Date.now() + Math.random().toString().substr(2, 6) + path.extname(res.originalname));
+        }
     }
 })
-
-const upload = multer({ storage: storage }).single('image');
+// const upload = multer({ storage: storage }).fields([{ name: 'image', maxCount: 1 }, { name: 'field[image][]', maxCount: 10 }]);
+const upload = multer({ storage: storage }).any();
 
 // Create a new Page 
-exports.add = (req, res) => {
+exports.add = async (req, res) => {
 
     const user = req.cookies['user'];
+    const pages = await Page.find();
 
     const success = req.flash('success');
     const danger = req.flash('danger');
     const info = req.flash('info');
 
-    res.render('pages/page/add', { user, success, danger, info, page_title: 'Page Add', page_url: 'page.add' });
+    res.render('pages/page/add', { user, success, danger, info, pages, page_title: 'Page Add', page_url: 'page.add' });
 };
 
 // Create and Save a new Page
@@ -39,7 +50,6 @@ exports.create = (req, res) => {
     // Create a Page
     upload(req, res, function (err) {
         const page = {};
-        const pageseo = {};
         if (err) {
             res.redirect('/page/create');
         }
@@ -61,6 +71,32 @@ exports.create = (req, res) => {
         page.slug = req.body.slug ? slugify(req.body.slug, { lower: true }) : slugify(req.body.title, { lower: true });
         page.except = req.body.except;
         page.description = req.body.description;
+        page.parent = req.body.parent;
+
+        if (req.files['image'] && req.files['image'][0]) {
+            page.image = req.files['image'][0].filename;
+        }
+
+        req.files.forEach((file) => {
+            if (file.fieldname == 'image') {
+                page_detail.image = file.filename;
+            }
+            if (file.fieldname.startsWith('field[image][')) {
+                const match = file.fieldname.match(/\[(\d+)\]/);
+                const index = match ? parseInt(match[1], 10) : null;
+
+                if (index !== null) {
+                    req.body.field.img[index] = file.filename;
+                }
+            }
+        });
+        const fields = {};
+        if (req.body.field) {
+            fields.title = req.body.field.title;
+            fields.image = req.body.field.img;
+            fields.description = req.body.field.description;
+        }
+        page.field = req.body.field ? JSON.stringify(fields) : '{"title":[],"image":[],"description":[]}';
 
         page.seo_title = req.body.seo_title;
         page.seo_keywords = req.body.seo_keywords;
@@ -96,7 +132,7 @@ exports.findAll = (req, res) => {
     const condition = search ? { $text: { $search: search } } : {};
 
     Page.count(condition).then(count => {
-        Page.find(condition).skip(offset).limit(limit)
+        Page.find(condition).skip(offset).limit(limit).populate('parent')
             .then(data => {
                 const lists = {
                     data: data, current: page, offset: offset,
@@ -138,19 +174,19 @@ exports.findOne = (req, res) => {
         });
 };
 
-exports.edit = (req, res) => {
+exports.edit = async (req, res) => {
     const user = req.cookies['user'];
 
     const success = req.flash('success');
     const danger = req.flash('danger');
     const info = req.flash('info');
-
     const id = req.params.id;
+    const pages = await Page.find({ _id: { $ne: id } });
     Page.findOne({ _id: id })
         .then(data => {
             if (data) {
                 res.render('pages/page/edit', {
-                    list: data, user, success, danger, info, page_title: 'Page Edit', page_url: 'page.edit'
+                    list: data, user, success, danger, info, pages, page_title: 'Page Edit', page_url: 'page.edit'
                 });
             } else {
                 req.flash('danger', `Cannot find Page with id=${id}.`);
@@ -162,7 +198,6 @@ exports.edit = (req, res) => {
             res.redirect('/page');
         });
 };
-
 
 // Update a Page by the id in the request
 exports.update = (req, res) => {
@@ -179,6 +214,28 @@ exports.update = (req, res) => {
         page_detail.slug = req.body.slug ? slugify(req.body.slug, { lower: true }) : slugify(req.body.title, { lower: true });
         page_detail.except = req.body.except;
         page_detail.description = req.body.description;
+        page_detail.parent = req.body.parent;
+
+        req.files.forEach((file) => {
+            if (file.fieldname == 'image') {
+                page_detail.image = file.filename;
+            }
+            if (file.fieldname.startsWith('field[image][')) {
+                const match = file.fieldname.match(/\[(\d+)\]/);
+                const index = match ? parseInt(match[1], 10) : null;
+
+                if (index !== null) {
+                    req.body.field.img[index] = file.filename;
+                }
+            }
+        });
+        const fields = {};
+        if (req.body.field) {
+            fields.title = req.body.field.title;
+            fields.image = req.body.field.img;
+            fields.description = req.body.field.description;
+        }
+        page_detail.field = req.body.field ? JSON.stringify(fields) : '{"title":[],"image":[],"description":[]}';
 
         page_detail.seo_title = req.body.seo_title;
         page_detail.seo_keywords = req.body.seo_keywords;

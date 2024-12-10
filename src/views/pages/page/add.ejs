@@ -51,7 +51,7 @@
                         <div class="card-body">
                             <form class="row g-3 needs-validation" novalidate="" action="/page" method="POST"
                                 files="true" enctype="multipart/form-data">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <label for="title" class="form-label">Title</label>
                                     <input type="text" name="title" class="form-control" id="title" placeholder="Title"
                                         required="">
@@ -62,14 +62,18 @@
                                     <input type="text" name="slug" class="form-control" id="slug" placeholder="Slug">
                                     <div class="invalid-feedback"> Please enter slug. </div>
                                 </div>
-                                <!-- <div class="col-md-6">
-                                    <label for="validationCustom04" class="form-label">State</label>
-                                    <select class="form-select border" id="validationCustom04" required="">
-                                        <option selected="" disabled="">Choose...</option>
-                                        <option>...</option>
+                                <div class="col-md-6">
+                                    <label for="parent" class="form-label">Parent</label>
+                                    <select class="form-select border" name="parent" id="parent">
+                                        <option selected="" disabled="">Select parent</option>
+                                        <% pages.forEach((page,key)=> { %>
+                                            <option value="<%-page._id %>">
+                                                <%-page.title %>
+                                            </option>
+                                            <% }) %>
                                     </select>
-                                    <div class="invalid-feedback"> Please select a valid state. </div>
-                                </div> -->
+                                    <div class="invalid-feedback"> Please select parent. </div>
+                                </div>
                                 <div class="col-md-6">
                                     <label for="image" class="form-label">Image</label>
                                     <input type="file" name="image" class="form-control" id="image">
@@ -86,6 +90,40 @@
                                     <textarea name="description" class="w-100 form-control editor" rows="10" id="description"
                                         placeholder="Description" required=""></textarea>
                                     <div class="invalid-feedback"> Please enter description. </div>
+                                </div>
+                                <hr>
+                                <div class="col-md-12">
+                                    <div class="container3">
+                                        <label for="">Other Details</label><br>
+                                        <button class="add_form_field3 btn-primary btn" data-id="1">Add
+                                            &nbsp;
+                                            <span style="font-size:16px; font-weight:bold;">+ </span>
+                                        </button>
+                                        <div class="row mt-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label">Title</label>
+                                                <input type="text" name="field[title][]" class="form-control"
+                                                    placeholder="Title">
+                                                <div class="invalid-feedback"> Please enter title. </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Image</label>
+                                                <input type="hidden" name="field[img][]">
+                                                <input type="file" name="field[image][0]" class="form-control">
+                                                <div class="invalid-feedback"> Please select image. </div>
+                                            </div>
+                                            <div class="col-md-12 mt-3">
+                                                <label class="form-label">Description</label>
+                                                <textarea name="field[description][]" class="w-100 form-control editor"
+                                                    placeholder="Description" required=""></textarea>
+                                                <div class="invalid-feedback"> Please enter description. </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="form-label">.</label>
+                                                <a href="#" class="btn btn-danger delete">Delete</a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <hr>
                                 <div class="col-md-12">
