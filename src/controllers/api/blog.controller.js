@@ -5,7 +5,7 @@ const BlogCategory = require('../../schemas/blogcategory.js');
 // Retrieve all Blogs from the database.
 exports.findAll = async (req, res) => {
 
-    const { page = 1, limit = 10, search, country, category } = req.query;
+    const { page = 1, limit = 10, search, country, category, year } = req.query;
     const offset = (page - 1) * limit;
     let query = {};
 
@@ -24,11 +24,16 @@ exports.findAll = async (req, res) => {
             query.categories = { $in: blogcategory._id };
         }
     }
+    if (year) {
+        const startDate = new Date(`${year}-01-01T00:00:00.000Z`);
+        const endDate = new Date(`${parseInt(year) + 1}-01-01T00:00:00.000Z`);
+        query.createdAt = { $gte: startDate, $lt: endDate };
+    }
 
     try {
         const blogs = await Blog.find(query).skip(offset).limit(parseInt(limit)).populate(['categories', 'country']).exec();
         const count = await Blog.find(query).populate(['categories', 'country']).countDocuments();
-
+        
         let lists = {
             data: blogs, current: page, offset: offset,
             pages: Math.ceil(count / limit)

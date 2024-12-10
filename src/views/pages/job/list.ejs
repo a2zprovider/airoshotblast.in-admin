@@ -5,12 +5,12 @@
         <!-- container -->
         <div class="main-container container-fluid">
             <!-- breadcrumb -->
-            <form action="/page/deleteAll" method="POST">
+            <form action="/job/deleteAll" method="POST">
                 <div class="breadcrumb-header justify-content-between">
                     <div class="my-auto">
                         <div class="d-flex">
-                            <h4 class="content-title mb-0 my-auto">Page List</h4><span
-                                class="text-muted mt-1 tx-13 ms-2 mb-0">/ Page</span>
+                            <h4 class="content-title mb-0 my-auto">Job List</h4><span
+                                class="text-muted mt-1 tx-13 ms-2 mb-0">/ Job</span>
                         </div>
                     </div>
                     <div class="d-flex my-xl-auto right-content">
@@ -20,9 +20,9 @@
                                 <i class="mdi mdi-delete"></i>
                             </button>
                         </div>
-                        <div class="mb-xl-0">
-                            <a href="/page/create" class="btn btn-primary">Add Page</a>
-                        </div>
+                        <!-- <div class="mb-xl-0">
+                            <a href="/job/create" class="btn btn-primary">Add Job</a>
+                        </div> -->
                     </div>
                 </div> <!-- breadcrumb -->
                 <div>
@@ -54,7 +54,7 @@
                         <div class="card mg-b-20">
                             <div class="card-header pb-0">
                                 <div class="d-flex justify-content-between mg-b-20">
-                                    <h4 class="card-title mg-b-0">Page List</h4>
+                                    <h4 class="card-title mg-b-0">Job List</h4>
                                 </div>
 
                                 <div class="row d-flex align-items-center">
@@ -119,8 +119,7 @@
                                             <tr>
                                                 <th>S.N.</th>
                                                 <th>Title</th>
-                                                <th>Parent</th>
-                                                <th>Image</th>
+                                                <th>File</th>
                                                 <th>Option</th>
                                             </tr>
                                         </thead>
@@ -133,30 +132,20 @@
                                                                 id="">
                                                     </th>
                                                     <td>
-                                                        <%-list.title %>
+                                                        <a href="career?search=<%= list.career.title %>" target="_blank" rel="noopener noreferrer"><%= list.career.title %></a>
                                                     </td>
                                                     <td>
-                                                        <%- list.parent?list.parent.title:'' %>
-                                                    </td>
-                                                    <td>
-                                                        <% if(list.image) { %>
+                                                        <% if(list.resume) { %>
                                                             <div class="media mt-0">
-                                                                <img class="avatar-sm rounded-circle my-auto me-3"
-                                                                    src="upload/page/<%= list.image %>"
-                                                                    alt="Image description">
+                                                                <a href="upload/job/<%= list.resume %>" target="_blank" rel="noopener noreferrer"><%= list.resume %></a>
                                                             </div>
-
                                                             <% } %>
                                                     </td>
                                                     <td class="d-flex ">
-                                                        <a href="<%= `page/delete/${list.id}?_method=DELETE` %>"
+                                                        <a href="<%= `job/delete/${list.id}?_method=DELETE` %>"
                                                             onclick="return confirm('Are you sure you want to delete this record?')"
                                                             class="btn btn-danger btn-sm  me-2">
                                                             <i class="mdi mdi-delete"></i>
-                                                        </a>
-                                                        <a href="<%= `page/edit/${list.id}` %>"
-                                                            class="btn btn-primary btn-sm  me-2">
-                                                            <i class="mdi mdi-pencil"></i>
                                                         </a>
                                                     </td>
                                                 </tr>
