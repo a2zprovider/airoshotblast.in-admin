@@ -119,6 +119,7 @@
                                             <tr>
                                                 <th>S.N.</th>
                                                 <th>Title</th>
+                                                <th>Parent</th>
                                                 <th>Image</th>
                                                 <th>Option</th>
                                             </tr>
@@ -133,6 +134,9 @@
                                                     </th>
                                                     <td>
                                                         <%-list.title %>
+                                                    </td>
+                                                    <td>
+                                                        <%- list.parent?list.parent.title:'' %>
                                                     </td>
                                                     <td>
                                                         <% if(list.image) { %>

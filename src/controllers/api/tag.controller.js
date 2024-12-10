@@ -1,4 +1,5 @@
 const Tag = require('../../schemas/tags.js');
+const Blog = require('../../schemas/blog.js');
 
 // Retrieve all Tag from the database.
 exports.findAll = async (req, res) => {
@@ -32,7 +33,11 @@ exports.findOne = async (req, res) => {
         if (!tag) {
             return res.status(404).send({ success: false, message: 'Tag not found' });
         }
-        res.status(200).send({ success: true, message: 'Record Found', data: tag });
+        const blogs = await Blog.find({
+            tags: tag._id, // Make sure category._id is accessible
+        });
+
+        res.status(200).send({ success: true, message: 'Record Found', data: tag, blogs: blogs });
     } catch (err) {
         res.status(500).send({ success: false, message: 'Internal Server Error', error: err });
     }

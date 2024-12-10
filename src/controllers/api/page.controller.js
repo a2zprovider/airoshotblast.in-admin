@@ -2,12 +2,20 @@ const Page = require('../../schemas/page.js');
 
 // Retrieve all Page from the database.
 exports.findAll = async (req, res) => {
-    const { page = 1, limit = 10, search } = req.query;
+    const { page = 1, limit = 10, search, parent = null } = req.query;
     const offset = (page - 1) * limit;
     let query = {};
 
     if (search) {
         query.title = { $regex: new RegExp(search, 'i') };
+    }
+    if (parent == 'null') {
+        query.parent = null; // Fetch only parent pages
+    } else if (parent) {
+        const p = await Page.findOne({ slug: parent });
+        if (p) {
+            query.parent = p._id;
+        }
     }
 
     try {
