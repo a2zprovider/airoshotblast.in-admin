@@ -142,7 +142,7 @@ exports.findAll = (req, res) => {
     const search = req.query.search || ''; // Default to empty string if no search term
 
     // Use text search condition only if search is provided
-    const condition = search ? { $text: { $search: search } } : {};
+    const condition = search ? { title: { $regex: search, $options: 'i' } } : {};
 
     Product.count(condition).then(count => {
         Product.find(condition)

@@ -3,109 +3,114 @@ import config from './config';
 import mongoose from 'mongoose';
 import express from "express";
 import cors from "cors";
-import { METHODS } from "http";
-const morgan = require('morgan');
-
-const Blog = require('./schemas/blog');
-const Blogcategory = require('./schemas/blogcategory');
-const bodyParser = require('body-parser');
+import morgan from 'morgan';
+import bodyParser from 'body-parser';
+import path from 'path';
+import flash from 'connect-flash';
+import session from 'express-session';
+import logger from './logger'; // Assuming your logger is set up properly
 
 const app = express();
 
-var flash = require('connect-flash');
-var session = require('express-session');
-
+// Session setup
 app.use(session({
     cookie: { maxAge: 60000 },
     secret: 'woot',
     resave: false,
     saveUninitialized: false
 }));
-const path = require('path');
+
+// Flash messages
 app.use(flash());
+
+// Logging setup
 app.use(morgan('dev'));
+logger.info('Server started');
 
-// we imported config
-// we imported router
-// we imported mongoose
-// we imported cors
-// we imported express and set up a new express 
-// instance const app = express().
-
-const port = process.env.PORT || 5000;
-
+// Body parsing
 app.use(express.urlencoded({ extended: true }));
-// app.use(express.json());
 app.use(bodyParser.json());
 
-// allow cors
-var corsOptions = {
-    origin: ["http://localhost:3000/", "http://localhost:3000","http://localhost:5173/", "http://localhost:5173","http://185.166.39.93:3000/","http://185.166.39.93:3000"],
+// CORS configuration
+const corsOptions = {
+    origin: [
+        "http://localhost:3000/",
+        "http://localhost:5173/",
+        "http://185.166.39.93:3000/"
+    ],
     methods: "GET,POST,PUT,DELETE"
 };
 app.use(cors(corsOptions));
-// set route in middleware
 
+// Routes
 app.use('/', router);
 
+// Set view engine
 app.set('view engine', 'ejs');
 
+// Mongoose connection setup
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
-// mongoose connection
 mongoose.connect(config.mongodbUrl(), { useNewUrlParser: true, useUnifiedTopology: true })
-const db = mongoose.connection;
-db.on("error", (error) => { console.error(error); })
-db.once("open", () => { console.log("connected to database"); })
+    .then(() => {
+        logger.info("Connected to database");
+    })
+    .catch(err => {
+        logger.error("Database connection error: ", err);
+        process.exit(1); // Exit process with failure
+    });
 
-app.use('/static', express.static('../src/public/assets'));
+// Static files
+app.use('/static', express.static(path.join(__dirname, '../src/public/assets')));
 app.use(express.static(path.join(__dirname, '../src/public')));
 app.set('views', path.join(__dirname, '../src/views'));
 
-// Error handlers
-const logger = require('./logger');
-
-// Log messages of different levels
-logger.info('This is an info message');
-logger.warn('This is a warning message');
-logger.error('This is an error message');
-
-// Log a debug message (won't be logged unless level is set to 'debug')
-logger.debug('This is a debug message');
-
-
-// Catch 404 and forward to error handler
-app.use(function (req, res, next) {
+// 404 error handler
+app.use((req, res, next) => {
     const error = new Error('Not Found');
     error.status = 404;
     next(error);
 });
 
 // Development error handler
-// Will print stacktrace
 if (app.get('env') === 'development') {
-    app.use(function (error, req, res, next) {
-        res.status(error.status || 500);
-        res.send({
+    app.use((error, req, res, next) => {
+        logger.error(`Error at ${req.originalUrl}:`, error);
+        res.status(error.status || 500).send({
             message: error.message,
             error: error
         });
     });
 }
 
-// Production error handler
-// No stacktraces leaked to user
-app.use(function (error, req, res, next) {
-    res.status(error.status || 500);
-    res.send({
+// Production error handler (no stack traces leaked to user)
+app.use((error, req, res, next) => {
+    logger.error(`Error at ${req.originalUrl}:`, error);
+    res.status(error.status || 500).send({
         message: error.message,
-        error: error
+        error: {}
     });
 });
 
-console.log('this is node js app');
+// Global unhandled rejection handler
+process.on('unhandledRejection', (reason, promise) => {
+    logger.error("Unhandled Rejection at:", promise, "reason:", reason);
+    // Perform a graceful shutdown if necessary
+    process.exit(1); // Exit process with failure
+});
 
-app.listen(port, () => console.log(`Server is running on  http://localhost:${port}`));
+// Global uncaught exception handler
+process.on('uncaughtException', (err) => {
+    logger.error("Uncaught Exception thrown:", err);
+    // Perform a graceful shutdown if necessary
+    process.exit(1); // Exit process with failure
+});
+
+// Start the server
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
+    logger.info(`Server is running on http://localhost:${port}`);
+});
 
 export default app;

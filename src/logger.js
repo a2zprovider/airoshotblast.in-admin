@@ -16,13 +16,13 @@ const logger = createLogger({
     ),
     transports: [
         new transports.Console(),
-        new transports.File({ filename: 'combined.log' })
+        new transports.File({ filename: 'log/combined.log' })
     ],
     exceptionHandlers: [
-        new transports.File({ filename: 'exceptions.log' })
+        new transports.File({ filename: 'log/exceptions.log' })
     ],
     rejectionHandlers: [
-        new transports.File({ filename: 'rejections.log' })
+        new transports.File({ filename: 'log/rejections.log' })
     ]
 });
 
