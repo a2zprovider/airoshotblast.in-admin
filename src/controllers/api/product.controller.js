@@ -2,8 +2,6 @@ const Product = require('../../schemas/product.js');
 const Country = require('../../schemas/country.js');
 const Category = require('../../schemas/category.js');
 
-
-
 // Retrieve all Products from the database.
 exports.findAll = async (req, res) => {
     const { page = 1, limit = 10, search, country, category } = req.query;
@@ -11,7 +9,7 @@ exports.findAll = async (req, res) => {
     let query = {};
 
     if (search) {
-        query.title = { $regex: new RegExp(search, 'i') };
+        query.title = { $regex: search, $options: 'i' };
     }
     if (country) {
         const p_country = await Country.findOne({ code: country });

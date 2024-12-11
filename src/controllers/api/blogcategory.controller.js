@@ -33,7 +33,7 @@ exports.findAll = async (req, res) => {
 
                     // Add the blogCount to the category object
                     categoryObj.blogCount = blogCount;
-                    console.log('category with blog count:', categoryObj);
+                    // console.log('category with blog count:', categoryObj);
 
                     return categoryObj; // Return the updated object
                 } catch (error) {

@@ -10,7 +10,7 @@ exports.findAll = async (req, res) => {
     let query = {};
 
     if (search) {
-        query.title = { $regex: new RegExp(search, 'i') };
+        query.title = { $regex: search, $options: 'i' };
     }
     if (country) {
         const p_country = await Country.findOne({ code: country });

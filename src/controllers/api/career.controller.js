@@ -60,10 +60,6 @@ exports.findOne = async (req, res) => {
 };
 
 exports.job = (req, res) => {
-    console.log('req : ', req);
-    console.log('req file : ', req.file);
-    console.log('req files : ', req.files);
-    console.log('req body : ', req.body);
     try {
         upload(req, res, function (err) {
 
@@ -72,9 +68,6 @@ exports.job = (req, res) => {
             }
             // Create a Job
             const job = {};
-
-            console.log('req : ', req);
-            console.log('req body : ', req.body);
 
             if (!req.file) {
                 return res.status(200).json({ success: false, message: 'Please Select Resume' });

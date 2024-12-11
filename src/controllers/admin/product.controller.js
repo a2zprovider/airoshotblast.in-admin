@@ -72,7 +72,6 @@ exports.create = (req, res) => {
         if (err) {
             res.redirect('/product/create');
         }
-        console.log('req : ', req);
 
         if (!req.body.title) {
             req.flash('danger', 'Please enter title.');
