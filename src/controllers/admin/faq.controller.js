@@ -84,7 +84,7 @@ exports.findAll = (req, res) => {
     const info = req.flash('info');
 
     const search = req.query.search;
-    const condition = search ? { $text: { $search: search } } : {};
+    const condition = search ? { title: { $regex: search, $options: 'i' } } : {};
 
     Faq.count(condition).then(count => {
         Faq.find(condition).skip(offset).limit(limit)

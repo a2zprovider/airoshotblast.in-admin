@@ -124,7 +124,7 @@ exports.findAll = (req, res) => {
     const info = req.flash('info');
 
     const search = req.query.search;
-    const condition = search ? { $text: { $search: search } } : {};
+    const condition = search ? { title: { $regex: search, $options: 'i' } } : {};
 
     Blog.count(condition).then(count => {
         Blog.find(condition).sort({ createdAt: -1 }).skip(offset).limit(limit).populate(['tags', 'categories'])
