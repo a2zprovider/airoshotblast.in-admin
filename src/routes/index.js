@@ -1,5 +1,6 @@
 import express from "express";
 import checkPermission from "../middleware/checkPermission.js";
+import routerPage from "./page.route.js";
 const router = express.Router();
 
 const { auth, guest } = require('../middleware/auth');
@@ -7,7 +8,6 @@ const { auth, guest } = require('../middleware/auth');
 // Admin Routes
 const UserController = require('../controllers/admin/user.controller.js');
 const EnquiryController = require("../controllers/admin/enquiry.controller");
-const PageController = require("../controllers/admin/page.controller");
 const ProductController = require("../controllers/admin/product.controller");
 const BlogController = require("../controllers/admin/blog.controller");
 const TagController = require("../controllers/admin/tag.controller");
@@ -61,15 +61,7 @@ router.post("/blog/update/:id", auth, checkPermission('Blog', 'Update'), BlogCon
 router.get("/blog/delete/:id", auth, checkPermission('Blog', 'Delete'), BlogController.delete);
 router.post("/blog/deleteAll", auth, checkPermission('Blog', 'Delete'), BlogController.deleteAll);
 
-// Pages
-router.post("/page", auth, checkPermission('Page', 'Create'), PageController.create);
-router.get("/page", auth, checkPermission('Page', 'Read'), PageController.findAll);
-router.get("/page/create", auth, checkPermission('Page', 'Add'), PageController.add);
-router.get("/page/:id", auth, checkPermission('Page', 'Read'), PageController.findOne);
-router.get("/page/edit/:id", auth, checkPermission('Page', 'Edit'), PageController.edit);
-router.post("/page/update/:id", auth, checkPermission('Page', 'Update'), PageController.update);
-router.get("/page/delete/:id", auth, checkPermission('Page', 'Delete'), PageController.delete);
-router.post("/page/deleteAll", auth, checkPermission('Page', 'Delete'), PageController.deleteAll);
+router.use('/page', routerPage);
 
 // Tag
 router.post("/tag", auth, checkPermission('Tag', 'Create'), TagController.create);
