@@ -9,42 +9,65 @@ exports.findAll = async (req, res) => {
     const offset = (page - 1) * limit;
     let query = {};
 
-    if (search) {
-        query.title = { $regex: search, $options: 'i' };
-    }
-    if (country) {
-        const p_country = await Country.findOne({ code: country });
-        if (p_country) {
+    try {
+        // Search filter
+        if (search) {
+            query.title = { $regex: search, $options: 'i' };
+        }
+
+        // Country filter
+        if (country) {
+            const p_country = await Country.findOne({ code: country });
+            if (!p_country) {
+                return res.status(400).send({ success: false, message: 'Invalid country code' });
+            }
             query.country = p_country._id;
         }
-    }
-    if (category) {
-        const blogcategory = await BlogCategory.findOne({ slug: category });
-        if (blogcategory) {
+
+        // Category filter
+        if (category) {
+            const blogcategory = await BlogCategory.findOne({ slug: category });
+            if (!blogcategory) {
+                return res.status(400).send({ success: false, message: 'Invalid category slug' });
+            }
             query.categories = { $in: blogcategory._id };
         }
-    }
-    if (year) {
-        const startDate = new Date(`${year}-01-01T00:00:00.000Z`);
-        const endDate = new Date(`${parseInt(year) + 1}-01-01T00:00:00.000Z`);
-        query.createdAt = { $gte: startDate, $lt: endDate };
-    }
 
-    try {
+        // Year filter
+        if (year) {
+            // Validate year format
+            const yearInt = parseInt(year);
+            if (isNaN(yearInt)) {
+                return res.status(400).send({ success: false, message: 'Invalid year format' });
+            }
+            const startDate = new Date(`${year}-01-01T00:00:00.000Z`);
+            const endDate = new Date(`${yearInt + 1}-01-01T00:00:00.000Z`);
+            query.createdAt = { $gte: startDate, $lt: endDate };
+        }
+
+        // Fetch blogs with filters, pagination, and population of related fields
         const blogs = await Blog.find(query).skip(offset).limit(parseInt(limit)).populate(['categories', 'country']).exec();
-        const count = await Blog.find(query).populate(['categories', 'country']).countDocuments();
-        
+        const count = await Blog.find(query).countDocuments();
+
         let lists = {
             data: blogs, current: page, offset: offset,
-            pages: Math.ceil(count / limit)
+            pages: Math.ceil(count / limit),
         };
-        res.status(200).send({ success: true, message: count + ' Records Found', data: lists });
+
+        return res.status(200).send({
+            success: true,
+            message: `${count} Records Found`,
+            data: lists,
+        });
+
     } catch (err) {
-        res.status(500).send({ success: false, message: 'Internal Server Error', error: err });
+        // Send generic error message to the client
+        return res.status(500).send({ success: false, message: 'Internal Server Error' });
     }
 };
 
-// Find a single Blog with an slug
+
+// Find a single Blog with a slug
 exports.findOne = async (req, res) => {
     const slug = req.params.slug;
     try {
@@ -52,9 +75,11 @@ exports.findOne = async (req, res) => {
         if (!blog) {
             return res.status(404).send({ success: false, message: 'Blog not found' });
         }
+
         const relatedBlogs = await Blog.find({ _id: { $ne: blog._id } }).limit(4).exec();
         res.status(200).send({ success: true, message: 'Record Found', data: blog, relatedBlogs: relatedBlogs });
     } catch (err) {
-        res.status(500).send({ success: false, message: 'Internal Server Error', error: err });
+        // Send generic error message to the client
+        return res.status(500).send({ success: false, message: 'Internal Server Error' });
     }
 };
