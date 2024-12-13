@@ -6,7 +6,8 @@ const multer = require('multer');
 const fs = require('fs');
 const slugify = require('slugify');
 const path = require('path');
-const { log } = require('console');
+const mongoose = require('mongoose');
+const logger = require('../../logger.js');
 
 const storage = multer.diskStorage({
     destination: function (req, res, callback) {
@@ -177,7 +178,6 @@ exports.findAll = (req, res) => {
     });
 };
 
-
 // Find a single Product with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
@@ -291,34 +291,87 @@ exports.update = async (req, res) => {
 
 // Delete a Product with the specified id in the request
 exports.delete = (req, res) => {
-    const id = req.params.id;
-    Product.deleteOne({ _id: id })
-        .then(num => {
-            if (num.ok == 1) {
-                req.flash('success', `Product deleted successfully!`);
+    try {
+        const id = req.params.id;
+
+        // Validate the Product ID
+        if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+            req.flash('danger', 'Invalid Product ID.');
+            logger.warn(`Attempt to delete with invalid ID: ${id}`);
+            return res.redirect('/product');
+        }
+
+        // Proceed to delete the product
+        Product.deleteOne({ _id: id })
+            .then(result => {
+                if (result.deletedCount === 1) {
+                    // Successful deletion
+                    req.flash('success', `Product deleted successfully!`);
+                    res.redirect('/product');
+                } else {
+                    // No document was deleted (Product not found)
+                    req.flash('danger', `Cannot delete Product with id=${id}. Maybe the Product was not found!`);
+                    logger.warn(`Product with ID ${id} not found for deletion.`);
+                    res.redirect('/product');
+                }
+            })
+            .catch(err => {
+                // Log and handle errors from the database
+                logger.error(`Error occurred while deleting Product with ID ${id} - ${err.message || 'Unknown error'}`);
+                req.flash('danger', `Could not delete Product with id=${id}. Please try again later.`);
                 res.redirect('/product');
-            } else {
-                req.flash('danger', `Cannot delete Product with id=${id}. Maybe Product was not found!`);
-                res.redirect('/product');
-            }
-        })
-        .catch(err => {
-            req.flash('danger', 'Could not delete Product with id=' + id);
-            res.redirect('/product');
-        });
+            });
+    } catch (err) {
+        // Catch unexpected errors and log them
+        logger.error(`Unexpected error during delete operation for Product with ID ${req.params.id} - ${err.message || 'Unknown error'}`);
+        req.flash('danger', 'An unexpected error occurred while attempting to delete the Product.');
+        res.redirect('/product');
+    }
 };
 
-// Delete all Products from the database.
+// Delete all Product from the database.
 exports.deleteAll = (req, res) => {
-    Product.deleteMany({ _id: { $in: req.body.id } })
-        .then(nums => {
-            req.flash('success', `${nums.deletedCount} Products were deleted successfully!`);
-            res.redirect('/product');
-        })
-        .catch(err => {
-            req.flash('danger', err.message || 'Some error occurred while creating the Product.');
-            res.redirect('/product');
-        });
+    try {
+        // Validate the ID array
+        if (!req.body.id || !Array.isArray(req.body.id) || req.body.id.length === 0) {
+            req.flash('danger', 'No product IDs provided for deletion.');
+            logger.warn('No product IDs provided for deletion.');
+            return res.redirect('/product');
+        }
+
+        // Validate each ID in the array
+        const invalidIds = req.body.id.filter(id => !mongoose.Types.ObjectId.isValid(id));
+        if (invalidIds.length > 0) {
+            req.flash('danger', `Invalid product IDs: ${invalidIds.join(', ')}`);
+            logger.warn(`Invalid product IDs: ${invalidIds.join(', ')}`);
+            return res.redirect('/product');
+        }
+
+        // Proceed with deletion
+        Product.deleteMany({ _id: { $in: req.body.id } })
+            .then(nums => {
+                if (nums.deletedCount > 0) {
+                    req.flash('success', `${nums.deletedCount} Product(s) were deleted successfully!`);
+                    logger.info(`${nums.deletedCount} Product(s) deleted successfully.`);
+                } else {
+                    req.flash('danger', 'No Products were deleted. Please check if the products exist.');
+                    logger.warn('No Products were deleted, either due to non-existence or invalid IDs.');
+                }
+                res.redirect('/product');
+            })
+            .catch(err => {
+                // Log the error and provide a user-friendly message
+                logger.error(`Error deleting products: ${err.message || 'Unknown error'}`);
+                req.flash('danger', err.message || 'Some error occurred while deleting the Products.');
+                res.redirect('/product');
+            });
+
+    } catch (err) {
+        // Catch any unexpected errors
+        logger.error(`Unexpected error occurred while deleting products: ${err.message || 'Unknown error'}`);
+        req.flash('danger', err.message || 'An unexpected error occurred while deleting the Products.');
+        res.redirect('/product');
+    }
 };
 
 // Delete a Product imgs with the specified id in the request
