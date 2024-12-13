@@ -4,6 +4,8 @@ const multer = require('multer');
 const fs = require('fs');
 const slugify = require('slugify');
 const path = require('path');
+const mongoose = require('mongoose');
+const logger = require('../../logger.js');
 
 const storage = multer.diskStorage({
     destination: function (req, res, callback) {

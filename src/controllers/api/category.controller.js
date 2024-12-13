@@ -8,12 +8,26 @@ exports.findAll = async (req, res) => {
     let query = {};
 
     if (search) {
-        query.title = { $regex: new RegExp(search, 'i') };
+        query.title = { $regex: search, $options: 'i' };
     }
     if (category) {
-        const p_category = await Category.findOne({ slug: category });
-        if (p_category) {
-            query.parent = p_category._id;
+        try {
+            const p_category = await Category.findOne({ slug: category });
+            if (p_category) {
+                query.parent = p_category._id;
+            } else {
+                return res.status(404).send({
+                    success: false,
+                    message: `Category with slug '${category}' not found`,
+                });
+            }
+        } catch (error) {
+            console.error(`Error fetching category with slug '${category}':`, error);
+            return res.status(500).send({
+                success: false,
+                message: 'Internal Server Error: Error fetching parent category.',
+                error: error.message,
+            });
         }
     }
 
@@ -26,19 +40,17 @@ exports.findAll = async (req, res) => {
                 const categoryObj = category.toObject ? category.toObject() : category;
 
                 try {
-                    // Fetch the blog count for each category
+                    // Fetch products for each category
                     const products = await Product.find({
-                        category: categoryObj._id, // Make sure category._id is accessible
+                        category: categoryObj._id, // Ensure category._id is used correctly
                     }).populate(['category', 'country']).limit(12).exec();
 
-                    // Add the blogCount to the category object
+                    // Add products to category object
                     categoryObj.products = products;
-                    // console.log('category with blog count:', categoryObj);
 
-                    return categoryObj; // Return the updated object
+                    return categoryObj; // Return the updated category object with products
                 } catch (error) {
-                    console.error(`Error fetching blog count for category ${categoryObj._id}:`, error);
-                    // In case of an error, return the category without blog count
+                    console.error(`Error fetching products for category ${categoryObj._id}:`, error);
                     categoryObj.products = []; // Fallback value
                     return categoryObj;
                 }
@@ -46,29 +58,56 @@ exports.findAll = async (req, res) => {
         );
 
         let lists = {
-            data: categoriesWithProducts, current: page, offset: offset,
-            pages: Math.ceil(count / limit)
+            data: categoriesWithProducts,
+            current: page,
+            offset: offset,
+            pages: Math.ceil(count / limit),
         };
-        res.status(200).send({ success: true, message: count + ' Records Found', data: lists });
+        return res.status(200).send({
+            success: true,
+            message: `${count} Records Found`,
+            data: lists,
+        });
     } catch (err) {
-        res.status(500).send({ success: false, message: 'Internal Server Error', error: err });
+        console.error('Error fetching categories:', err);
+        return res.status(500).send({
+            success: false,
+            message: 'Internal Server Error: Error fetching categories.',
+            error: err.message || 'An error occurred while fetching categories.',
+        });
     }
 };
 
-// Find a single Category with an slug
+// Find a single Category with a slug
 exports.findOne = async (req, res) => {
     const slug = req.params.slug;
+
     try {
         const category = await Category.findOne({ slug: slug }).populate('parent');
         if (!category) {
-            return res.status(404).send({ success: false, message: 'Category not found' });
+            return res.status(404).send({
+                success: false,
+                message: `Category with slug '${slug}' not found`,
+            });
         }
 
+        // Fetch products related to the found category
         const products = await Product.find({
-            category: category._id, // Make sure category._id is accessible
+            category: category._id, // Ensure category._id is accessible
         }).populate(['category', 'country']);
-        res.status(200).send({ success: true, message: 'Record Found', data: category, products: products });
+
+        return res.status(200).send({
+            success: true,
+            message: 'Category and products found successfully',
+            data: category,
+            products: products,
+        });
     } catch (err) {
-        res.status(500).send({ success: false, message: 'Internal Server Error', error: err });
+        console.error(`Error fetching category with slug '${slug}':`, err);
+        return res.status(500).send({
+            success: false,
+            message: 'Internal Server Error: Error fetching category details.',
+            error: err.message || 'An error occurred while fetching category details.',
+        });
     }
 };

@@ -1,27 +1,54 @@
 const Enquiry = require('../../schemas/enquiry.js');
 
 // Create and Save a new Enquiry
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
     try {
-        // Create a Enquiry
+        // Validate input fields
+        const { name, email, mobile, subject, message } = req.body;
+
+        if (email) {
+            // Optionally validate email format
+            const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+            if (!emailRegex.test(email)) {
+                return res.status(400).send({
+                    success: false,
+                    message: 'Invalid email format.',
+                });
+            }
+        }
         const enquiry = {};
-        
-        enquiry.name = req.body.name ? req.body.name : '';
-        enquiry.email = req.body.email ? req.body.email : '';
-        enquiry.mobile = req.body.mobile ? req.body.mobile : '';
-        enquiry.subject = req.body.subject ? req.body.subject : '';
-        enquiry.message = req.body.message ? req.body.message : '';
+        // Prepare the enquiry object
+        enquiry.name = name ? name : '';
+        enquiry.email = email ? email : '';
+        enquiry.mobile = mobile ? mobile : '';
+        enquiry.subject = subject ? subject : '';
+        enquiry.message = message ? message : '';
 
         // Save enquiry in the database
-        Enquiry.create(enquiry)
-            .then(data => {
-                res.json({ success: true, message: 'We are working on your request and will get in touch as soon as possible. ' });
-            })
-            .catch(err => {
-                res.status(500).json({ success: false, message: 'Some Error Found', error: err });
-            });
+        const createdEnquiry = await Enquiry.create(enquiry);
 
-    } catch (error) {
-        res.status(500).json({ success: false, message: 'Internal Server Error', error: error });
+        return res.status(201).send({
+            success: true,
+            message: 'We are working on your request and will get in touch as soon as possible.',
+            data: createdEnquiry,
+        });
+    } catch (err) {
+        console.error('Error creating enquiry:', err);
+
+        // Handle specific error cases (e.g., database errors, validation errors)
+        if (err.name === 'ValidationError') {
+            return res.status(400).send({
+                success: false,
+                message: 'Validation Error: Invalid data format.',
+                error: err.message,
+            });
+        }
+
+        // General error handling
+        return res.status(500).send({
+            success: false,
+            message: 'Internal Server Error: Something went wrong while creating the enquiry.',
+            error: err.message || 'An unexpected error occurred.',
+        });
     }
 };

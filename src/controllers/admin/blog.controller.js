@@ -7,6 +7,8 @@ const multer = require('multer');
 const fs = require('fs');
 const slugify = require('slugify');
 const path = require('path');
+const mongoose = require('mongoose');
+const logger = require('../../logger.js');
 
 const storage = multer.diskStorage({
     destination: function (req, res, callback) {
@@ -196,7 +198,6 @@ exports.edit = async (req, res) => {
         });
 };
 
-
 // Update a Blog by the id in the request
 exports.update = async (req, res) => {
     const id = req.params.id;
@@ -248,32 +249,85 @@ exports.update = async (req, res) => {
 
 // Delete a Blog with the specified id in the request
 exports.delete = (req, res) => {
-    const id = req.params.id;
-    Blog.deleteOne({ _id: id })
-        .then(num => {
-            if (num.ok == 1) {
-                req.flash('success', `Blog deleted successfully!`);
+    try {
+        const id = req.params.id;
+
+        // Validate the Blog ID
+        if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+            req.flash('danger', 'Invalid Blog ID.');
+            logger.warn(`Attempt to delete with invalid ID: ${id}`);
+            return res.redirect('/blog');
+        }
+
+        // Proceed to delete the blog
+        Blog.deleteOne({ _id: id })
+            .then(result => {
+                if (result.deletedCount === 1) {
+                    // Successful deletion
+                    req.flash('success', `Blog deleted successfully!`);
+                    res.redirect('/blog');
+                } else {
+                    // No document was deleted (Blog not found)
+                    req.flash('danger', `Cannot delete Blog with id=${id}. Maybe the Blog was not found!`);
+                    logger.warn(`Blog with ID ${id} not found for deletion.`);
+                    res.redirect('/blog');
+                }
+            })
+            .catch(err => {
+                // Log and handle errors from the database
+                logger.error(`Error occurred while deleting Blog with ID ${id} - ${err.message || 'Unknown error'}`);
+                req.flash('danger', `Could not delete Blog with id=${id}. Please try again later.`);
                 res.redirect('/blog');
-            } else {
-                req.flash('danger', `Cannot delete Blog with id=${id}. Maybe Blog was not found!`);
-                res.redirect('/blog');
-            }
-        })
-        .catch(err => {
-            req.flash('danger', 'Could not delete Blog with id=' + id);
-            res.redirect('/blog');
-        });
+            });
+    } catch (err) {
+        // Catch unexpected errors and log them
+        logger.error(`Unexpected error during delete operation for Blog with ID ${req.params.id} - ${err.message || 'Unknown error'}`);
+        req.flash('danger', 'An unexpected error occurred while attempting to delete the Blog.');
+        res.redirect('/blog');
+    }
 };
 
-// Delete all Blogs from the database.
+// Delete all Blog from the database.
 exports.deleteAll = (req, res) => {
-    Blog.deleteMany({ _id: { $in: req.body.id } })
-        .then(nums => {
-            req.flash('success', `${nums.deletedCount} Blogs were deleted successfully!`);
-            res.redirect('/blog');
-        })
-        .catch(err => {
-            req.flash('danger', err.message || 'Some error occurred while creating the Blog.');
-            res.redirect('/blog');
-        });
+    try {
+        // Validate the ID array
+        if (!req.body.id || !Array.isArray(req.body.id) || req.body.id.length === 0) {
+            req.flash('danger', 'No blog IDs provided for deletion.');
+            logger.warn('No blog IDs provided for deletion.');
+            return res.redirect('/blog');
+        }
+
+        // Validate each ID in the array
+        const invalidIds = req.body.id.filter(id => !mongoose.Types.ObjectId.isValid(id));
+        if (invalidIds.length > 0) {
+            req.flash('danger', `Invalid blog IDs: ${invalidIds.join(', ')}`);
+            logger.warn(`Invalid blog IDs: ${invalidIds.join(', ')}`);
+            return res.redirect('/blog');
+        }
+
+        // Proceed with deletion
+        Blog.deleteMany({ _id: { $in: req.body.id } })
+            .then(nums => {
+                if (nums.deletedCount > 0) {
+                    req.flash('success', `${nums.deletedCount} Blog(s) were deleted successfully!`);
+                    logger.info(`${nums.deletedCount} Blog(s) deleted successfully.`);
+                } else {
+                    req.flash('danger', 'No Blogs were deleted. Please check if the blogs exist.');
+                    logger.warn('No Blogs were deleted, either due to non-existence or invalid IDs.');
+                }
+                res.redirect('/blog');
+            })
+            .catch(err => {
+                // Log the error and provide a user-friendly message
+                logger.error(`Error deleting blogs: ${err.message || 'Unknown error'}`);
+                req.flash('danger', err.message || 'Some error occurred while deleting the Blogs.');
+                res.redirect('/blog');
+            });
+
+    } catch (err) {
+        // Catch any unexpected errors
+        logger.error(`Unexpected error occurred while deleting blogs: ${err.message || 'Unknown error'}`);
+        req.flash('danger', err.message || 'An unexpected error occurred while deleting the Blogs.');
+        res.redirect('/blog');
+    }
 };

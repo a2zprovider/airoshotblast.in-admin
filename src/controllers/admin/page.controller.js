@@ -140,7 +140,7 @@ exports.create = (req, res) => {
             page.slug = req.body.slug ? slugify(req.body.slug, { lower: true }) : slugify(req.body.title, { lower: true });
             page.except = req.body.except || '';
             page.description = req.body.description;
-            page.parent = req.body.parent || '';
+            page.parent = req.body.parent || null;
 
             // Handle image uploads
             if (req.files && req.files['image'] && req.files['image'][0]) {
@@ -377,7 +377,7 @@ exports.update = (req, res) => {
                 slug: req.body.slug ? slugify(req.body.slug, { lower: true }) : slugify(req.body.title, { lower: true }),
                 except: req.body.except,
                 description: req.body.description,
-                parent: req.body.parent,
+                parent: req.body.parent || null,
                 seo_title: req.body.seo_title,
                 seo_keywords: req.body.seo_keywords,
                 seo_description: req.body.seo_description,
