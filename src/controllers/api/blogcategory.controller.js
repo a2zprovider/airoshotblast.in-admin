@@ -1,45 +1,54 @@
 const BlogCategory = require('../../schemas/blogcategory.js');
 const Blog = require('../../schemas/blog.js');
 
-// Retrieve all Blog Category from the database.
+// Retrieve all Blog Categories from the database.
 exports.findAll = async (req, res) => {
     const { page = 1, limit = 10, search, category } = req.query;
     const offset = (page - 1) * limit;
     let query = {};
 
-    if (search) {
-        query.title = { $regex: new RegExp(search, 'i') };
-    }
-    if (category) {
-        const p_category = await BlogCategory.findOne({ slug: category });
-        if (p_category) {
+    try {
+        // Validate page and limit
+        if (isNaN(page) || page <= 0) {
+            return res.status(400).send({ success: false, message: 'Invalid page number' });
+        }
+        if (isNaN(limit) || limit <= 0) {
+            return res.status(400).send({ success: false, message: 'Invalid limit number' });
+        }
+
+        // Search filter
+        if (search) {
+            query.title = { $regex: search, $options: 'i' };
+        }
+
+        // Category filter
+        if (category) {
+            const p_category = await BlogCategory.findOne({ slug: category });
+            if (!p_category) {
+                return res.status(400).send({ success: false, message: 'Invalid category slug' });
+            }
             query.parent = p_category._id;
         }
-    }
 
-    try {
+        // Fetch categories with pagination and population
         const categories = await BlogCategory.find(query).skip(offset).limit(parseInt(limit)).populate('parent').exec();
         const count = await BlogCategory.find(query).countDocuments();
 
+        // Fetch the blog count for each category
         const categoriesWithBlogCount = await Promise.all(
             categories.map(async (category) => {
                 const categoryObj = category.toObject ? category.toObject() : category;
 
                 try {
-                    // Fetch the blog count for each category
                     const blogCount = await Blog.countDocuments({
-                        categories: categoryObj._id, // Make sure category._id is accessible
+                        categories: categoryObj._id, // Ensure category._id is accessible
                     });
 
-                    // Add the blogCount to the category object
                     categoryObj.blogCount = blogCount;
-                    console.log('category with blog count:', categoryObj);
-
-                    return categoryObj; // Return the updated object
+                    return categoryObj;
                 } catch (error) {
                     console.error(`Error fetching blog count for category ${categoryObj._id}:`, error);
-                    // In case of an error, return the category without blog count
-                    categoryObj.blogCount = 0; // Fallback value
+                    categoryObj.blogCount = 0; // Fallback to 0 if an error occurs
                     return categoryObj;
                 }
             })
@@ -47,28 +56,47 @@ exports.findAll = async (req, res) => {
 
         let lists = {
             data: categoriesWithBlogCount, current: page, offset: offset,
-            pages: Math.ceil(count / limit)
+            pages: Math.ceil(count / limit),
         };
-        res.status(200).send({ success: true, message: count + ' Records Found', data: lists });
+
+        res.status(200).send({
+            success: true,
+            message: `${count} Records Found`,
+            data: lists,
+        });
     } catch (err) {
-        res.status(500).send({ success: false, message: 'Internal Server Error', error: err });
+        console.error('Error fetching categories:', err);
+        res.status(500).send({ success: false, message: 'Internal Server Error', error: err.message });
     }
 };
 
-// Find a single Blog Category with an slug
+// Find a single Blog Category with a slug
 exports.findOne = async (req, res) => {
     const slug = req.params.slug;
+
     try {
+        // Validate slug parameter
+        if (!slug) {
+            return res.status(400).send({ success: false, message: 'Category slug is required' });
+        }
+
         const category = await BlogCategory.findOne({ slug: slug }).populate('parent');
         if (!category) {
             return res.status(404).send({ success: false, message: 'Category not found' });
         }
+
         const blogs = await Blog.find({
-            categories: category._id, // Make sure category._id is accessible
+            categories: category._id, // Ensure category._id is accessible
         });
 
-        res.status(200).send({ success: true, message: 'Record Found', data: category, blogs: blogs });
+        res.status(200).send({
+            success: true,
+            message: 'Record Found',
+            data: category,
+            blogs: blogs,
+        });
     } catch (err) {
-        res.status(500).send({ success: false, message: 'Internal Server Error', error: err });
+        console.error(`Error fetching category with slug ${slug}:`, err);
+        res.status(500).send({ success: false, message: 'Internal Server Error', error: err.message });
     }
 };
