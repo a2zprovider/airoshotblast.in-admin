@@ -16,6 +16,11 @@ const Role = require('../../schemas/role.js');
 const mongoose = require('mongoose');
 const logger = require('../../logger.js');
 
+const multer = require('multer');
+const fs = require('fs');
+const slugify = require('slugify');
+const path = require('path');
+
 // Login
 exports.login = async (req, res) => {
     const success = req.flash('success');
@@ -231,13 +236,6 @@ exports.passwordUpdate = async (req, res) => {
         });
 
 };
-
-
-const multer = require('multer');
-const fs = require('fs');
-const slugify = require('slugify');
-const path = require('path');
-const logger = require('../../logger.js');
 
 // Set up storage for Multer
 const storage = multer.diskStorage({
