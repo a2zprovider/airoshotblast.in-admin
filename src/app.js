@@ -40,6 +40,12 @@ const corsOptions = {
         "http://localhost:5173/",
         "http://185.166.39.93:3000/",
         "http://185.166.39.93:3000",
+        "http://gulfsouks.com",
+        "http://gulfsouks.com/",
+        "https://gulfsouks.com",
+        "https://gulfsouks.com/",
+        "https://www.gulfsouks.com",
+        "https://www.gulfsouks.com/",
     ],
     methods: "GET,POST,PUT,DELETE"
 };
