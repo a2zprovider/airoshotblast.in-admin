@@ -3,26 +3,31 @@ const Product = require('../../schemas/product.js');
 
 // Retrieve all Category from the database.
 exports.findAll = async (req, res) => {
-    const { page = 1, limit = 10, search, category } = req.query;
+    const { page = 1, limit = 10, search, parent } = req.query;
     const offset = (page - 1) * limit;
     let query = {};
 
     if (search) {
         query.title = { $regex: search, $options: 'i' };
     }
-    if (category) {
+    if (parent) {
         try {
-            const p_category = await Category.findOne({ slug: category });
-            if (p_category) {
-                query.parent = p_category._id;
-            } else {
-                return res.status(404).send({
-                    success: false,
-                    message: `Category with slug '${category}' not found`,
-                });
+            // Parent filter
+            if (parent == 'null') {
+                query.parent = null; // Fetch only parent pages
+            } else if (parent) {
+                const p_category = await Category.findOne({ slug: parent });
+                if (p_category) {
+                    query.parent = p_category._id;
+                } else {
+                    return res.status(404).send({
+                        success: false,
+                        message: `Category with slug '${parent}' not found`,
+                    });
+                }
             }
         } catch (error) {
-            console.error(`Error fetching category with slug '${category}':`, error);
+            console.error(`Error fetching category with slug '${parent}':`, error);
             return res.status(500).send({
                 success: false,
                 message: 'Internal Server Error: Error fetching parent category.',
@@ -36,8 +41,8 @@ exports.findAll = async (req, res) => {
         const count = await Category.find(query).countDocuments();
 
         const categoriesWithProducts = await Promise.all(
-            categories.map(async (category) => {
-                const categoryObj = category.toObject ? category.toObject() : category;
+            categories.map(async (cat) => {
+                const categoryObj = cat.toObject ? cat.toObject() : cat;
 
                 try {
                     // Fetch products for each category

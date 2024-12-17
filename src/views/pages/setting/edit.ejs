@@ -72,7 +72,7 @@
                                     <div class="invalid-feedback"> Please enter mobile. </div>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <label for="logo" class="form-label">Logo</label>
                                     <input type="file" name="logo" class="form-control" id="logo">
                                     <div class="invalid-feedback"> Please select logo. </div>
@@ -81,7 +81,16 @@
                                         <img src="upload/setting/logo/<%= list.logo %>" width="50px" alt="<%= list.title %>">
                                         <% } %>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
+                                    <label for="logo2" class="form-label">Logo 2</label>
+                                    <input type="file" name="logo2" class="form-control" id="logo2">
+                                    <div class="invalid-feedback"> Please select logo2. </div>
+                                    <% if(list.logo2){ %>
+                                        <br>
+                                        <img src="upload/setting/logo2/<%= list.logo2 %>" width="50px" alt="<%= list.title %>">
+                                        <% } %>
+                                </div>
+                                <div class="col-md-3">
                                     <label for="favicon" class="form-label">Favicon</label>
                                     <input type="file" name="favicon" class="form-control" id="favicon">
                                     <div class="invalid-feedback"> Please select favicon. </div>
@@ -90,7 +99,7 @@
                                         <img src="upload/setting/favicon/<%= list.favicon %>" width="50px" alt="<%= list.title %>">
                                         <% } %>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <label for="brochure" class="form-label">Brochure</label>
                                     <input type="file" name="brochure" class="form-control" id="brochure">
                                     <div class="invalid-feedback"> Please select brochure. </div>
@@ -173,21 +182,21 @@
                                     <div class="invalid-feedback"> Please enter home page seo description. </div>
                                 </div>
 
-                                <!-- Setting -->
+                                <!-- Product -->
                                 <div class="col-md-12">
-                                    <label for="p_seo_title" class="form-label">Setting Page Seo Title</label>
-                                    <input type="text" name="seo_details[p_seo_title]" value="<%= list.seo_details?JSON.parse(list.seo_details).p_seo_title:'' %>" class="form-control" id="home_seo_title" placeholder="Setting Page Seo Title">
+                                    <label for="p_seo_title" class="form-label">Product Page Seo Title</label>
+                                    <input type="text" name="seo_details[p_seo_title]" value="<%= list.seo_details?JSON.parse(list.seo_details).p_seo_title:'' %>" class="form-control" id="home_seo_title" placeholder="Product Page Seo Title">
                                     <div class="invalid-feedback"> Please enter setting page seo title. </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="p_seo_keywords" class="form-label">Setting Page Seo Keywords</label>
-                                    <textarea name="seo_details[p_seo_keywords]" value="<%= list.seo_details?JSON.parse(list.seo_details).p_seo_keywords:'' %>" class="w-100 form-control" rows="4" id="p_seo_keywords" placeholder="Setting Page Seo Keywords"><%= list.seo_details?JSON.parse(list.seo_details).p_seo_keywords:'' %></textarea>
+                                    <label for="p_seo_keywords" class="form-label">Product Page Seo Keywords</label>
+                                    <textarea name="seo_details[p_seo_keywords]" value="<%= list.seo_details?JSON.parse(list.seo_details).p_seo_keywords:'' %>" class="w-100 form-control" rows="4" id="p_seo_keywords" placeholder="Product Page Seo Keywords"><%= list.seo_details?JSON.parse(list.seo_details).p_seo_keywords:'' %></textarea>
                                     <div class="invalid-feedback"> Please enter setting page seo keywords. </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="p_seo_description" class="form-label">Setting Page Seo
+                                    <label for="p_seo_description" class="form-label">Product Page Seo
                                         Description</label>
-                                    <textarea name="seo_details[p_seo_description]" value="<%= list.seo_details?JSON.parse(list.seo_details).p_seo_description:'' %>" class="w-100 form-control" rows="4" id="p_seo_description" placeholder="Setting Page Seo Description"><%= list.seo_details?JSON.parse(list.seo_details).p_seo_description:'' %></textarea>
+                                    <textarea name="seo_details[p_seo_description]" value="<%= list.seo_details?JSON.parse(list.seo_details).p_seo_description:'' %>" class="w-100 form-control" rows="4" id="p_seo_description" placeholder="Product Page Seo Description"><%= list.seo_details?JSON.parse(list.seo_details).p_seo_description:'' %></textarea>
                                     <div class="invalid-feedback"> Please enter setting page seo description. </div>
                                 </div>
 
@@ -261,6 +270,60 @@
                                         Description</label>
                                     <textarea name="seo_details[t_seo_description]" value="<%= list.seo_details?JSON.parse(list.seo_details).t_seo_description:'' %>" class="w-100 form-control" rows="4" id="t_seo_description" placeholder="Tag Page Seo Description"><%= list.seo_details?JSON.parse(list.seo_details).t_seo_description:'' %></textarea>
                                     <div class="invalid-feedback"> Please enter tag page seo description. </div>
+                                </div>
+                                
+                                <!-- Video -->
+                                <div class="col-md-12">
+                                    <label for="v_seo_title" class="form-label">Video Page Seo Title</label>
+                                    <input type="text" name="seo_details[v_seo_title]" value="<%= list.seo_details?JSON.parse(list.seo_details).v_seo_title:'' %>" class="form-control" id="v_seo_title" placeholder="Video Page Seo Title">
+                                    <div class="invalid-feedback"> Please enter video page seo title. </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="v_seo_keywords" class="form-label">Video Page Seo Keywords</label>
+                                    <textarea name="seo_details[v_seo_keywords]" value="<%= list.seo_details?JSON.parse(list.seo_details).v_seo_keywords:'' %>" class="w-100 form-control" rows="4" id="v_seo_keywords" placeholder="Video Page Seo Keywords"><%= list.seo_details?JSON.parse(list.seo_details).v_seo_keywords:'' %></textarea>
+                                    <div class="invalid-feedback"> Please enter video page seo keywords. </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="v_seo_description" class="form-label">Video Page Seo
+                                        Description</label>
+                                    <textarea name="seo_details[v_seo_description]" value="<%= list.seo_details?JSON.parse(list.seo_details).v_seo_description:'' %>" class="w-100 form-control" rows="4" id="v_seo_description" placeholder="Video Page Seo Description"><%= list.seo_details?JSON.parse(list.seo_details).v_seo_description:'' %></textarea>
+                                    <div class="invalid-feedback"> Please enter video page seo description. </div>
+                                </div>
+                                
+                                <!-- Faq -->
+                                <div class="col-md-12">
+                                    <label for="f_seo_title" class="form-label">Faq Page Seo Title</label>
+                                    <input type="text" name="seo_details[f_seo_title]" value="<%= list.seo_details?JSON.parse(list.seo_details).f_seo_title:'' %>" class="form-control" id="f_seo_title" placeholder="Faq Page Seo Title">
+                                    <div class="invalid-feedback"> Please enter faq page seo title. </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="f_seo_keywords" class="form-label">Faq Page Seo Keywords</label>
+                                    <textarea name="seo_details[f_seo_keywords]" value="<%= list.seo_details?JSON.parse(list.seo_details).f_seo_keywords:'' %>" class="w-100 form-control" rows="4" id="f_seo_keywords" placeholder="Faq Page Seo Keywords"><%= list.seo_details?JSON.parse(list.seo_details).f_seo_keywords:'' %></textarea>
+                                    <div class="invalid-feedback"> Please enter faq page seo keywords. </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="f_seo_description" class="form-label">Faq Page Seo
+                                        Description</label>
+                                    <textarea name="seo_details[f_seo_description]" value="<%= list.seo_details?JSON.parse(list.seo_details).f_seo_description:'' %>" class="w-100 form-control" rows="4" id="f_seo_description" placeholder="Faq Page Seo Description"><%= list.seo_details?JSON.parse(list.seo_details).f_seo_description:'' %></textarea>
+                                    <div class="invalid-feedback"> Please enter faq page seo description. </div>
+                                </div>
+                                
+                                <!-- Career -->
+                                <div class="col-md-12">
+                                    <label for="career_seo_title" class="form-label">Career Page Seo Title</label>
+                                    <input type="text" name="seo_details[career_seo_title]" value="<%= list.seo_details?JSON.parse(list.seo_details).career_seo_title:'' %>" class="form-control" id="career_seo_title" placeholder="Career Page Seo Title">
+                                    <div class="invalid-feedback"> Please enter career page seo title. </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="career_seo_keywords" class="form-label">Career Page Seo Keywords</label>
+                                    <textarea name="seo_details[career_seo_keywords]" value="<%= list.seo_details?JSON.parse(list.seo_details).career_seo_keywords:'' %>" class="w-100 form-control" rows="4" id="career_seo_keywords" placeholder="Career Page Seo Keywords"><%= list.seo_details?JSON.parse(list.seo_details).career_seo_keywords:'' %></textarea>
+                                    <div class="invalid-feedback"> Please enter career page seo keywords. </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="career_seo_description" class="form-label">Career Page Seo
+                                        Description</label>
+                                    <textarea name="seo_details[career_seo_description]" value="<%= list.seo_details?JSON.parse(list.seo_details).career_seo_description:'' %>" class="w-100 form-control" rows="4" id="career_seo_description" placeholder="Career Page Seo Description"><%= list.seo_details?JSON.parse(list.seo_details).career_seo_description:'' %></textarea>
+                                    <div class="invalid-feedback"> Please enter career page seo description. </div>
                                 </div>
 
                                 <hr>
