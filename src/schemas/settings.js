@@ -5,6 +5,7 @@ const SettingSchema = new Schema({
     title: String,
     tagline: String,
     logo: String,
+    logo2: String,
     favicon: String,
     brochure: String,
     mobile: Number,
