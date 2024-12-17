@@ -15,6 +15,12 @@ const storage = multer.diskStorage({
                 fs.mkdirSync(dir);
             }
             callback(null, dir);
+        } else if (res.fieldname === "logo2") {
+            var dir = "./src/public/upload/setting/logo2";
+            if (!fs.existsSync(dir)) {
+                fs.mkdirSync(dir);
+            }
+            callback(null, dir);
         } else if (res.fieldname === "favicon") {
             var dir = "./src/public/upload/setting/favicon";
             if (!fs.existsSync(dir)) {
@@ -33,6 +39,8 @@ const storage = multer.diskStorage({
     filename: function (req, res, callback) {
         if (res.fieldname === "logo") {
             callback(null, res.fieldname + path.extname(res.originalname));
+        } else if (res.fieldname === "logo2") {
+            callback(null, res.fieldname + path.extname(res.originalname));
         } else if (res.fieldname === "favicon") {
             callback(null, res.fieldname + path.extname(res.originalname));
         } else if (res.fieldname === "brochure") {
@@ -41,7 +49,7 @@ const storage = multer.diskStorage({
     }
 })
 
-const upload = multer({ storage: storage }).fields([{ name: 'logo', maxCount: 1 }, { name: 'favicon', maxCount: 1 }, { name: 'brochure', maxCount: 1 }]);
+const upload = multer({ storage: storage }).fields([{ name: 'logo', maxCount: 1 }, { name: 'logo2', maxCount: 1 }, { name: 'favicon', maxCount: 1 }, { name: 'brochure', maxCount: 1 }]);
 
 exports.edit = (req, res) => {
     const user = req.cookies['user'];
@@ -105,6 +113,9 @@ exports.update = async (req, res) => {
         if (req.files && req.files.logo) {
             setting_detail.logo = req.files.logo[0].filename;
         }
+        if (req.files && req.files.logo2) {
+            setting_detail.logo2 = req.files.logo2[0].filename;
+        }
         if (req.files && req.files.favicon) {
             setting_detail.favicon = req.files.favicon[0].filename;
         }
@@ -153,6 +164,9 @@ exports.update1 = (req, res) => {
 
         if (req.files && req.files.logo) {
             detail.logo = req.files.logo[0].filename;
+        }
+        if (req.files && req.files.logo2) {
+            detail.logo2 = req.files.logo2[0].filename;
         }
         if (req.files && req.files.favicon) {
             detail.favicon = req.files.favicon[0].filename;
