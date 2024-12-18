@@ -4,7 +4,7 @@ const Category = require('../../schemas/category.js');
 
 // Retrieve all Products from the database.
 exports.findAll = async (req, res) => {
-    const { page = 1, limit = 10, search, country, category } = req.query;
+    const { page = 1, limit = 10, search, country, category, categories } = req.query;
     const offset = (page - 1) * limit;
     let query = {};
 
@@ -26,6 +26,10 @@ exports.findAll = async (req, res) => {
     // Handle search query if provided
     if (search) {
         query.title = { $regex: search, $options: 'i' };
+    }
+    if (categories) {
+        const c = categories.split(',');
+        query.category = { $in: c };
     }
 
     // Handle country query if provided
