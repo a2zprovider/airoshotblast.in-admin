@@ -53,10 +53,17 @@ exports.findAll = async (req, res) => {
                     // Add products to category object
                     categoryObj.products = products;
 
+                    // Fetch subcategory for each category
+                    const subcategory = await Category.find({ parent: categoryObj._id });
+
+                    // Add subcategory to category object
+                    categoryObj.subcategory = subcategory;
+
                     return categoryObj; // Return the updated category object with products
                 } catch (error) {
                     console.error(`Error fetching products for category ${categoryObj._id}:`, error);
                     categoryObj.products = []; // Fallback value
+                    categoryObj.subcategory = []; // Fallback value
                     return categoryObj;
                 }
             })
