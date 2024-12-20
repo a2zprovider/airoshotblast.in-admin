@@ -2,7 +2,7 @@ const Page = require('../../schemas/page.js');
 
 // Retrieve all Pages from the database.
 exports.findAll = async (req, res) => {
-    const { page = 1, limit = 10, search, parent = null } = req.query;
+    const { page = 1, limit = 10, search, parent = null, sortBy = 'createdAt', sortOrder = 'desc' } = req.query;
     const offset = (page - 1) * limit;
 
     // Validate query parameters
@@ -32,8 +32,10 @@ exports.findAll = async (req, res) => {
             query.parent = p._id;
         }
 
+        const sort = {};
+        sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
         // Query pages from the database
-        const pages = await Page.find(query).skip(offset).limit(parseInt(limit)).exec();
+        const pages = await Page.find(query).sort(sort).skip(offset).limit(parseInt(limit)).exec();
         const count = await Page.find(query).countDocuments();
 
         // Prepare response data

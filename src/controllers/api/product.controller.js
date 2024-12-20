@@ -4,7 +4,7 @@ const Category = require('../../schemas/category.js');
 
 // Retrieve all Products from the database.
 exports.findAll = async (req, res) => {
-    const { page = 1, limit = 10, search, country, category, categories } = req.query;
+    const { page = 1, limit = 10, search, country, category, categories, sortBy = 'createdAt', sortOrder = 'desc' } = req.query;
     const offset = (page - 1) * limit;
     let query = {};
 
@@ -77,9 +77,12 @@ exports.findAll = async (req, res) => {
     }
 
     try {
+        const sort = {};
+        sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
         const products = await Product.find(query)
             .skip(offset)
             .limit(parseInt(limit))
+            .sort(sort)
             .populate(['category', 'country'])
             .exec();
 
@@ -130,9 +133,7 @@ exports.findOne = async (req, res) => {
                     category: product.category._id,
                     _id: { $ne: product._id },
                 })
-                    .populate(['category', 'country'])
-                    .limit(4)
-                    .exec();
+                    .populate(['category', 'country']);
                 return res.status(200).send({
                     success: true,
                     message: 'Record Found',

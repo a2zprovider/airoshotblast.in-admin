@@ -2,7 +2,7 @@ const Slider = require('../../schemas/slider.js');
 
 // Retrieve all Sliders from the database.
 exports.findAll = async (req, res) => {
-    const { page = 1, limit = 10, search } = req.query;
+    const { page = 1, limit = 10, search, sortBy = 'createdAt', sortOrder = 'desc' } = req.query;
     const offset = (page - 1) * limit;
     let query = {};
 
@@ -27,8 +27,10 @@ exports.findAll = async (req, res) => {
     }
 
     try {
+        const sort = {};
+        sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
         // Fetch sliders from the database with pagination
-        const sliders = await Slider.find(query)
+        const sliders = await Slider.find(query).sort(sort)
             .skip(offset)
             .limit(parseInt(limit))
             .exec();

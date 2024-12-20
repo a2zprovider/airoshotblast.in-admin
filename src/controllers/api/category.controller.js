@@ -3,7 +3,7 @@ const Product = require('../../schemas/product.js');
 
 // Retrieve all Category from the database.
 exports.findAll = async (req, res) => {
-    const { page = 1, limit = 10, search, parent } = req.query;
+    const { page = 1, limit = 10, search, parent, sortBy = 'createdAt', sortOrder = 'desc' } = req.query;
     const offset = (page - 1) * limit;
     let query = {};
 
@@ -37,7 +37,9 @@ exports.findAll = async (req, res) => {
     }
 
     try {
-        const categories = await Category.find(query).skip(offset).limit(parseInt(limit)).populate('parent').exec();
+        const sort = {};
+        sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
+        const categories = await Category.find(query).sort(sort).skip(offset).limit(parseInt(limit)).populate('parent').exec();
         const count = await Category.find(query).countDocuments();
 
         const categoriesWithProducts = await Promise.all(
