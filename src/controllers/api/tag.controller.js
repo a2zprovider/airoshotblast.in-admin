@@ -3,7 +3,7 @@ const Blog = require('../../schemas/blog.js');
 
 // Retrieve all Tags from the database.
 exports.findAll = async (req, res) => {
-    const { page = 1, limit = 10, search } = req.query;
+    const { page = 1, limit = 10, search, sortBy = 'createdAt', sortOrder = 'desc' } = req.query;
     const offset = (page - 1) * limit;
     let query = {};
 
@@ -28,8 +28,10 @@ exports.findAll = async (req, res) => {
     }
 
     try {
+        const sort = {};
+        sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
         // Fetch tags from the database with pagination
-        const tags = await Tag.find(query)
+        const tags = await Tag.find(query).sort(sort)
             .skip(offset)
             .limit(parseInt(limit))
             .exec();
