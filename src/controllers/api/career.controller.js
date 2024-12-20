@@ -30,7 +30,7 @@ const upload = multer({ storage: storage }).single('file');
 
 // Retrieve all Careers from the database.
 exports.findAll = async (req, res) => {
-    const { page = 1, limit = 10, search, country } = req.query;
+    const { page = 1, limit = 10, search, country, sortBy = 'createdAt', sortOrder = 'desc' } = req.query;
     const offset = (page - 1) * limit;
     let query = {};
 
@@ -39,7 +39,9 @@ exports.findAll = async (req, res) => {
     }
 
     try {
-        const careers = await Career.find(query).skip(offset).limit(parseInt(limit)).exec();
+        const sort = {};
+        sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
+        const careers = await Career.find(query).sort(sort).skip(offset).limit(parseInt(limit)).exec();
         const count = await Career.find(query).countDocuments();
 
         let lists = {

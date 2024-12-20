@@ -3,7 +3,7 @@ const Country = require('../../schemas/country.js');
 
 // Retrieve all Applications from the database.
 exports.findAll = async (req, res) => {
-    const { page = 1, limit = 10, search, country } = req.query;
+    const { page = 1, limit = 10, search, country, sortBy = 'createdAt', sortOrder = 'desc' } = req.query;
     const offset = (page - 1) * limit;
     let query = {};
 
@@ -23,8 +23,10 @@ exports.findAll = async (req, res) => {
             }
         }
 
+        const sort = {};
+        sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
         // Fetch applications with pagination
-        const applications = await Application.find(query).skip(offset).limit(parseInt(limit)).populate('country').exec();
+        const applications = await Application.find(query).sort(sort).skip(offset).limit(parseInt(limit)).populate('country').exec();
         const count = await Application.find(query).countDocuments();
 
         const lists = {
