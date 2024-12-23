@@ -277,7 +277,7 @@ const upload = multer({
     },
     fileFilter: function (req, file, callback) {
         // Allow only images (jpg, jpeg, png, gif) and PDFs
-        const allowedTypes = /jpg|jpeg|png|gif|pdf/;
+        const allowedTypes = /jpg|jpeg|png|gif|webp|pdf/;
         const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
         const mimetype = allowedTypes.test(file.mimetype);
 
@@ -287,7 +287,7 @@ const upload = multer({
         } else {
             // Reject the file and provide an error message
             logger.warn(`File upload rejected: Invalid file type (only JPG, JPEG, PNG, GIF, and PDF are allowed)`);
-            callback(new Error('Invalid file type. Only JPG, JPEG, PNG, GIF, and PDF files are allowed.'));
+            callback(new Error('Invalid file type. Only JPG, JPEG, PNG, GIF, WEBP, and PDF files are allowed.'));
         }
     }
 }).single('image'); // Handling single file upload (adjust if needed for multiple files)
