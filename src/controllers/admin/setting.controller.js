@@ -9,47 +9,82 @@ const logger = require('../../logger.js');
 
 const storage = multer.diskStorage({
     destination: function (req, res, callback) {
-        if (res.fieldname === "logo") {
-            var dir = "./src/public/upload/setting/logo";
-            if (!fs.existsSync(dir)) {
-                fs.mkdirSync(dir);
+        try {
+            // Check the fieldname to decide where to store the file
+            let dir;
+            if (res.fieldname === "logo") {
+                dir = "./src/public/upload/setting/logo";
+            } else if (res.fieldname === "logo2") {
+                dir = "./src/public/upload/setting/logo2";
+            } else if (res.fieldname === "favicon") {
+                dir = "./src/public/upload/setting/favicon";
+            } else if (res.fieldname === "brochure") {
+                dir = "./src/public/upload/setting/brochure";
+            } else {
+                dir = "./src/public/upload/setting/other";
             }
-            callback(null, dir);
-        } else if (res.fieldname === "logo2") {
-            var dir = "./src/public/upload/setting/logo2";
-            if (!fs.existsSync(dir)) {
-                fs.mkdirSync(dir);
-            }
-            callback(null, dir);
-        } else if (res.fieldname === "favicon") {
-            var dir = "./src/public/upload/setting/favicon";
-            if (!fs.existsSync(dir)) {
-                fs.mkdirSync(dir);
-            }
-            callback(null, dir);
-        } else if (res.fieldname === "brochure") {
-            var dir = "./src/public/upload/setting/brochure";
-            if (!fs.existsSync(dir)) {
-                fs.mkdirSync(dir);
-            }
-            callback(null, dir);
-        }
 
+            // Check if the directory exists, if not, create it
+            if (!fs.existsSync(dir)) {
+                fs.mkdirSync(dir, { recursive: true }); // Ensures parent directories are created if they don't exist
+            }
+
+            // Proceed to store the file
+            callback(null, dir);
+        } catch (err) {
+            // Log any errors related to directory creation and pass the error to the callback
+            logger.error(`Error in multer destination function: ${err.message || 'Unknown error'}`);
+            callback(new Error('Error creating upload directory.'));
+        }
     },
+
     filename: function (req, res, callback) {
-        if (res.fieldname === "logo") {
-            callback(null, res.fieldname + path.extname(res.originalname));
-        } else if (res.fieldname === "logo2") {
-            callback(null, res.fieldname + path.extname(res.originalname));
-        } else if (res.fieldname === "favicon") {
-            callback(null, res.fieldname + path.extname(res.originalname));
-        } else if (res.fieldname === "brochure") {
-            callback(null, res.fieldname + path.extname(res.originalname));
+        try {
+            // Generate the file name based on the fieldname and current timestamp
+            let fileName;
+            if (res.fieldname === "image") {
+                fileName = res.fieldname + '-' + Date.now() + Math.random().toString().substr(2, 6) + path.extname(res.originalname);
+            } else if (res.fieldname === "logo2") {
+                fileName = res.fieldname + '-' + Date.now() + Math.random().toString().substr(2, 6) + path.extname(res.originalname);
+            } else if (res.fieldname === "favicon") {
+                fileName = res.fieldname + '-' + Date.now() + Math.random().toString().substr(2, 6) + path.extname(res.originalname);
+            } else if (res.fieldname === "brochure") {
+                fileName = res.fieldname + '-' + Date.now() + Math.random().toString().substr(2, 6) + path.extname(res.originalname);
+            } else {
+                fileName = 'other' + Math.random().toString().substr(2, 6) + '-' + Date.now() + Math.random().toString().substr(2, 6) + path.extname(res.originalname);
+            }
+
+            // Pass the file name to the callback
+            callback(null, fileName);
+        } catch (err) {
+            // Log any errors related to file name generation
+            logger.error(`Error in multer filename function: ${err.message || 'Unknown error'}`);
+            callback(new Error('Error generating file name.'));
         }
     }
-})
+});
 
-const upload = multer({ storage: storage }).fields([{ name: 'logo', maxCount: 1 }, { name: 'logo2', maxCount: 1 }, { name: 'favicon', maxCount: 1 }, { name: 'brochure', maxCount: 1 }]);
+// Create a multer instance with storage configuration and additional error handling
+const upload = multer({
+    storage: storage,
+    limits: {
+        fileSize: 10 * 1024 * 1024 // Set a file size limit of 10MB (can adjust as necessary)
+    },
+    fileFilter: function (req, file, callback) {
+        // Filter allowed file types (e.g., only images and PDF)
+        const allowedTypes = /jpg|jpeg|png|gif|webp|pdf/;
+        const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
+        const mimetype = allowedTypes.test(file.mimetype);
+
+        if (extname && mimetype) {
+            return callback(null, true);
+        } else {
+            const errorMessage = 'Invalid file type. Only JPG, JPEG, PNG, GIF, WEBP, and PDF files are allowed.';
+            logger.warn(`File upload error: ${errorMessage}`);
+            return callback(new Error(errorMessage));
+        }
+    }
+}).any();
 
 exports.edit = (req, res) => {
     const user = req.cookies['user'];
@@ -110,6 +145,29 @@ exports.update = async (req, res) => {
         setting_detail.seo_details = req.body.seo_details ? JSON.stringify(req.body.seo_details) : '';
         setting_detail.other_details = req.body.other_details ? JSON.stringify(req.body.other_details) : '';
 
+        // Process uploaded files if any
+        if (req.files && req.files.length > 0) {
+            req.files.forEach((file) => {
+                if (file.fieldname.startsWith('field[image][')) {
+                    const match = file.fieldname.match(/\[(\d+)\]/);
+                    const index = match ? parseInt(match[1], 10) : null;
+
+                    if (index !== null) {
+                        req.body.field.img[index] = file.filename;
+                    }
+                }
+            });
+        }
+
+        // Handle additional fields
+        const fields = {};
+        if (req.body.field) {
+            fields.title = req.body.field.title;
+            fields.image = req.body.field.img;
+            fields.description = req.body.field.description;
+        }
+        setting_detail.field = req.body.field ? JSON.stringify(fields) : '{"title":[],"image":[],"description":[]}';
+
         if (req.files && req.files.logo) {
             setting_detail.logo = req.files.logo[0].filename;
         }
@@ -161,6 +219,29 @@ exports.update1 = (req, res) => {
         detail.social_links = req.body.social_links;
         detail.seo_details = req.body.seo_details;
         detail.other_details = req.body.other_details;
+
+        // Process uploaded files if any
+        if (req.files && req.files.length > 0) {
+            req.files.forEach((file) => {
+                if (file.fieldname.startsWith('field[image][')) {
+                    const match = file.fieldname.match(/\[(\d+)\]/);
+                    const index = match ? parseInt(match[1], 10) : null;
+
+                    if (index !== null) {
+                        req.body.field.img[index] = file.filename;
+                    }
+                }
+            });
+        }
+
+        // Handle additional fields
+        const fields = {};
+        if (req.body.field) {
+            fields.title = req.body.field.title;
+            fields.image = req.body.field.img;
+            fields.description = req.body.field.description;
+        }
+        detail.field = req.body.field ? JSON.stringify(fields) : '{"title":[],"image":[],"description":[]}';
 
         if (req.files && req.files.logo) {
             detail.logo = req.files.logo[0].filename;

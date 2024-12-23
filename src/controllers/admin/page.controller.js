@@ -59,14 +59,14 @@ const upload = multer({
     },
     fileFilter: function (req, file, callback) {
         // Filter allowed file types (e.g., only images and PDF)
-        const allowedTypes = /jpg|jpeg|png|gif|pdf/;
+        const allowedTypes = /jpg|jpeg|png|gif|webp|pdf/;
         const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
         const mimetype = allowedTypes.test(file.mimetype);
 
         if (extname && mimetype) {
             return callback(null, true);
         } else {
-            const errorMessage = 'Invalid file type. Only JPG, JPEG, PNG, GIF, and PDF files are allowed.';
+            const errorMessage = 'Invalid file type. Only JPG, JPEG, PNG, GIF, WEBP, and PDF files are allowed.';
             logger.warn(`File upload error: ${errorMessage}`);
             return callback(new Error(errorMessage));
         }
