@@ -130,6 +130,56 @@
                                     <div class="invalid-feedback"> Please enter description. </div>
                                 </div>
                                 <hr>
+                                <div class="col-md-12">
+                                    <div class="container3">
+                                        <label for="">Other Details</label><br>
+                                        <button class="add_form_field3 btn-primary btn"
+                                            data-id="<%= list.field && list.field!='null' && JSON.parse(list.field).title.length %>">Add
+                                            &nbsp;
+                                            <span style="font-size:16px; font-weight:bold;">+ </span>
+                                        </button>
+                                        <% list.field && list.field!='null' &&
+                                            JSON.parse(list.field).title.forEach((f,key)=>
+                                            { %>
+
+                                            <div class="row mt-3">
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Title</label>
+                                                    <input type="text" name="field[title][]" value="<%= f %>"
+                                                        class="form-control" placeholder="Title">
+                                                    <div class="invalid-feedback"> Please enter title. </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Image</label>
+                                                    <input type="hidden" name="field[img][]" value="<%= JSON.parse(list.field).image[key] %>">
+                                                    <input type="file" name="field[image][<%= key %>]" class="form-control">
+                                                    <div class="invalid-feedback"> Please select image. </div>
+                                                    <% if(JSON.parse(list.field).image[key]){ %>
+                                                        <br>
+                                                        <div style="display: flex;">
+                                                            <div
+                                                                style="border: 1px solid;width: 50px;padding: 3px; margin-right: 10px; position: relative;">
+                                                                <img src="../../../upload/setting/other/<%= JSON.parse(list.field).image[key] %>" width="50px"
+                                                                    alt="<%= list.title %>">
+                                                            </div>
+                                                        </div>
+                                                        <% } %>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Description</label>
+                                                    <textarea name="field[description][]" value="<%= JSON.parse(list.field).description[key] %>"
+                                                        class="w-100 form-control editor" placeholder="Description"><%= JSON.parse(list.field).description[key] %></textarea>
+                                                    <div class="invalid-feedback"> Please enter description. </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label">.</label>
+                                                    <a href="#" class="btn btn-danger delete">Delete</a>
+                                                </div>
+                                            </div>
+                                            <% }) %>
+                                    </div>
+                                </div>
+                                <hr>
                                 <h3 class="card-title">Social Links</h3>
                                 <div class="col-md-3">
                                     <label for="facebook" class="form-label">Facebook</label>

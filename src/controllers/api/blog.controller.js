@@ -42,8 +42,10 @@ exports.findAll = async (req, res) => {
             }
             const startDate = new Date(`${year}-01-01T00:00:00.000Z`);
             const endDate = new Date(`${yearInt + 1}-01-01T00:00:00.000Z`);
-            query.createdAt = { $gte: startDate, $lt: endDate };
+            // query.createdAt = { $gte: startDate, $lt: endDate };
+            query.updatedAt = { $gte: startDate, $lt: endDate };
         }
+        console.log('query : ', query);
 
         const sort = {};
         sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
@@ -77,11 +79,41 @@ exports.findOne = async (req, res) => {
         if (!blog) {
             return res.status(404).send({ success: false, message: 'Blog not found' });
         }
+        console.log('blog : ', blog.createdAt);
 
+        // Step 1: Check if createdAt is in the correct format (string) and convert it to Date if needed
+        let updatedCreatedAt = blog.createdAt;
+        if (typeof updatedCreatedAt === 'string') {
+            updatedCreatedAt = new Date(updatedCreatedAt.replace(' ', 'T'));  // Convert to ISO format if needed
+        }
+
+        // Step 2: Remove the createdAt field first using $unset
+        // const removeResult = await Blog.updateOne(
+        //     { _id: blog._id },
+        //     { $unset: { createdAt: "" } }
+        // );
+        // console.log('Removed createdAt field:', removeResult);
+
+        // Step 3: Now, set the updated createdAt field as a Date using $set
+        const updateResult = await Blog.updateOne(
+            { _id: blog._id },
+            { $set: { createdAt: updatedCreatedAt } }
+        );
+        console.log('Updated createdAt field:', updateResult);
+
+        // Step 4: Fetch related blogs
         const relatedBlogs = await Blog.find({ _id: { $ne: blog._id } }).limit(4).exec();
-        res.status(200).send({ success: true, message: 'Record Found', data: blog, relatedBlogs: relatedBlogs });
+
+        res.status(200).send({
+            success: true,
+            message: 'Record Found',
+            data: blog,
+            relatedBlogs: relatedBlogs
+        });
+
     } catch (err) {
-        // Send generic error message to the client
+        console.log('Error in updating blog:', err);
         return res.status(500).send({ success: false, message: 'Internal Server Error' });
     }
 };
+

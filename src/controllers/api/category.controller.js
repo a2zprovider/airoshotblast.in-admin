@@ -39,7 +39,8 @@ exports.findAll = async (req, res) => {
     try {
         const sort = {};
         sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
-        const categories = await Category.find(query).sort(sort).skip(offset).limit(parseInt(limit)).populate('parent').exec();
+
+        const categories = await Category.find(query).skip(offset).limit(parseInt(limit)).populate('parent').exec();
         const count = await Category.find(query).countDocuments();
 
         const categoriesWithProducts = await Promise.all(

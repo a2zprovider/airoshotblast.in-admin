@@ -14,6 +14,7 @@ const SettingSchema = new Schema({
     map: String,
     except: String,
     description: String,
+    field: String,
     analytics: String,
     social_links: String,
     seo_details: String,
