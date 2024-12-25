@@ -99,7 +99,7 @@ exports.create = (req, res) => {
         product.seo_title = req.body.seo_title;
         product.seo_keywords = req.body.seo_keywords;
         product.seo_description = req.body.seo_description;
-        
+
         if (req.files && req.files.image) {
             product.image = req.files.image[0].filename;
         }
