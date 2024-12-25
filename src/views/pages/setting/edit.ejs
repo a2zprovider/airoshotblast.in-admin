@@ -111,17 +111,17 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label for="address" class="form-label">Address</label>
-                                    <textarea name="address" value="<%= list.address %>" class="w-100 form-control" rows="4" id="address" placeholder="Address" required=""><%= list.address %></textarea>
+                                    <textarea name="address" value="<%= list.address %>" class="w-100 form-control" rows="4" id="address" placeholder="Address"><%= list.address %></textarea>
                                     <div class="invalid-feedback"> Please enter address. </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="map" class="form-label">Map</label>
-                                    <textarea name="map" value="<%= list.map %>" class="w-100 form-control" rows="4" id="map" placeholder="Map" required=""><%= list.map %></textarea>
+                                    <textarea name="map" value="<%= list.map %>" class="w-100 form-control" rows="4" id="map" placeholder="Map"><%= list.map %></textarea>
                                     <div class="invalid-feedback"> Please enter map. </div>
                                 </div>
                                 <div class="col-md-12">
                                     <label for="except" class="form-label">Short Description</label>
-                                    <textarea name="except" value="<%= list.except %>" class="w-100 form-control" rows="4" id="except" placeholder="Short Description" required=""><%= list.except %></textarea>
+                                    <textarea name="except" value="<%= list.except %>" class="w-100 form-control" rows="4" id="except" placeholder="Short Description"><%= list.except %></textarea>
                                     <div class="invalid-feedback"> Please enter short description. </div>
                                 </div>
                                 <div class="col-md-12">
@@ -403,6 +403,11 @@
                                     <label for="gst_no" class="form-label">GST No.</label>
                                     <input type="text" name="other_details[gst_no]" value="<%= list.other_details?JSON.parse(list.other_details).gst_no:'' %>" class="form-control" id="home_seo_title" placeholder="GST No.">
                                     <div class="invalid-feedback"> Please enter GST no. </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="google_script" class="form-label">Google Script</label>
+                                    <textarea name="seo_details[google_script]" value="<%= list.other_details?JSON.parse(list.other_details).google_script:'' %>" class="w-100 form-control" rows="4" id="google_script" placeholder="Google Script"><%= list.other_details?JSON.parse(list.other_details).google_script:'' %></textarea>
+                                    <div class="invalid-feedback"> Please enter google script. </div>
                                 </div>
 
                                 <div class="col-12">
