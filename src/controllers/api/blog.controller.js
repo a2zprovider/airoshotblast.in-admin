@@ -42,10 +42,8 @@ exports.findAll = async (req, res) => {
             }
             const startDate = new Date(`${year}-01-01T00:00:00.000Z`);
             const endDate = new Date(`${yearInt + 1}-01-01T00:00:00.000Z`);
-            // query.createdAt = { $gte: startDate, $lt: endDate };
-            query.updatedAt = { $gte: startDate, $lt: endDate };
+            query.createdAt = { $gte: startDate, $lt: endDate };
         }
-        console.log('query : ', query);
 
         const sort = {};
         sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
