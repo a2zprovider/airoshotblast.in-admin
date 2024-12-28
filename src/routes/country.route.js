@@ -13,5 +13,6 @@ routerCountry.get("/edit/:id", auth, checkPermission('Country', 'Edit'), Country
 routerCountry.post("/update/:id", auth, checkPermission('Country', 'Update'), CountryController.update);
 routerCountry.get("/delete/:id", auth, checkPermission('Country', 'Delete'), CountryController.delete);
 routerCountry.post("/deleteAll", auth, checkPermission('Country', 'Delete'), CountryController.deleteAll);
+routerCountry.get("/status/:id", auth, checkPermission('Country', 'Status'), CountryController.status);
 
 export default routerCountry;

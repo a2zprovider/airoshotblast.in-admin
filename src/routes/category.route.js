@@ -13,5 +13,6 @@ routerCategory.get("/edit/:id", auth, checkPermission('Category', 'Edit'), Categ
 routerCategory.post("/update/:id", auth, checkPermission('Category', 'Update'), CategoryController.update);
 routerCategory.get("/delete/:id", auth, checkPermission('Category', 'Delete'), CategoryController.delete);
 routerCategory.post("/deleteAll", auth, checkPermission('Category', 'Delete'), CategoryController.deleteAll);
+routerCategory.get("/status/:id", auth, checkPermission('Category', 'Status'), CategoryController.status);
 
 export default routerCategory;

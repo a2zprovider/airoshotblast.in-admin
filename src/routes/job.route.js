@@ -13,5 +13,6 @@ routerJob.get("/edit/:id", auth, checkPermission('Job', 'Edit'), JobController.e
 routerJob.post("/update/:id", auth, checkPermission('Job', 'Update'), JobController.update);
 routerJob.get("/delete/:id", auth, checkPermission('Job', 'Delete'), JobController.delete);
 routerJob.post("/deleteAll", auth, checkPermission('Job', 'Delete'), JobController.deleteAll);
+routerJob.get("/status/:id", auth, checkPermission('Job', 'Status'), JobController.status);
 
 export default routerJob;

@@ -13,5 +13,6 @@ routerApplication.get("/edit/:id", auth, checkPermission('Application', 'Edit'),
 routerApplication.post("/update/:id", auth, checkPermission('Application', 'Update'), ApplicationController.update);
 routerApplication.get("/delete/:id", auth, checkPermission('Application', 'Delete'), ApplicationController.delete);
 routerApplication.post("/deleteAll", auth, checkPermission('Application', 'Delete'), ApplicationController.deleteAll);
+routerApplication.get("/status/:id", auth, checkPermission('Application', 'Status'), ApplicationController.status);
 
 export default routerApplication;
