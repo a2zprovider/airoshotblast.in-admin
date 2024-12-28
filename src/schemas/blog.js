@@ -37,6 +37,10 @@ const BlogSchema = new Schema({
     seo_title: String,
     seo_keywords: String,
     seo_description: String,
+    showStatus: {
+        type: Boolean,
+        default: true,
+    }
 }, { timestamps: true });
 BlogSchema.index({ title: 'text' });
 

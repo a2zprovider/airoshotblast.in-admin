@@ -30,7 +30,7 @@ exports.findAll = async (req, res) => {
         const sort = {};
         sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
         // Fetch sliders from the database with pagination
-        const sliders = await Slider.find(query).sort(sort)
+        const sliders = await Slider.find(query)
             .skip(offset)
             .limit(parseInt(limit))
             .exec();

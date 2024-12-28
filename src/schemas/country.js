@@ -10,6 +10,10 @@ const CountrySchema = new Schema({
         type: String,
         required: true,
         unique: true,
+    },
+    showStatus: {
+        type: Boolean,
+        default: true,
     }
 }, { timestamps: true });
 
