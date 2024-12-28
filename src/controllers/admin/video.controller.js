@@ -193,7 +193,6 @@ exports.edit = async (req, res) => {
         });
 };
 
-
 // Update a Video by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
@@ -311,5 +310,47 @@ exports.deleteAll = (req, res) => {
         logger.error(`Unexpected error occurred while deleting videos: ${err.message || 'Unknown error'}`);
         req.flash('danger', err.message || 'An unexpected error occurred while deleting the Videos.');
         res.redirect('/video');
+    }
+};
+
+// Status Change a Record with the specified id in the request
+exports.status = (req, res) => {
+    try {
+        const id = req.params.id;
+
+        // Validate the Record ID
+        if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+            req.flash('danger', 'Invalid Record ID.');
+            logger.warn(`Attempt to status change with invalid ID: ${id}`);
+            return res.redirect('back');
+        }
+
+        Video.findOne({ _id: id })
+            .then(r_detail => {
+                console.log(r_detail);
+                const record_detail = {};
+                record_detail.showStatus = !r_detail.showStatus;
+
+                Video.updateOne({ _id: id }, { $set: record_detail }).then(num => {
+                    if (num.ok == 1) {
+                        req.flash('success', `Record status change successfully!`);
+                        return res.redirect('back');
+                    } else {
+                        req.flash('danger', `Cannot update Record with id=${id}. Maybe Record was not found or req.body is empty!`);
+                        return res.redirect('back');
+                    }
+                })
+                    .catch(err => {
+                        req.flash('danger', 'Error updating Record with id=' + id);
+                        return res.redirect('back');
+                    });
+            })
+            .catch(error => {
+                req.flash('danger', `${error}`);
+                return res.redirect('back');
+            });
+    } catch (err) {
+        req.flash('danger', 'An unexpected error occurred while attempting to status change the Record.');
+        return res.redirect('back');
     }
 };

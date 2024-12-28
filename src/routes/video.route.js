@@ -13,5 +13,6 @@ routerVideo.get("/edit/:id", auth, checkPermission('Video', 'Edit'), VideoContro
 routerVideo.post("/update/:id", auth, checkPermission('Video', 'Update'), VideoController.update);
 routerVideo.get("/delete/:id", auth, checkPermission('Video', 'Delete'), VideoController.delete);
 routerVideo.post("/deleteAll", auth, checkPermission('Video', 'Delete'), VideoController.deleteAll);
+routerVideo.get("/status/:id", auth, checkPermission('Video', 'Status'), VideoController.status);
 
 export default routerVideo;

@@ -13,5 +13,6 @@ routerFaq.get("/edit/:id", auth, checkPermission('Faq', 'Edit'), FaqController.e
 routerFaq.post("/update/:id", auth, checkPermission('Faq', 'Update'), FaqController.update);
 routerFaq.get("/delete/:id", auth, checkPermission('Faq', 'Delete'), FaqController.delete);
 routerFaq.post("/deleteAll", auth, checkPermission('Faq', 'Delete'), FaqController.deleteAll);
+routerFaq.get("/status/:id", auth, checkPermission('Faq', 'Status'), FaqController.status);
 
 export default routerFaq;

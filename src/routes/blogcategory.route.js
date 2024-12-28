@@ -13,5 +13,6 @@ routerBlogcategory.get("/edit/:id", auth, checkPermission('Blogcategory', 'Edit'
 routerBlogcategory.post("/update/:id", auth, checkPermission('Blogcategory', 'Update'), BlogCategoryController.update);
 routerBlogcategory.get("/delete/:id", auth, checkPermission('Blogcategory', 'Delete'), BlogCategoryController.delete);
 routerBlogcategory.post("/deleteAll", auth, checkPermission('Blogcategory', 'Delete'), BlogCategoryController.deleteAll);
+routerBlogcategory.get("/status/:id", auth, checkPermission('Blogcategory', 'Status'), BlogCategoryController.status);
 
 export default routerBlogcategory;

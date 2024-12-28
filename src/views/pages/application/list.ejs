@@ -120,6 +120,7 @@
                                                 <th>S.N.</th>
                                                 <th>Title</th>
                                                 <th>Image</th>
+                                                <th>Status</th>
                                                 <th>Option</th>
                                             </tr>
                                         </thead>
@@ -144,16 +145,28 @@
 
                                                             <% } %>
                                                     </td>
-                                                    <td class="d-flex ">
-                                                        <a href="<%= `application/delete/${list.id}?_method=DELETE` %>"
-                                                            onclick="return confirm('Are you sure you want to delete this record?')"
-                                                            class="btn btn-danger btn-sm  me-2">
-                                                            <i class="mdi mdi-delete"></i>
+                                                    <td>
+                                                        <a href="<%= `application/status/${list.id}` %>"
+                                                            onclick="return confirm('Are you sure you want to change status for this record?')">
+                                                            <% if(list.showStatus) { %>
+                                                                <i class="bx bx-toggle-right text-success fs-1"></i>
+                                                                <% }else{ %>
+                                                                    <i class="bx bx-toggle-left text-danger fs-1"></i>
+                                                                    <% } %>
                                                         </a>
-                                                        <a href="<%= `application/edit/${list.id}` %>"
-                                                            class="btn btn-primary btn-sm  me-2">
-                                                            <i class="mdi mdi-pencil"></i>
-                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex ">
+                                                            <a href="<%= `application/delete/${list.id}?_method=DELETE` %>"
+                                                                onclick="return confirm('Are you sure you want to delete this record?')"
+                                                                class="btn btn-danger btn-sm  me-2">
+                                                                <i class="mdi mdi-delete"></i>
+                                                            </a>
+                                                            <a href="<%= `application/edit/${list.id}` %>"
+                                                                class="btn btn-primary btn-sm  me-2">
+                                                                <i class="mdi mdi-pencil"></i>
+                                                            </a>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                                 <% }) %>

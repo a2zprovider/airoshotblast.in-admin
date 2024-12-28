@@ -13,5 +13,6 @@ routerSlider.get("/edit/:id", auth, checkPermission('Slider', 'Edit'), SliderCon
 routerSlider.post("/update/:id", auth, checkPermission('Slider', 'Update'), SliderController.update);
 routerSlider.get("/delete/:id", auth, checkPermission('Slider', 'Delete'), SliderController.delete);
 routerSlider.post("/deleteAll", auth, checkPermission('Slider', 'Delete'), SliderController.deleteAll);
+routerSlider.get("/status/:id", auth, checkPermission('Slider', 'Status'), SliderController.status);
 
 export default routerSlider;

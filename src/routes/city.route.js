@@ -13,5 +13,6 @@ routerCity.get("/edit/:id", auth, checkPermission('City', 'Edit'), CityControlle
 routerCity.post("/update/:id", auth, checkPermission('City', 'Update'), CityController.update);
 routerCity.get("/delete/:id", auth, checkPermission('City', 'Delete'), CityController.delete);
 routerCity.post("/deleteAll", auth, checkPermission('City', 'Delete'), CityController.deleteAll);
+routerCity.get("/status/:id", auth, checkPermission('City', 'Status'), CityController.status);
 
 export default routerCity;
