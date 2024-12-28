@@ -15,6 +15,10 @@ const CitySchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'State',
     },
+    showStatus: {
+        type: Boolean,
+        default: true,
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model("City", CitySchema);

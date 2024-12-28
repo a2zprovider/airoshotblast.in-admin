@@ -8,6 +8,10 @@ const VideoSchema = new Schema({
     },
     image: String,
     url: String,
+    showStatus: {
+        type: Boolean,
+        default: true,
+    }
 }, { timestamps: true });
 
 VideoSchema.index({ title: 'text' });

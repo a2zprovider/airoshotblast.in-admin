@@ -148,6 +148,18 @@ exports.update = async (req, res) => {
         // Process uploaded files if any
         if (req.files && req.files.length > 0) {
             req.files.forEach((file) => {
+                if (file && file.logo) {
+                    setting_detail.logo = file.filename;
+                }
+                if (file && file.logo2) {
+                    setting_detail.logo2 = file.filename;
+                }
+                if (file && file.favicon) {
+                    setting_detail.favicon = file.filename;
+                }
+                if (file && file.brochure) {
+                    setting_detail.brochure = file.filename;
+                }
                 if (file.fieldname.startsWith('field[image][')) {
                     const match = file.fieldname.match(/\[(\d+)\]/);
                     const index = match ? parseInt(match[1], 10) : null;
@@ -167,19 +179,6 @@ exports.update = async (req, res) => {
             fields.description = req.body.field.description;
         }
         setting_detail.field = req.body.field ? JSON.stringify(fields) : '{"title":[],"image":[],"description":[]}';
-
-        if (req.files && req.files.logo) {
-            setting_detail.logo = req.files.logo[0].filename;
-        }
-        if (req.files && req.files.logo2) {
-            setting_detail.logo2 = req.files.logo2[0].filename;
-        }
-        if (req.files && req.files.favicon) {
-            setting_detail.favicon = req.files.favicon[0].filename;
-        }
-        if (req.files && req.files.brochure) {
-            setting_detail.brochure = req.files.brochure[0].filename;
-        }
 
         Setting.updateOne({ _id: id }, { $set: setting_detail }).then(num => {
             if (num.ok == 1) {

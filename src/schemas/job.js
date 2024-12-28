@@ -18,6 +18,10 @@ const JobSchema = new Schema({
     review: {
         type: String,
     },
+    showStatus: {
+        type: Boolean,
+        default: true,
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model("Job", JobSchema);

@@ -18,6 +18,10 @@ const SliderSchema = new Schema({
     //     type: mongoose.Schema.Types.ObjectId,
     //     ref: 'Country', 
     // },
+    showStatus: {
+        type: Boolean,
+        default: true,
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model("Slider", SliderSchema);
