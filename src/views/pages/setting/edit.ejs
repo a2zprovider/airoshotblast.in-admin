@@ -78,7 +78,9 @@
                                     <div class="invalid-feedback"> Please select logo. </div>
                                     <% if(list.logo){ %>
                                         <br>
-                                        <img src="upload/setting/logo/<%= list.logo %>" width="50px" alt="<%= list.title %>">
+                                        <div style="border: 1px solid #ccc;width: 50px;padding: 3px; margin-right: 10px; position: relative;">
+                                            <img src="upload/setting/logo/<%= list.logo %>" width="50px" alt="<%= list.title %>">
+                                        </div>
                                         <% } %>
                                 </div>
                                 <div class="col-md-3">
@@ -87,7 +89,9 @@
                                     <div class="invalid-feedback"> Please select logo2. </div>
                                     <% if(list.logo2){ %>
                                         <br>
-                                        <img src="upload/setting/logo2/<%= list.logo2 %>" width="50px" alt="<%= list.title %>">
+                                        <div style="border: 1px solid #ccc;width: 50px;padding: 3px; margin-right: 10px; position: relative;">
+                                            <img src="upload/setting/logo2/<%= list.logo2 %>" width="50px" alt="<%= list.title %>">
+                                        </div>
                                         <% } %>
                                 </div>
                                 <div class="col-md-3">
@@ -96,7 +100,9 @@
                                     <div class="invalid-feedback"> Please select favicon. </div>
                                     <% if(list.favicon){ %>
                                         <br>
-                                        <img src="upload/setting/favicon/<%= list.favicon %>" width="50px" alt="<%= list.title %>">
+                                        <div style="border: 1px solid #ccc;width: 50px;padding: 3px; margin-right: 10px; position: relative;">
+                                            <img src="upload/setting/favicon/<%= list.favicon %>" width="50px" alt="<%= list.title %>">
+                                        </div>
                                         <% } %>
                                 </div>
                                 <div class="col-md-3">
@@ -157,8 +163,7 @@
                                                     <% if(JSON.parse(list.field).image[key]){ %>
                                                         <br>
                                                         <div style="display: flex;">
-                                                            <div
-                                                                style="border: 1px solid;width: 50px;padding: 3px; margin-right: 10px; position: relative;">
+                                                            <div style="border: 1px solid #ccc;width: 50px;padding: 3px; margin-right: 10px; position: relative;">
                                                                 <img src="../../../upload/setting/other/<%= JSON.parse(list.field).image[key] %>" width="50px"
                                                                     alt="<%= list.title %>">
                                                             </div>
@@ -406,7 +411,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <label for="google_analytics_id" class="form-label">Google Analytics Id</label>
-                                    <textarea name="other_details[google_analytics_id]" value="<%= list.other_details?JSON.parse(list.other_details).google_analytics_id:'' %>" class="w-100 form-control" rows="4" id="google_analytics_id" placeholder="Google Script"><%= list.other_details?JSON.parse(list.other_details).google_analytics_id:'' %></textarea>
+                                    <input type="text" name="other_details[google_analytics_id]" value="<%= list.other_details?JSON.parse(list.other_details).google_analytics_id:'' %>" class="form-control" id="google_analytics_id" placeholder="Google Script">
                                     <div class="invalid-feedback"> Please enter google script. </div>
                                 </div>
 

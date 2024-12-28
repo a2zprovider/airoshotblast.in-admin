@@ -148,16 +148,16 @@ exports.update = async (req, res) => {
         // Process uploaded files if any
         if (req.files && req.files.length > 0) {
             req.files.forEach((file) => {
-                if (file && file.logo) {
+                if (file && file.fieldname == 'logo') {
                     setting_detail.logo = file.filename;
                 }
-                if (file && file.logo2) {
+                if (file && file.fieldname == 'logo2') {
                     setting_detail.logo2 = file.filename;
                 }
-                if (file && file.favicon) {
+                if (file && file.fieldname == 'favicon') {
                     setting_detail.favicon = file.filename;
                 }
-                if (file && file.brochure) {
+                if (file && file.fieldname == 'brochure') {
                     setting_detail.brochure = file.filename;
                 }
                 if (file.fieldname.startsWith('field[image][')) {
