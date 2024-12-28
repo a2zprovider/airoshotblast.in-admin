@@ -21,6 +21,10 @@ const TagsSchema = new Schema({
     seo_title: String,
     seo_keywords: String,
     seo_description: String,
+    showStatus: {
+        type: Boolean,
+        default: true,
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model("Tag", TagsSchema);

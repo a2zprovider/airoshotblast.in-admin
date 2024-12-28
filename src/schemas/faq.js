@@ -11,6 +11,10 @@ const FaqSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Country',
     },
+    showStatus: {
+        type: Boolean,
+        default: true,
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model("Faq", FaqSchema);

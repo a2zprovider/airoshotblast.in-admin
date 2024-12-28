@@ -21,6 +21,10 @@ const ApplicationSchema = new Schema({
     seo_title: String,
     seo_keywords: String,
     seo_description: String,
+    showStatus: {
+        type: Boolean,
+        default: true,
+    }
 }, { timestamps: true });
 
 ApplicationSchema.index({ title: 'text' });
