@@ -13,5 +13,6 @@ routerCareer.get("/edit/:id", auth, checkPermission('Career', 'Edit'), CareerCon
 routerCareer.post("/update/:id", auth, checkPermission('Career', 'Update'), CareerController.update);
 routerCareer.get("/delete/:id", auth, checkPermission('Career', 'Delete'), CareerController.delete);
 routerCareer.post("/deleteAll", auth, checkPermission('Career', 'Delete'), CareerController.deleteAll);
+routerCareer.get("/status/:id", auth, checkPermission('Career', 'Status'), CareerController.status);
 
 export default routerCareer;

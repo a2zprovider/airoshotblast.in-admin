@@ -13,5 +13,6 @@ routerPage.get("/edit/:id", auth, checkPermission('Page', 'Edit'), PageControlle
 routerPage.post("/update/:id", auth, checkPermission('Page', 'Update'), PageController.update);
 routerPage.get("/delete/:id", auth, checkPermission('Page', 'Delete'), PageController.delete);
 routerPage.post("/deleteAll", auth, checkPermission('Page', 'Delete'), PageController.deleteAll);
+routerPage.get("/status/:id", auth, checkPermission('Page', 'Status'), PageController.status);
 
 export default routerPage;

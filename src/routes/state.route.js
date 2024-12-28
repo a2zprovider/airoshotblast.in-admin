@@ -13,5 +13,6 @@ routerState.get("/edit/:id", auth, checkPermission('State', 'Edit'), StateContro
 routerState.post("/update/:id", auth, checkPermission('State', 'Update'), StateController.update);
 routerState.get("/delete/:id", auth, checkPermission('State', 'Delete'), StateController.delete);
 routerState.post("/deleteAll", auth, checkPermission('State', 'Delete'), StateController.deleteAll);
+routerState.get("/status/:id", auth, checkPermission('State', 'Status'), StateController.status);
 
 export default routerState;

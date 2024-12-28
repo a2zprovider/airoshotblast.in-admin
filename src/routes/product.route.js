@@ -13,5 +13,6 @@ routerProduct.get("/edit/:id", auth, checkPermission('Product', 'Edit'), Product
 routerProduct.post("/update/:id", auth, checkPermission('Product', 'Update'), ProductController.update);
 routerProduct.get("/delete/:id", auth, checkPermission('Product', 'Delete'), ProductController.delete);
 routerProduct.post("/deleteAll", auth, checkPermission('Product', 'Delete'), ProductController.deleteAll);
+routerProduct.get("/status/:id", auth, checkPermission('Product', 'Status'), ProductController.status);
 
 export default routerProduct;

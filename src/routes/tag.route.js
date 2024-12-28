@@ -13,5 +13,6 @@ routerTag.get("/edit/:id", auth, checkPermission('Tag', 'Edit'), TagController.e
 routerTag.post("/update/:id", auth, checkPermission('Tag', 'Update'), TagController.update);
 routerTag.get("/delete/:id", auth, checkPermission('Tag', 'Delete'), TagController.delete);
 routerTag.post("/deleteAll", auth, checkPermission('Tag', 'Delete'), TagController.deleteAll);
+routerTag.get("/status/:id", auth, checkPermission('Tag', 'Status'), TagController.status);
 
 export default routerTag;

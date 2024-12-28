@@ -25,6 +25,7 @@ exports.findAll = async (req, res) => {
     if (search) {
         query.title = { $regex: search, $options: 'i' };
     }
+    query.showStatus = true;
 
     try {
         const sort = {};
