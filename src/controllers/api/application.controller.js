@@ -22,6 +22,7 @@ exports.findAll = async (req, res) => {
                 return res.status(400).send({ success: false, message: 'Invalid country code' });
             }
         }
+        query.showStatus = true;
 
         const sort = {};
         sort[sortBy] = sortOrder === 'desc' ? -1 : 1;

@@ -75,6 +75,7 @@ exports.findAll = async (req, res) => {
             });
         }
     }
+    query.showStatus = true;
 
     try {
         const sort = {};
@@ -131,7 +132,7 @@ exports.findOne = async (req, res) => {
             try {
                 const relatedProducts = await Product.find({
                     category: product.category._id,
-                    _id: { $ne: product._id },
+                    _id: { $ne: product._id }, showStatus: true
                 })
                     .populate(['category', 'country']);
                 return res.status(200).send({

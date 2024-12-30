@@ -35,6 +35,7 @@ exports.findAll = async (req, res) => {
             });
         }
     }
+    query.showStatus = true;
 
     try {
         const sort = {};
@@ -50,14 +51,14 @@ exports.findAll = async (req, res) => {
                 try {
                     // Fetch products for each category
                     const products = await Product.find({
-                        category: categoryObj._id, // Ensure category._id is used correctly
+                        category: categoryObj._id, showStatus: true // Ensure category._id is used correctly
                     }).populate(['category', 'country']).limit(12).exec();
 
                     // Add products to category object
                     categoryObj.products = products;
 
                     // Fetch subcategory for each category
-                    const subcategory = await Category.find({ parent: categoryObj._id });
+                    const subcategory = await Category.find({ parent: categoryObj._id, showStatus: true });
 
                     // Add subcategory to category object
                     categoryObj.subcategory = subcategory;
@@ -108,7 +109,7 @@ exports.findOne = async (req, res) => {
 
         // Fetch products related to the found category
         const products = await Product.find({
-            category: category._id, // Ensure category._id is accessible
+            category: category._id, showStatus: true // Ensure category._id is accessible
         }).populate(['category', 'country']);
 
         return res.status(200).send({
