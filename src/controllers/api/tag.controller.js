@@ -26,6 +26,7 @@ exports.findAll = async (req, res) => {
     if (search) {
         query.title = { $regex: search, $options: 'i' };
     }
+    query.showStatus = true;
 
     try {
         const sort = {};
@@ -75,7 +76,7 @@ exports.findOne = async (req, res) => {
 
         // Fetch the blogs associated with the tag
         const blogs = await Blog.find({
-            tags: tag._id, // Make sure tag._id is accessible
+            tags: tag._id, showStatus: true // Make sure tag._id is accessible
         }).exec();
 
         res.status(200).send({ success: true, message: 'Record Found', data: tag, blogs: blogs });

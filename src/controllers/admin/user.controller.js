@@ -118,7 +118,7 @@ exports.user_login = async (req, res) => {
             { user_id: user.id, email },
             'ADMIN',
             {
-                expiresIn: "2h",
+                expiresIn: "10h",
             }
         );
 

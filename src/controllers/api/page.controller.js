@@ -31,6 +31,7 @@ exports.findAll = async (req, res) => {
             }
             query.parent = p._id;
         }
+        query.showStatus = true;
 
         const sort = {};
         sort[sortBy] = sortOrder === 'desc' ? -1 : 1;

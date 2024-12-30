@@ -29,6 +29,7 @@ exports.findAll = async (req, res) => {
             }
             query.parent = p_category._id;
         }
+        query.showStatus = true;
 
         const sort = {};
         sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
@@ -88,7 +89,7 @@ exports.findOne = async (req, res) => {
         }
 
         const blogs = await Blog.find({
-            categories: category._id, // Ensure category._id is accessible
+            categories: category._id, showStatus: true // Ensure category._id is accessible
         });
 
         res.status(200).send({
