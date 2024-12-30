@@ -14,5 +14,6 @@ routerProduct.post("/update/:id", auth, checkPermission('Product', 'Update'), Pr
 routerProduct.get("/delete/:id", auth, checkPermission('Product', 'Delete'), ProductController.delete);
 routerProduct.post("/deleteAll", auth, checkPermission('Product', 'Delete'), ProductController.deleteAll);
 routerProduct.get("/status/:id", auth, checkPermission('Product', 'Status'), ProductController.status);
+routerProduct.get("/imgs/:id/:index", auth, checkPermission('Product', 'ImgDelete'), ProductController.imgDelete);
 
 export default routerProduct;
