@@ -9,6 +9,7 @@ const SettingSchema = new Schema({
     favicon: String,
     brochure: String,
     mobile: Number,
+    mobileStatus: { type: Boolean, default: true },
     email: String,
     address: String,
     map: String,

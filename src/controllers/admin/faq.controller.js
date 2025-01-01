@@ -320,7 +320,6 @@ exports.status = (req, res) => {
 
         Faq.findOne({ _id: id })
             .then(r_detail => {
-                console.log(r_detail);
                 const record_detail = {};
                 record_detail.showStatus = !r_detail.showStatus;
 

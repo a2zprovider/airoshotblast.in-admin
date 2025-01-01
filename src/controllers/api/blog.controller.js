@@ -34,16 +34,17 @@ exports.findAll = async (req, res) => {
         }
 
         // Year filter
-        if (year) {
-            // Validate year format
-            const yearInt = parseInt(year);
-            if (isNaN(yearInt)) {
-                return res.status(400).send({ success: false, message: 'Invalid year format' });
-            }
-            const startDate = new Date(`${year}-01-01T00:00:00.000Z`);
-            const endDate = new Date(`${yearInt + 1}-01-01T00:00:00.000Z`);
-            query.createdAt = { $gte: startDate, $lt: endDate };
-        }
+        // if (year) {
+        //     // Validate year format
+        //     const yearInt = parseInt(year);
+        //     if (isNaN(yearInt)) {
+        //         return res.status(400).send({ success: false, message: 'Invalid year format' });
+        //     }
+        //     const startDate = new Date(`${year}-01-01T00:00:00.000Z`);
+        //     const endDate = new Date(`${yearInt + 1}-01-01T00:00:00.000Z`);
+        //     query.createdAt = { $gte: startDate, $lt: endDate };
+        // }
+        query.showStatus = true;
 
         const sort = {};
         sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
@@ -100,7 +101,7 @@ exports.findOne = async (req, res) => {
         console.log('Updated createdAt field:', updateResult);
 
         // Step 4: Fetch related blogs
-        const relatedBlogs = await Blog.find({ _id: { $ne: blog._id } }).limit(4).exec();
+        const relatedBlogs = await Blog.find({ _id: { $ne: blog._id }, showStatus: true }).limit(4).exec();
 
         res.status(200).send({
             success: true,

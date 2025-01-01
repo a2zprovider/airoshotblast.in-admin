@@ -72,11 +72,27 @@
                                         id="email" placeholder="Email" required>
                                     <div class="invalid-feedback"> Please enter email. </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label for="mobile" class="form-label">Mobile</label>
                                     <input type="text" name="mobile" value="<%= list.mobile %>" class="form-control"
                                         id="mobile" placeholder="Mobile" required>
                                     <div class="invalid-feedback"> Please enter mobile. </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="mobileStatus" class="form-label">Mobile Status</label>
+                                    <select class="form-select border" name="mobileStatus" id="mobileStatus">
+                                        <% if(list.mobileStatus==true){ %>
+                                            <option value="true" selected>Show</option>
+                                            <% }else { %>
+                                                <option value="true">Show</option>
+                                                <% } %>
+                                                    <% if(list.mobileStatus==false){ %>
+                                                        <option value="false" selected>Hide</option>
+                                                        <% }else { %>
+                                                            <option value="false">Hide</option>
+                                                            <% } %>
+                                    </select>
+                                    <div class="invalid-feedback"> Please select parent. </div>
                                 </div>
 
                                 <div class="col-md-3">
@@ -126,7 +142,6 @@
                                         <br>
                                         <a href="upload/setting/brochure/<%= list.brochure %>" target="_blank">Brochure
                                             Link</a>
-                                        <!-- <img src="upload/setting/brochure/<%= list.brochure %>" width="50px" alt="<%= list.title %>"> -->
                                         <% } %>
                                 </div>
                                 <div class="col-md-6">
@@ -536,6 +551,16 @@
                                         class="form-control" id="google_analytics_id" placeholder="Google Script">
                                     <div class="invalid-feedback"> Please enter google script. </div>
                                 </div>
+                                <div class="col-md-12">
+                                    <label for="google_site_verification" class="form-label">Google Site
+                                        Verification</label>
+                                    <input type="text" name="other_details[google_site_verification]"
+                                        value="<%= list.other_details?JSON.parse(list.other_details).google_site_verification:'' %>"
+                                        class="form-control" id="google_site_verification"
+                                        placeholder="Google Site Verification">
+                                    <div class="invalid-feedback"> Please enter google site verification. </div>
+                                </div>
+
 
                                 <div class="col-12">
                                     <button class="btn btn-primary" type="submit">Submit</button>

@@ -141,6 +141,7 @@ exports.update = async (req, res) => {
         setting_detail.description = req.body.description;
         setting_detail.email = req.body.email;
         setting_detail.mobile = req.body.mobile;
+        setting_detail.mobileStatus = req.body.mobileStatus;
         setting_detail.social_links = req.body.social_links ? JSON.stringify(req.body.social_links) : '{"facebook":"","instagram":"","pinterest":"","youtube":"","linkedin":"","whatsapp":""}';
         setting_detail.seo_details = req.body.seo_details ? JSON.stringify(req.body.seo_details) : '';
         setting_detail.other_details = req.body.other_details ? JSON.stringify(req.body.other_details) : '';
