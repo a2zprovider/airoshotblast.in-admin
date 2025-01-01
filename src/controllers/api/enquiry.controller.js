@@ -1,3 +1,4 @@
+const { default: axios } = require('axios');
 const Enquiry = require('../../schemas/enquiry.js');
 
 // Create and Save a new Enquiry
@@ -26,6 +27,14 @@ exports.create = async (req, res) => {
 
         // Save enquiry in the database
         const createdEnquiry = await Enquiry.create(enquiry);
+
+        const input = { name, email, mobile, subject, message };
+        try {
+            const response = await axios.post('https://inquiry.airoshotblast.in/api/enquiry/gulfsouks.com', input);
+            // console.log('External API Response:', response.data);
+        } catch (apiError) {
+            console.error('Error calling external API:', apiError.message);
+        }
 
         return res.status(201).send({
             success: true,
