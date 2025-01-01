@@ -142,7 +142,6 @@
                                         <br>
                                         <a href="upload/setting/brochure/<%= list.brochure %>" target="_blank">Brochure
                                             Link</a>
-                                        <!-- <img src="upload/setting/brochure/<%= list.brochure %>" width="50px" alt="<%= list.title %>"> -->
                                         <% } %>
                                 </div>
                                 <div class="col-md-6">
@@ -552,6 +551,16 @@
                                         class="form-control" id="google_analytics_id" placeholder="Google Script">
                                     <div class="invalid-feedback"> Please enter google script. </div>
                                 </div>
+                                <div class="col-md-12">
+                                    <label for="google_site_verification" class="form-label">Google Site
+                                        Verification</label>
+                                    <input type="text" name="other_details[google_site_verification]"
+                                        value="<%= list.other_details?JSON.parse(list.other_details).google_site_verification:'' %>"
+                                        class="form-control" id="google_site_verification"
+                                        placeholder="Google Site Verification">
+                                    <div class="invalid-feedback"> Please enter google site verification. </div>
+                                </div>
+
 
                                 <div class="col-12">
                                     <button class="btn btn-primary" type="submit">Submit</button>

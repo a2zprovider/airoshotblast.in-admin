@@ -66,7 +66,6 @@ const upload = multer({
     }
 }).single('image'); // Handling single file upload (adjust if needed for multiple files)
 
-
 // Create a new Enquiry Page
 exports.add = (req, res) => {
 
@@ -128,6 +127,8 @@ exports.create = (req, res) => {
 // Retrieve all Enquiry from the database.
 exports.findAll = (req, res) => {
     const limit = parseInt(req.query.limit) || 10;
+    const sortBy = 'createdAt';
+    const sortOrder = 'desc';
 
     const page = parseInt(req.query.page) || 1;
     const offset = ((page - 1) * limit);
@@ -141,8 +142,10 @@ exports.findAll = (req, res) => {
     const search = req.query.search;
     const condition = search ? { title: { $regex: search, $options: 'i' } } : {};
 
-    Enquiry.count(condition).then(count => {
-        Enquiry.find(condition).skip(offset).limit(limit)
+    const sort = {};
+    sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
+    Enquiry.count(condition).sort(sort).then(count => {
+        Enquiry.find(condition).sort(sort).skip(offset).limit(limit)
             .then(data => {
                 res.render('pages/enquiry/list', {
                     lists: {
