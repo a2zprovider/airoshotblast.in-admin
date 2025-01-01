@@ -123,6 +123,7 @@
                                                 <th>Mobile</th>
                                                 <th>Subject</th>
                                                 <th>Message</th>
+                                                <th>Status</th>
                                                 <th>Date</th>
                                                 <th>Option</th>
                                             </tr>
@@ -149,6 +150,16 @@
                                                     </td>
                                                     <td>
                                                         <%-list.message %>
+                                                    </td>
+                                                    <td>
+                                                        <a href="<%= `product/status/${list.id}?status=success` %>"
+                                                            onclick="return confirm('Are you sure you want to change status for this record?')">
+                                                            <% if(list.status) { %>
+                                                                <i class="bx bx-toggle-right text-success fs-1"></i>
+                                                                <% }else{ %>
+                                                                    <i class="bx bx-toggle-left text-danger fs-1"></i>
+                                                                    <% } %>
+                                                        </a>
                                                     </td>
                                                     <td>
                                                         <script type="text/javascript">
