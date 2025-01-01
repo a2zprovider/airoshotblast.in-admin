@@ -383,7 +383,11 @@ exports.imgDelete = async (req, res) => {
     const images = JSON.parse(product_details.images);
 
     var filePath = './src/public/upload/product/imgs/' + images[index];
-    fs.unlinkSync(filePath);
+    if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath, (err) => {
+            if (err) { console.log("Error deleting file", err) } else { console.log("deleted") }
+        });
+    }
 
     images.splice(index, 1);
 
