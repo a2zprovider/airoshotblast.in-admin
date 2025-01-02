@@ -152,13 +152,17 @@
                                                         <%-list.message %>
                                                     </td>
                                                     <td>
-                                                        <a href="<%= `product/status/${list.id}?status=success` %>"
+                                                        <a href="<%= `enquiry/status/${list.id}` %>"
                                                             onclick="return confirm('Are you sure you want to change status for this record?')">
-                                                            <% if(list.status) { %>
-                                                                <i class="bx bx-toggle-right text-success fs-1"></i>
-                                                                <% }else{ %>
-                                                                    <i class="bx bx-toggle-left text-danger fs-1"></i>
-                                                                    <% } %>
+                                                            <% if(list.status=='pending' ) { %>
+                                                                <div class="text-warning" style="font-size: medium;font-weight: 500;">Pending</div>
+                                                                <% } %>
+                                                                    <% if(list.status=='success' ) { %>
+                                                                        <div class="text-success" style="font-size: medium;font-weight: 500;">Completed</div>
+                                                                        <% } %>
+                                                                            <% if(list.status=='reject' ) { %>
+                                                                                <div class="text-danger" style="font-size: medium;font-weight: 500;">Canceled</div>
+                                                                                <% } %>
                                                         </a>
                                                     </td>
                                                     <td>

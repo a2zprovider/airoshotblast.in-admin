@@ -8,5 +8,6 @@ const EnquiryController = require("../controllers/admin/enquiry.controller.js");
 routerEnquiry.get("/", auth, checkPermission('Enquiry', 'Read'), EnquiryController.findAll);
 routerEnquiry.get("/delete/:id", auth, checkPermission('Enquiry', 'Delete'), EnquiryController.delete);
 routerEnquiry.post("/deleteAll", auth, checkPermission('Enquiry', 'Delete'), EnquiryController.deleteAll);
+routerEnquiry.get("/status/:id", auth, checkPermission('Enquiry', 'Status'), EnquiryController.status);
 
 export default routerEnquiry;
