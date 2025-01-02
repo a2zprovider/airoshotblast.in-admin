@@ -123,6 +123,7 @@
                                                 <th>Mobile</th>
                                                 <th>Subject</th>
                                                 <th>Message</th>
+                                                <th>Status</th>
                                                 <th>Date</th>
                                                 <th>Option</th>
                                             </tr>
@@ -149,6 +150,20 @@
                                                     </td>
                                                     <td>
                                                         <%-list.message %>
+                                                    </td>
+                                                    <td>
+                                                        <a href="<%= `enquiry/status/${list.id}` %>"
+                                                            onclick="return confirm('Are you sure you want to change status for this record?')">
+                                                            <% if(list.status=='pending' ) { %>
+                                                                <div class="text-warning" style="font-size: medium;font-weight: 500;">Pending</div>
+                                                                <% } %>
+                                                                    <% if(list.status=='success' ) { %>
+                                                                        <div class="text-success" style="font-size: medium;font-weight: 500;">Completed</div>
+                                                                        <% } %>
+                                                                            <% if(list.status=='reject' ) { %>
+                                                                                <div class="text-danger" style="font-size: medium;font-weight: 500;">Canceled</div>
+                                                                                <% } %>
+                                                        </a>
                                                     </td>
                                                     <td>
                                                         <script type="text/javascript">
