@@ -42,12 +42,13 @@ const storage = multer.diskStorage({
         try {
             // Generate the file name based on the fieldname and current timestamp
             let fileName;
-            if (res.fieldname === "image") {
-                fileName = res.fieldname + '-' + Date.now() + Math.random().toString().substr(2, 6) + path.extname(res.originalname);
+            let ext = res.originalname.substring(res.originalname.lastIndexOf('.'), res.originalname.length);
+            if (res.fieldname === "logo") {
+                fileName = 'logo' + ext;
             } else if (res.fieldname === "logo2") {
-                fileName = res.fieldname + '-' + Date.now() + Math.random().toString().substr(2, 6) + path.extname(res.originalname);
+                fileName = 'logo2' + ext;
             } else if (res.fieldname === "favicon") {
-                fileName = res.fieldname + '-' + Date.now() + Math.random().toString().substr(2, 6) + path.extname(res.originalname);
+                fileName = 'favicon' + ext;
             } else if (res.fieldname === "brochure") {
                 fileName = res.fieldname + '-' + Date.now() + Math.random().toString().substr(2, 6) + path.extname(res.originalname);
             } else {
